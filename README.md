@@ -15,19 +15,19 @@ composer req survos/maker-bundle --dev
 
 To set default values (@todo: install recipe)
 ```yaml
-# config/packages/barcode.yaml
-barcode:
+# config/packages/bootstrap.yaml
+bootstrap:
   widthFactor: 3
   height: 120
   foregroundColor: 'purple'
 ```
 
 ```bash
-symfony new BarcodeDemo --webapp
+symfony new BootstrapDemo --webapp
 yarn install 
 bin/console make:controller AppController
-composer req survos/barcode-bundle
-echo "{{ 'test'|barcode }} or {{ barcode('test', 2, 80, 'red') }} " >> templates/app/index.html.twig
+composer req survos/bootstrap-bundle
+echo "{{ 'test'|bootstrap }} or {{ bootstrap('test', 2, 80, 'red') }} " >> templates/app/index.html.twig
 symfony server:start -d
 
 ```

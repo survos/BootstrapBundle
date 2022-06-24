@@ -1,6 +1,6 @@
 {
-    "name": "survos/barcode-bundle",
-    "description": "Integrates picqer/php-barcode-generator in a Symfony application",
+    "name": "survos/bootstrap-bundle",
+    "description": "Integrates a simple bootstrap theme in a Symfony application",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -11,20 +11,29 @@
     ],
     "require": {
         "php": "^8.1",
-        "picqer/php-barcode-generator": "^2.2",
+        "knplabs/knp-menu-bundle": "^3.2",
         "symfony/config": "^6.1",
         "symfony/dependency-injection": "^6.1",
         "symfony/http-kernel": "^6.1",
+        "symfony/security-bundle": "^6.1",
+        "twig/string-extra": "^3.4",
         "twig/twig": "^3.4"
     },
     "autoload": {
         "psr-4": {
-            "Survos\\BarcodeBundle\\": "src/"
+            "Survos\\BootstrapBundle\\": "src/"
         }
     },
     "extra": {
         "symfony": {
             "require": "^6.1"
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "phpstan": "vendor/bin/phpstan analyse"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.7"
     }
 }

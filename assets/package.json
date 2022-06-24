@@ -1,0 +1,31 @@
+{
+  "name": "@survos/datatables-bundle",
+  "description": "integrate php and javascript helpers for DataTables.net",
+  "license": "MIT",
+  "version": "1.0.1",
+  "symfony": {
+    "controllers": {
+      "datatables": {
+        "main": "src/controllers/datatables_controller.js",
+        "webpackMode": "eager",
+        "fetch": "lazy",
+        "enabled": true
+      },
+      "api_datatables": {
+        "main": "src/controllers/api_datatables_controller.js",
+        "webpackMode": "eager",
+        "fetch": "lazy",
+        "enabled": true
+      }
+    }
+  },
+  "peerDependencies": {
+    "@hotwired/stimulus": "^3.0.0"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}
