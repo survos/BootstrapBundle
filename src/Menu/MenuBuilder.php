@@ -10,8 +10,8 @@
 namespace Survos\BootstrapBundle\Menu;
 
 use Knp\Menu\ItemInterface;
-use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Knp\Menu\FactoryInterface;
+use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class MenuBuilder
@@ -34,7 +34,7 @@ class MenuBuilder
     public function createNavbarMenu(array $options): ItemInterface
     {
         $menu = $this->factory->createItem('menuroot');
-        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), self::NAVBAR_MENU_EVENT);
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), KnpMenuEvent::NAVBAR_MENU_EVENT);
         return $menu;
     }
 
@@ -70,7 +70,7 @@ class MenuBuilder
         ];
 
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options, $childOptions),
-            self::SIDEBAR_MENU_EVENT);
+            KnpMenuEvent::SIDEBAR_MENU_EVENT);
 
         return $menu;
     }
@@ -100,7 +100,7 @@ class MenuBuilder
             'labelAttributes' => ['safe_html' => true, 'data-toggle' => 'xxcollapse'],
         ];
 
-        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options, $childOptions), self::PAGE_MENU_EVENT);
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options, $childOptions), KnpMenuEvent::PAGE_MENU_EVENT);
 
         return $menu;
     }
