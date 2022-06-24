@@ -1,5 +1,10 @@
 # Bootstrap Bundle
 
+## @todo:
+
+* make:create-user-command
+* make:menu
+
 A simple template with a navbar and login for Symfony, using Bootstrap 5
 
 ```bash
