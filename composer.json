@@ -1,0 +1,30 @@
+{
+    "name": "survos/barcode-bundle",
+    "description": "Integrates picqer/php-barcode-generator in a Symfony application",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tac Tacelosky",
+            "email": "tacman@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "picqer/php-barcode-generator": "^2.2",
+        "symfony/config": "^6.1",
+        "symfony/dependency-injection": "^6.1",
+        "symfony/http-kernel": "^6.1",
+        "twig/twig": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Survos\\BarcodeBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "symfony": {
+            "require": "^6.1"
+        }
+    }
+}
