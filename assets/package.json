@@ -1,22 +1,10 @@
 {
-  "name": "@survos/datatables-bundle",
-  "description": "integrate php and javascript helpers for DataTables.net",
+  "name": "@survos/bootstrap-bundle",
+  "description": "integrate php and javascript helpers for bootstrap-based admin themes (e.g. tabler), including menus",
   "license": "MIT",
   "version": "1.0.1",
   "symfony": {
     "controllers": {
-      "datatables": {
-        "main": "src/controllers/datatables_controller.js",
-        "webpackMode": "eager",
-        "fetch": "lazy",
-        "enabled": true
-      },
-      "api_datatables": {
-        "main": "src/controllers/api_datatables_controller.js",
-        "webpackMode": "eager",
-        "fetch": "lazy",
-        "enabled": true
-      }
     }
   },
   "peerDependencies": {
