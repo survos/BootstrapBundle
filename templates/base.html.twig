@@ -137,10 +137,10 @@ fixed, layout-boxed, layout-top-nav, sidebar-collapse, sidebar-mini
         <aside class="main-sidebar sidebar-dark-primary elevation-4 d-print-none">
             <a href="{% block logo_path %}{{ path('home'|route_alias) }}{% endblock %}" class="brand-link ">
                 {% block logo_mini %}
-                    <img src="{{ asset('favicon-32x32.png')  }}" alt="Logo" class="brand-image elevation-3" >
+{#                    <img src="{{ asset('favicon-32x32.png')  }}" alt="Logo" class="brand-image elevation-3" >#}
                     <span class="brand-text font-weight-light">{{ logo_mini|default('home.title'|trans)}}</span>
                 {% endblock %}
-                {% block logo_large %} {{ logo_large|default('home.title'|trans)}} {% endblock %}
+{#                {% block logo_large %} {{ logo_large|default('home.title'|trans)}} {% endblock %}#}
             </a>
 
             <div class="sidebar">
