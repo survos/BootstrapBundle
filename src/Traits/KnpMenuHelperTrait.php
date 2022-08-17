@@ -10,7 +10,7 @@ use function Symfony\Component\String\u;
 trait KnpMenuHelperTrait
 {
     private ?AuthorizationCheckerInterface $authorizationChecker=null;
-    private ?ParameterBagInterface $bag=null;
+//    private ?ParameterBagInterface $bag=null;
 
     private ?array $options;
     private $childOptions;
