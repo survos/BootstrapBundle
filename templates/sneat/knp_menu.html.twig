@@ -25,8 +25,11 @@
         {% if item.isRoot %}
             {%- set listAttributes = item.isRoot
                 ? options['rootAttributes']
-                : (listAttributes|merge({class: (listAttributes.class|default('') ~ ' nav-treeviewXX')}))
+                : (listAttributes|merge({class: (listAttributes.class|default('') ~ ' ')}))
                 |trim -%}
+        {% endif %}
+        {% if depth > 0 %}
+            {%- set listAttributes = listAttributes|merge({class: ' menu-sub'}) %}
         {% endif %}
         <ul{{ macros.attributes(listAttributes) }}>
             {{ block('children') }}
@@ -40,7 +43,7 @@
     {% import _self as ownmacro %}
     {#    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'nav-link depth-' ~ item.level ) }}#}
 
-    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class'), 'menu-item'] : ['menu-item'] %}
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class'), ' menu-link'] : [' menu-link'] %}
     <!-- linkElement -->
 
     {%- set attributes = item.linkAttributes %}
@@ -93,7 +96,7 @@
             {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
         {%- endif %}
         {% if matcher.isAncestor(item, options.matchingDepth) %}
-            {%- set attributes = attributes|merge({'class': classes|join(' active')}) %}
+            {%- set attributes = attributes|merge({'class': classes|join(' menu.item.open open active ')}) %}
             {% endif %}
 {#        {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}#}
         {# displaying the item #}
@@ -112,8 +115,9 @@
                     {#                    </a>#}
 
                     {#                collapsible {{  matcher.isAncestor(item, options.matchingDepth) ? 'ancestor' : 'not ancestor' }}#}
-                    <a data-bs-target="#{{ ulId }}"
-                       data-bs-toggle="collapse"
+                    <a
+{#                            data-bs-target="#{{ ulId }}"#}
+{#                       data-bs-toggle="collapse"#}
                        aria-expanded="false"
                        class="menu-link menu-toggle {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}">
                         <!-- icon -->

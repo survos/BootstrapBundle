@@ -16,20 +16,17 @@
                                      "class": "menu-inner py-1",
                                 } ,
                                 "ancestorClass" : "menu-item menu-open",
-                                "branch_class"  : "menu-item menu-toggle",
-                                'leaf_class'    : 'menu-item leaf',
+                                "branch_class"  : "menu-item ",
+                                'leaf_class'    : 'menu-item leaf ',
                                 'link_class'    : 'menu-link',
                                 "allow_safe_labels": true,
                                 'rootAttributes': {
-                                    'class': 'nav nav-pills nav-sidebar flex-column',
-                                    'data-lte-toggle': 'treeview',
-                                    'data-accordian': 'false',
+                                    'class': 'menu-inner py-1',
                                     'role': 'menu'
                                 },
 
                                 'comment': "This is an option passed in knp_menu_render",
                             })
                             %}
-
-
+{#                            'data-accordian': 'false',#}
                                 {{ menuHtml|raw }}
