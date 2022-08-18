@@ -73,10 +73,13 @@
             {% endblock %}
             <div class="menu-inner-shadow"></div>
 
+            {% set menuCode = 'survos_sidebar_menu' %}
+            {% set menuItem = knp_menu_get(menuCode, []) %}
+
             {% block sidebar %}
-            {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
+                {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
                 debug: app.request.get('debug', false),
-                menuCode: 'survos_sidebar_menu'
+                menuItem: menuItem
             }
             ) }}
 
@@ -92,16 +95,24 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
+                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %}
                     <h4 class="fw-bold py-3 mb-4">
-                        <span class="text-muted fw-light">Extended UI /</span> Perfect Scrollbar
+                    {% for breadcrumb in breadcrumbs|slice(1) %}
+                        {% if loop.last %}
+                            <a href="{{ breadcrumb.uri }}">{{ breadcrumb.label }}</a>
+                        {% else %}
+                            {{ not loop.first ? '/' }}
+                            <span class="text-muted fw-light">{{ breadcrumb.label }} /</span>
+                            {% endif %}
+{#                         Perfect Scrollbar#}
+                    {% endfor %}
                     </h4>
-
                     {% block body %}
                     Body goes here.  In the sneat pages, it appears to always begin with class=row.
                 {% endblock %}
             </div>
-            <div class="content-backdrop fade"></div>
             {{ include('@SurvosBootstrap/sneat/_footer.html.twig') }}
+            <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
     </div>

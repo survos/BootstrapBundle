@@ -2,6 +2,7 @@
 
 namespace Survos\BootstrapBundle\Components;
 
+use Survos\BootstrapBundle\Service\ContextService;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
@@ -19,7 +20,7 @@ class AlertComponent
         // validate data
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['type' => 'success', 'dismissible' => false]);
-        $resolver->setAllowedValues('type', ['success', 'danger', 'info', 'primary']);
+        $resolver->setAllowedValues('type', ContextService::THEME_COLORS);
         $resolver->setRequired('message');
         $resolver->setAllowedTypes('message', 'string');
 

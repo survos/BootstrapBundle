@@ -40,7 +40,7 @@ class MenuBuilder
 
     public function createSidebarMenu(array $options): ItemInterface
     {
-        assert(count($options), "Missing get options");
+//        assert(count($options), "Missing get options");
         $menu = $this->factory->createItem('menuroot',
             [
                 'label' => "Menu Root",

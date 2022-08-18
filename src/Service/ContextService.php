@@ -6,7 +6,17 @@ namespace Survos\BootstrapBundle\Service;
 
 class ContextService
 {
-    public function __construct(array $options=[])
+    const THEME_COLORS = [
+        "primary",
+        "secondary",
+        "success",
+        "info",
+        "warning",
+        "danger",
+        "light",
+        "dark"];
+
+    public function __construct(array $options = [])
     {
 
     }

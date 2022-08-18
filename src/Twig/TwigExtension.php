@@ -33,6 +33,7 @@ class TwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('bootstrap_theme_colors', fn() => ContextService::THEME_COLORS),
             new TwigFunction('admin_context_is_enabled', [$this, 'isEnabled']),
         ];
     }
