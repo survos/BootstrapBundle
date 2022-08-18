@@ -56,12 +56,18 @@
     {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.link_class} ) %}
 
     <a href="{{ item.uri }}" {{ macros.attributes(attributes) }}>
-        <i class="menu-icon tf-icons bx bx-copy"></i>
-        {% if item.attribute('data-icon') is not empty  %}
-            <span class="{{ item.attribute('data-icon') }}"></span>
-        {% endif %}
+        {{ block('icon') }}
+{#        {% if item.attribute('data-icon') is not empty  %}#}
+{#            <i class="menu-icon tf-icons bx bx-copy"></i>#}
+{#            <i class="{{ item.attribute('data-icon') }}"></i>#}
+{#        {% endif %}#}
         {{ block('label') }}
     </a>
+{% endblock %}
+
+{% block icon %}
+<!-- icon -->
+<i class="menu-icon {{ item.attribute('data-icon') is not empty ? item.attribute('data-icon') : 'fas fa-circle' }}"></i>
 {% endblock %}
 
 {% block item %}
@@ -120,8 +126,7 @@
 {#                       data-bs-toggle="collapse"#}
                        aria-expanded="false"
                        class="menu-link menu-toggle {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}">
-                        <!-- icon -->
-                        {#                    <span class="nav-icon {{ item.attribute('data-icon') is not empty ? item.attribute('data-icon') : 'fas fa-circle' }}"></span>#}
+                        {{ block('icon') }}
                         {{ block('spanElement') }}
                         {#                        <span class="end fas fa-angle-left"></span>#}
                     </a>

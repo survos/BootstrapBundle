@@ -225,7 +225,7 @@ class MenuService
         }
 
         if ($options['style'] === 'header') {
-            $options['attributes']['class'] = 'nav-header';
+            $options['attributes']['class'] = 'menu-header';
         }
 
         if (!$options['id']) {

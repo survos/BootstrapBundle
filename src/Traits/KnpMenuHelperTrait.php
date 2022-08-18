@@ -163,9 +163,12 @@ trait KnpMenuHelperTrait
             $options['label_attributes']['data-icon'] = $options['icon'];
             unset($options['icon']);
         }
+//        if ($options['label'] == 'Layouts') {
+//            dd($options);
+//        }
 
         if ($options['style'] === 'header') {
-            $options['attributes']['class'] = 'nav-header';
+            $options['attributes']['class'] = 'menu-header';
         }
 
         if (!$options['id']) {

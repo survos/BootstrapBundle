@@ -1,4 +1,6 @@
-# Bootstrap Bundle
+# Bootstrap Bundle, based on Sneat Admin theme.
+
+hello@themeselection.com
 
 ## @todo:
 

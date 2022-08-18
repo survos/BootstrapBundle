@@ -2,6 +2,8 @@
 
 namespace Survos\BootstrapBundle;
 
+use Survos\BootstrapBundle\Components\AccordionComponent;
+use Survos\BootstrapBundle\Components\AlertComponent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -27,6 +29,9 @@ class SurvosBootstrapBundle extends AbstractBundle
         $builder->register(ContextService::class)
             ->setArgument('$options', $config['options'])
             ->setAutowired(true);
+
+        $builder->register(AlertComponent::class)->setAutowired(true)->setAutoconfigured(true);
+        $builder->register(AccordionComponent::class)->setAutowired(true)->setAutoconfigured(true);
 
         $definition = $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)

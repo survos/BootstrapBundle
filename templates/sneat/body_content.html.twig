@@ -1,13 +1,10 @@
-{% extends "@SurvosBootstrap/sneat/shell.html.twig" %}
-
-{% block body_content %}
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
             {% block sidebar_logo %}
-            <div class="app-brand demo">
-                <a href="index.html" class="app-brand-link">
+                <div class="app-brand demo">
+                    <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                         width="25"
@@ -63,25 +60,25 @@
                   </g>
                 </svg>
               </span>
-                    <span class="app-brand-text demo menu-text fw-bolder ms-2">{{ appShortName|default('appShortName') }}</span>
-                </a>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">{{ appShortName|default('appShortName') }}</span>
+                    </a>
 
-                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                </a>
-            </div>
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                    </a>
+                </div>
             {% endblock %}
             <div class="menu-inner-shadow"></div>
 
             {% block sidebar %}
-            {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
-                debug: app.request.get('debug', false),
-                menuCode: 'survos_sidebar_menu'
-            }
-            ) }}
+                {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
+                    debug: app.request.get('debug', false),
+                    menuCode: 'survos_sidebar_menu'
+                }
+                ) }}
 
-            {#            {{ include('_sidebar.html.twig') }} #}
-        {% endblock %}
+                {#            {{ include('_sidebar.html.twig') }} #}
+            {% endblock %}
         </aside>
 
         <!-- Layout container -->
@@ -91,17 +88,15 @@
 
             <div class="content-wrapper">
                 <!-- Content -->
-                <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="fw-bold py-3 mb-4">
-                        <span class="text-muted fw-light">Extended UI /</span> Perfect Scrollbar
-                    </h4>
 
-                    {% block body %}
-                    Body goes here.  In the sneat pages, it appears to always begin with class=row.
+                {% block body %}
+                    Body goes here.
                 {% endblock %}
             </div>
             <div class="content-backdrop fade"></div>
+            {% block footer %}
             {{ include('@SurvosBootstrap/sneat/_footer.html.twig') }}
+            {% endblock %}
         </div>
         <!-- Content wrapper -->
     </div>
@@ -109,4 +104,3 @@
 
     <!-- / Layout page -->
 </div>
-{% endblock %}

@@ -16,6 +16,7 @@
         "symfony/dependency-injection": "^6.1",
         "symfony/http-kernel": "^6.1",
         "symfony/security-bundle": "^6.1",
+        "symfony/ux-twig-component": "^2.3",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4"
     },
