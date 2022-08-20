@@ -1,0 +1,31 @@
+<div class="card {{ h ? 'h-%s'|format(h) }}">
+    {% if image %}
+    <img class="card-img-top" src="{{ image }}" alt="{{ alt }}">
+    {% endif %}
+
+    <div class="card-body">
+        <h5 class="card-title">
+            {% block title %}
+            {{ title }}
+            {% endblock %}
+        </h5>
+        <p class="card-text">
+            {% block text %}
+            {{ text }}
+            {% endblock %}
+        </p>
+    </div>
+    <ul class="list-group list-group-flush">
+{#        <li class="list-group-item">{{ sentences(3) }}</li>#}
+        <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
+    <div class="card-body">
+        {% block body %}
+            {{ body }}
+        {% endblock %}
+    </div>
+    {% block links %}
+    <a href="javascript:void(0)" class="card-link">Card link</a>
+    <a href="javascript:void(0)" class="card-link">Another link</a>
+    {% endblock %}
+</div>

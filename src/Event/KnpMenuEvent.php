@@ -11,7 +11,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class KnpMenuEvent extends Event
 {
-    const NAVBAR_MENU_EVENT = 'navbar_menu';
+    const NAVBAR_MENU_EVENT = 'survos_navbar_menu';
     const PAGE_MENU_EVENT = 'page_menu';
     const SIDEBAR_MENU_EVENT = 'sidebar_menu';
 

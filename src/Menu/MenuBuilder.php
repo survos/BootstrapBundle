@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class MenuBuilder
 {
     const PAGE_MENU_EVENT = 'page_menu';
-    const NAVBAR_MENU_EVENT = 'page_menu';
+    const NAVBAR_MENU_EVENT = 'navbar_menu';
     const SIDEBAR_MENU_EVENT = 'sidebar_menu';
 
     public function __construct(private FactoryInterface $factory, private EventDispatcherInterface $eventDispatcher)

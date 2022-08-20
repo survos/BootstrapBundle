@@ -4,6 +4,9 @@ namespace Survos\BootstrapBundle;
 
 use Survos\BootstrapBundle\Components\AccordionComponent;
 use Survos\BootstrapBundle\Components\AlertComponent;
+use Survos\BootstrapBundle\Components\BadgeComponent;
+use Survos\BootstrapBundle\Components\CardComponent;
+use Survos\BootstrapBundle\Components\DividerComponent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -32,6 +35,9 @@ class SurvosBootstrapBundle extends AbstractBundle
 
         $builder->register(AlertComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(AccordionComponent::class)->setAutowired(true)->setAutoconfigured(true);
+        $builder->register(DividerComponent::class)->setAutowired(true)->setAutoconfigured(true);
+        $builder->register(CardComponent::class)->setAutowired(true)->setAutoconfigured(true);
+        $builder->register(BadgeComponent::class)->setAutowired(true)->setAutoconfigured(true);
 
         $definition = $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)
@@ -39,6 +45,8 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->setArgument('$routes', $config['routes'])
             ->setArgument('$options', $config['options'])
             ->setArgument('$contextService', new Reference(ContextService::class))
+            ->setArgument('$container', new Reference('service_container'))
+            ->setArgument('$componentRenderer', new Reference('ux.twig_component.component_renderer'))
         ;
 
 
