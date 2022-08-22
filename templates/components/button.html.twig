@@ -1,0 +1,13 @@
+<button type="button"
+        class="btn {{ size ? 'btn-'~size }}
+        btn{{ outline ? '-outline' }}{{ color ? '-' ~ color }} {{ style }}">
+    {% if a %}<a href="{{ a.href }}" {{ a.target ? "target=%s"|format(a.target) }}> {% endif %}
+    {% if icon %}
+            <span class="{{ icon }}"></span>&nbsp;
+    {% endif %}
+        {{ label }}
+    {% if a %}
+        </a>
+    {% endif %}
+</button>
+
