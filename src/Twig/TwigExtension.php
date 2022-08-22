@@ -18,7 +18,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
                                 private ComponentRenderer $componentRenderer,
                                 private array $routes,
                                 private array $options,
-                                ContextService $contextService,
+                                private ContextService $contextService,
     )
     {
     }
@@ -45,6 +45,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
 //            new TwigFunction('component', [$this, 'render'], ['is_safe' => ['all']]),
 
             new TwigFunction('bootstrap_theme_colors', fn() => ContextService::THEME_COLORS),
+            new TwigFunction('theme_option', fn(string $option) => $this->contextService->getOption($option)),
             new TwigFunction('admin_context_is_enabled', [$this, 'isEnabled']),
             new TwigFunction('badge', [$this, 'badge']),
             new TwigFunction('img', fn(string $src) => sprintf('img src="%s"', $src)),

@@ -16,9 +16,14 @@ class ContextService
         "light",
         "dark"];
 
-    public function __construct(array $options = [])
+    public function __construct(private array $options = [])
     {
 
+    }
+
+    public function getOption(string $option): mixed
+    {
+        return $this->options[$option];
     }
 
 
