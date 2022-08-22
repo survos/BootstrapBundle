@@ -11,10 +11,9 @@
 {% endmacro %}
 
 {% block root %}
-    {{ options|json_encode }}
 
     {% set listAttributes = item.childrenAttributes %}
-    <ul class="{{ item.attributes.class|default("") }}">
+    <ul class="{{ item.attributes.class|default(options.rootAttributes.class|default()) }}">
         {{ block('children') -}}
 {#        <li class="nav-item">#}
 {#            <a class="nav-link active" aria-current="page" href="#">Home</a>#}

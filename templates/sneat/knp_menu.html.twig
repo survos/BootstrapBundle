@@ -49,7 +49,7 @@
         {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.currentClass} ) %}
     {% endif %}
 
-    {# there's probably a way to pass this in via render_sidebar.html.twig, but not sure how! #}
+    {# passed in via render_sidebar.html.twig #}
     {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.link_class|default('')} ) %}
 
     <a href="{{ item.uri }}" {{ macros.attributes(attributes) }}>
@@ -68,6 +68,7 @@
 {% endblock %}
 
 {% block item %}
+    {%- set is_collapsable = item.hasChildren %} {# was attributes.collapsable|default(false) %} #}
 
     {% if item.displayed %}
         {# building the class of the item #}

@@ -13,12 +13,10 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\FactoryInterface;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuBuilder
 {
-    const PAGE_MENU_EVENT = 'page_menu';
-    const NAVBAR_MENU_EVENT = 'navbar_menu';
-    const SIDEBAR_MENU_EVENT = 'sidebar_menu';
 
     public function __construct(private FactoryInterface $factory, private EventDispatcherInterface $eventDispatcher)
     {
@@ -26,8 +24,13 @@ class MenuBuilder
 
     public function createMenu(array $options): ItemInterface
     {
-        $menu = $this->factory->createItem('menuroot');
-        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options));
+        $options = (new OptionsResolver())
+            ->setDefaults([
+                'event' => KnpMenuEvent::MENU_EVENT,
+                'name' => KnpMenuEvent::MENU_EVENT
+            ])->resolve($options);
+        $menu = $this->factory->createItem($options['name']);
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $options['event']);
         return $menu;
     }
 
@@ -57,11 +60,13 @@ class MenuBuilder
 
     public function createNavbarMenu(array $options): ItemInterface
     {
-        $menu = $this->factory->createItem('menuroot', [
-            'attributes' => [
-                'class' => "navbar-nav me-auto mb-2 mb-lg-0"
-            ]
-        ]);
+        $menu = $this->factory->createItem('navbar_root');
+
+//        $menu = $this->factory->createItem('menuroot', [
+//            'attributes' => [
+//                'class' => "navbar-nav me-auto mb-2 mb-lg-0"
+//            ]
+//        ]);
 
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), KnpMenuEvent::NAVBAR_MENU_EVENT);
         return $menu;
@@ -71,6 +76,11 @@ class MenuBuilder
     {
         // options are passed in from knp_menu_GET.  So they really shouldn't be rendering options.
         //
+        $menu = $this->factory->createItem('footer');
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), KnpMenuEvent::FOOTER_MENU_EVENT);
+        return $menu;
+
+
         dump($options, 'from knp_menu_get');
         // this builds the root item
         $menu = $this->factory->createItem('footer', [
@@ -90,11 +100,9 @@ class MenuBuilder
         ]);
 
         $childOptions = [
-            'class' => 'list-item footer-child'
+//            'class' => 'list-item footer-child'
         ];
 
-        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options, $childOptions), KnpMenuEvent::FOOTER_MENU_EVENT);
-        return $menu;
     }
 
     public function createSidebarMenu(array $options): ItemInterface
