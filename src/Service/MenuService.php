@@ -6,10 +6,8 @@ namespace Survos\BootstrapBundle\Service;
 
 use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Security;
 use function Symfony\Component\String\u;
 
 class MenuService

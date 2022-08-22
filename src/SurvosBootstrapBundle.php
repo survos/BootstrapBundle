@@ -7,6 +7,7 @@ use Survos\BootstrapBundle\Components\AlertComponent;
 use Survos\BootstrapBundle\Components\BadgeComponent;
 use Survos\BootstrapBundle\Components\CardComponent;
 use Survos\BootstrapBundle\Components\DividerComponent;
+use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -45,8 +46,8 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->setArgument('$routes', $config['routes'])
             ->setArgument('$options', $config['options'])
             ->setArgument('$contextService', new Reference(ContextService::class))
-            ->setArgument('$container', new Reference('service_container'))
-            ->setArgument('$componentRenderer', new Reference('ux.twig_component.component_renderer'))
+//            ->setArgument('$container', new Reference('service_container'))
+//            ->setArgument('$componentRenderer', new Reference('ux.twig_component.component_renderer'))
         ;
 
 
@@ -58,8 +59,11 @@ class SurvosBootstrapBundle extends AbstractBundle
         $builder->register(MenuBuilder::class)
             ->setArgument('$factory', new Reference('knp_menu.factory'))
             ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
-            ->addTag('knp_menu.menu_builder', ['method' => 'createSidebarMenu', 'alias' => 'survos_sidebar_menu'])
-            ->addTag('knp_menu.menu_builder', ['method' => 'createNavbarMenu', 'alias' => 'survos_navbar_menu'])
+            ->addTag('knp_menu.menu_builder', ['method' => 'createSidebarMenu', 'alias' => KnpMenuEvent::SIDEBAR_MENU_EVENT])
+            ->addTag('knp_menu.menu_builder', ['method' => 'createNavbarMenu', 'alias' => KnpMenuEvent::NAVBAR_MENU_EVENT])
+            ->addTag('knp_menu.menu_builder', ['method' => 'createAuthMenu', 'alias' => KnpMenuEvent::AUTH_MENU_EVENT])
+            ->addTag('knp_menu.menu_builder', ['method' => 'createFooterMenu', 'alias' => KnpMenuEvent::FOOTER_MENU_EVENT])
+            ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::MENU_EVENT])
         ;
 
 
@@ -101,6 +105,23 @@ class SurvosBootstrapBundle extends AbstractBundle
                 ->scalarNode('home')
                 ->defaultValue('app_homepage')
                 ->info('name of the homepage route')
+                ->end()
+
+            ->scalarNode('login')
+            ->defaultValue('app_login')
+            ->info('name of the login')
+            ->end()
+
+            ->scalarNode('logout')
+            ->defaultValue('app_logout')
+            ->info('name of the logout route')
+            ->end()
+
+            ->scalarNode('register')
+            ->defaultValue('app_register')
+            ->info('name of the register route')
+            ->end()
+
             ->end();
         return $rootNode;
     }

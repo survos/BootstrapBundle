@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 
-#[AsTwigComponent('snead_alert', template: '@SurvosBootstrap/components/alert.html.twig')]
+#[AsTwigComponent('alert', template: '@SurvosBootstrap/components/alert.html.twig')]
 class AlertComponent
 {
     public string $type;

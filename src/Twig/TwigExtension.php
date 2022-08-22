@@ -2,21 +2,19 @@
 
 namespace Survos\BootstrapBundle\Twig;
 
-use Survos\BootstrapBundle\Components\BadgeComponent;
 use Survos\BootstrapBundle\Service\ContextService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Contracts\Service\ServiceSubscriberInterface;
-use Symfony\UX\TwigComponent\ComponentFactory;
 use Symfony\UX\TwigComponent\ComponentRenderer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-class TwigExtension extends AbstractExtension implements ServiceSubscriberInterface
+class TwigExtension extends AbstractExtension // implements ServiceSubscriberInterface
 {
 
+
     public function __construct(
-        private ContainerInterface $container,
+                                #[Autowire(service: 'ux.twig_component.component_renderer')]
                                 private ComponentRenderer $componentRenderer,
                                 private array $routes,
                                 private array $options,
@@ -25,24 +23,13 @@ class TwigExtension extends AbstractExtension implements ServiceSubscriberInterf
     {
     }
 
-    public static function getSubscribedServices(): array
-    {
-        return [
-            ComponentRenderer::class,
-            ComponentFactory::class,
-        ];
-    }
-
     public function render(string $name, array $props = []): string
     {
-        return $this->componentRenderer->createAndRender($name, $props);
-//        return $this->container->get(ComponentRenderer::class)->createAndRender($name, $props);
+        $renderedContent =  $this->componentRenderer->createAndRender($name, $props);
+        return $renderedContent;
+        dd($renderedContent);
     }
 
-    public function embeddedContext(string $name, array $props, array $context): array
-    {
-        return $this->container->get(ComponentRenderer::class)->embeddedContext($name, $props, $context);
-    }
     public function getFilters(): array
     {
         // consider something like https://github.com/a-r-m-i-n/font-awesome-bundle
@@ -64,10 +51,9 @@ class TwigExtension extends AbstractExtension implements ServiceSubscriberInterf
         ];
     }
 
-    public function badge(array $props=[]): bool
+    public function badge(array $props = []): string
     {
         return $this->render('badge', $props);
-        dd($value);
     }
     public function isEnabled(string $value): bool
     {

@@ -8,7 +8,7 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 use function Symfony\Component\String\u;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
-#[AsTwigComponent('snead_accordion', template: '@SurvosBootstrap/components/accordion.html.twig')]
+#[AsTwigComponent('accordion', template: '@SurvosBootstrap/components/accordion.html.twig')]
 class AccordionComponent
 {
     public string $header;

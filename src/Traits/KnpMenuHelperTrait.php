@@ -2,6 +2,7 @@
 namespace Survos\BootstrapBundle\Traits;
 
 use Knp\Menu\ItemInterface;
+use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -20,8 +21,50 @@ trait KnpMenuHelperTrait
         $this->authorizationChecker = $authorizationChecker;
     }
 
+    public function addSubmenu(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
+    {
+
+    }
+    public function addHeading(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
+    {
+
+    }
+    public function add(
+        ItemInterface $menu,
+        array|RouteParametersInterface|null $rp=null,
+        ?string $route=null,
+        ?string $label=null,
+        ?string $uri=null,
+        ?string $id=null,
+        bool $external = false,
+    ): self // for nesting.  Leaves only, requires route or uri.
+    {
+        if (!$id) {
+            $id = uniqid();
+        }
+        assert(!($route && $uri));
+        $options = [];
+        if ($route) {
+            $options['route'] = $route;
+        }
+        if ($rp) {
+            $options['route_parameters'] = is_array($rp) ? $rp : $rp->getrp();
+        }
+        $child = $menu->addChild($id, $options);
+        if (!$label) {
+            $label = $route; // @todo, be smarter.
+        }
+        $options['label'] = $label;
+
+        // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
+        $child->setLabel($label);
+
+        return $this;
+
+    }
     public function addMenuItem(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
     {
+        assert(count($extra) === 0, json_encode($extra));
         $options = $this->menuOptions($options);
         // must pass in either route, icon or menu_code
 

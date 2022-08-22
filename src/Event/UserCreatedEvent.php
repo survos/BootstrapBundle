@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Survos\BaseBundle\Event;
+namespace Survos\BootstrapBundle\Event;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\Event;

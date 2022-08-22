@@ -1,17 +1,56 @@
+
+
 <!-- Footer -->
+<nav class="navbar fixed-bottom navbar-light bg-light">
+    <a class="navbar-brand" href="#">Fixed bottom</a>
+</nav>
+
+
 <footer class="content-footer footer bg-footer-theme">
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+    </ul>
+
+
     <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+
+        {% set menu = knp_menu_get(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::FOOTER_MENU_EVENT'),
+            [],
+            {'knp_menu_get_options': _self }
+
+            ) %}
+        {% set menuHtml = knp_menu_render(menu, {
+            template: '@SurvosBootstrap/knp_top_menu.html.twig',
+            style: 'footer',
+            something_else: 'test render!!'
+        }) %}
+
         <div class="mb-2 mb-md-0">
-            ©
-            <script>
-                document.write(new Date().getFullYear());
-            </script>
-            , made with ❤️ by
-            <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
-        </div>
-        <div>
-            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+            {#  sb an unstyled list, or just spans #}
+            {{ menuHtml|raw }}
+
+
+{#            ©#}
+{#            <script>#}
+{#                document.write(new Date().getFullYear());#}
+{#            </script>#}
+{#            , made with ❤️ by#}
+{#            <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>#}
+{#        </div>#}
+{#        <div>#}
+{#            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>#}
+{#            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>#}
 
             <a
                     href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"

@@ -24,6 +24,13 @@ class MenuBuilder
     {
     }
 
+    public function createMenu(array $options): ItemInterface
+    {
+        $menu = $this->factory->createItem('menuroot');
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options));
+        return $menu;
+    }
+
     public function createAppMenu(array $options): ItemInterface
     {
         $menu = $this->factory->createItem('menuroot');
@@ -31,15 +38,69 @@ class MenuBuilder
         return $menu;
     }
 
+    public function createAuthMenu(array $options): ItemInterface
+    {
+        // $options is what is passed in from the twig call to GET the menu, NOT the MenuBuilder (for rendering)
+//        dd($options);
+        $menu = $this->factory->createItem('authroot', [
+            'label' => "Auth",
+            'first' => 'FIRSTCLASS',
+            'currentClass' => 'text-danger current-class active show',
+            'ancestorClass' => 'text-warning ancestor-class active show',
+            'attributes' => [
+                'class' => 'dropdown-menu dropdown-menu-end',
+            ]
+        ]);
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), KnpMenuEvent::AUTH_MENU_EVENT);
+        return $menu;
+    }
+
     public function createNavbarMenu(array $options): ItemInterface
     {
-        $menu = $this->factory->createItem('menuroot');
+        $menu = $this->factory->createItem('menuroot', [
+            'attributes' => [
+                'class' => "navbar-nav me-auto mb-2 mb-lg-0"
+            ]
+        ]);
+
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), KnpMenuEvent::NAVBAR_MENU_EVENT);
+        return $menu;
+    }
+
+    public function createFooterMenu(array $options): ItemInterface
+    {
+        // options are passed in from knp_menu_GET.  So they really shouldn't be rendering options.
+        //
+        dump($options, 'from knp_menu_get');
+        // this builds the root item
+        $menu = $this->factory->createItem('footer', [
+            'listAttributes' => [
+                'class' => "footer-listAttributes-class"
+//                'class' => "list-unstyled ul-class footer-listAttributes-class"
+            ],
+            'attributes' => [
+                'class' => "footer-attributes-class"
+//                'class' => "navbar-nav nav me-auto mb-2 mb-lg-0 list-unstyled footer-attributes-class"
+            ],
+//            NOTE For the root element, only the children attributes are used as only the <ul> element is displayed.
+            'childrenAttributes' => [
+//                'class' => 'list-unstyled ul-rool-class footer-childrenAttributes-class '
+                'class' => 'footer-childrenAttributes-class '
+            ],
+        ]);
+
+        $childOptions = [
+            'class' => 'list-item footer-child'
+        ];
+
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options, $childOptions), KnpMenuEvent::FOOTER_MENU_EVENT);
         return $menu;
     }
 
     public function createSidebarMenu(array $options): ItemInterface
     {
+
+
 //        assert(count($options), "Missing get options");
         $menu = $this->factory->createItem('menuroot',
             [

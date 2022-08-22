@@ -1,6 +1,6 @@
 {#https://getbootstrap.com/docs/5.2/components/navbar/#}
-    {% set menu = knp_menu_get('survos_navbar_menu', [], {'some_option': 'my_value'}) %}
 
+    {% set menu = knp_menu_get('survos_navbar_menu', [], {'some_option': 'my_value'}) %}
     {% set menuHtml = knp_menu_render(menu, {
         template: '@SurvosBootstrap/knp_top_menu.html.twig',
         style: 'navbar'}) %}
@@ -20,5 +20,9 @@
             </form>
         </div>
     </div>
+
+    {{ include('@SurvosBootstrap/sneat/_navbar_auth.html.twig') }}
+{#    {{ include('@SurvosBootstrap/sneat/_navbar_auth_example.html.twig') }}#}
+
 </nav>
 

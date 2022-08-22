@@ -40,9 +40,6 @@
 
 {% block linkElement %}
     {% import "knp_menu.html.twig" as macros %}
-    {% import _self as ownmacro %}
-    {#    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'nav-link depth-' ~ item.level ) }}#}
-
     {%- set classes = item.attribute('class') is not empty ? [item.attribute('class'), ' menu-link'] : [' menu-link'] %}
     <!-- linkElement -->
 
@@ -53,7 +50,7 @@
     {% endif %}
 
     {# there's probably a way to pass this in via render_sidebar.html.twig, but not sure how! #}
-    {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.link_class} ) %}
+    {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.link_class|default('')} ) %}
 
     <a href="{{ item.uri }}" {{ macros.attributes(attributes) }}>
         {{ block('icon') }}
@@ -71,6 +68,7 @@
 {% endblock %}
 
 {% block item %}
+
     {% if item.displayed %}
         {# building the class of the item #}
         {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
@@ -128,6 +126,7 @@
                        class="menu-link menu-toggle {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}">
                         {{ block('icon') }}
                         {{ block('spanElement') }}
+                        {{ block('badge') }}
                         {#                        <span class="end fas fa-angle-left"></span>#}
                     </a>
                 {% else %}
@@ -137,7 +136,7 @@
             {%- endif %}
             {# render the list of children#}
             {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
-            {%- set childrenClasses = childrenClasses|merge(['nav-treeview menu_level_' ~ item.level]) %}
+            {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
             {#            {%- set childrenClasses = childrenClasses|merge(['nav-treeview']) %}#}
             {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
             {%- set listAttributes = listAttributes|merge({'id': ulId, 'class':  matcher.isAncestor(item, options.matchingDepth) ? 'show' : 'collapse' }) %}
@@ -153,10 +152,19 @@
 {% endblock %}
 
 {% block label %}
-    <div data-i18n="Analytics">
-    {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}
-</div>
-{% endblock %}
+    {% set badge = item.extras.badge|default(false) %}
+
+    <div data-i18n="{{ item.label }}" class="position-relative">
+        {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}
+    {% if badge %}
+        <span class="position-absolute top-0 start-120 translate-middle p-1 bg-success border border-light rounded-circle">
+    {% endif %}
+
+    <span class="visually-hidden">New alerts</span>
+  </span>
+    </div>
+
+    {% endblock %}
 
 {% macro badges(item) %}
     {% import _self as selfMacros %}
@@ -168,6 +176,17 @@
         {% endfor %}
     {% endif %}
 {% endmacro %}
+
+{% block badge %}
+    {% set badge = item.extras.badge|default(false) %}
+{% if badge %}
+    {#  moved to label
+        <span class="float-end">
+                {{ component('badge', {style: 'right', color: 'white', text: 'primary', message: badge.value}) }}
+        </span>
+    #}
+    {% endif %}
+{% endblock %}
 
 {% macro badge(badge) %}
     <div class="mm-counter"><span class="badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span></div>

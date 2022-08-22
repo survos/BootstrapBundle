@@ -73,9 +73,8 @@
             {% endblock %}
             <div class="menu-inner-shadow"></div>
 
-            {% set menuCode = 'survos_sidebar_menu' %}
-            {% set menuItem = knp_menu_get(menuCode, []) %}
 
+            {% set menuItem = knp_menu_get(menuCode|default(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::SIDEBAR_MENU_EVENT')), menuItemToSelect|default([]), menuOptions|default([])) %}
             {% block sidebar %}
                 {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
                 debug: app.request.get('debug', false),
@@ -90,8 +89,10 @@
         <!-- Layout container -->
         <div class="layout-page">
             <!-- Navbar -->
+            {% block navbar %}
             {{ include('@SurvosBootstrap/sneat/_navbar.html.twig') }}
 {#            {{ include('@SurvosBootstrap/_navbar.html.twig') }}#}
+            {% endblock %}
 
 
             <div class="content-wrapper">
@@ -113,6 +114,7 @@
                     Body goes here.  In the sneat pages, it appears to always begin with class=row.
                 {% endblock %}
             </div>
+
             {{ include('@SurvosBootstrap/sneat/_footer.html.twig') }}
             <div class="content-backdrop fade"></div>
         </div>

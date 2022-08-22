@@ -1,4 +1,6 @@
 
+
+
 {#                            todo: OptionsResolver for the theme #}
                             {% set menuHtml = knp_menu_render(menuItem, {
                                 "template"      : "@SurvosBootstrap/sneat/knp_menu.html.twig",
@@ -14,12 +16,13 @@
                                 'leaf_class'    : 'menu-item leaf ',
                                 'link_class'    : 'menu-link',
                                 "allow_safe_labels": true,
+
+                                'comment': "This is an custom option passed in knp_menu_render. Only used by our custom renderer.",
                                 'rootAttributes': {
                                     'class': 'menu-inner py-1',
                                     'role': 'menu'
                                 },
 
-                                'comment': "This is an option passed in knp_menu_render",
                             })
                             %}
 {#                            'data-accordian': 'false',#}
