@@ -25,12 +25,15 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class SurvosBootstrapBundle extends AbstractBundle
 {
 
-    protected string $extensionAlias = 'survos_bootstrap';
+//    protected string $extensionAlias = 'survos_bootstrap';
 
     /** @param array<mixed> $config */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         assert(is_array($config['routes']), json_encode($config));
+
+//        $config = $this->getContextOptions($config);
+//        dd($config);
         $builder->register(ContextService::class)
             ->setArgument('$options', $config['options'])
             ->setAutowired(true);
@@ -90,6 +93,7 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->append($this->getRouteAliasesConfig())
             ->append($this->getContextConfig())
             ->scalarNode('auth_menu')->defaultValue(2)->end()
+
             ->end();
         ;
     }
@@ -119,6 +123,11 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->info('name of the logout route')
             ->end()
 
+            ->scalarNode('offcanvas')
+            ->defaultValue('app_settings')
+            ->info('name of the offcanvas route (e.g. a settings sidebar)')
+            ->end()
+
             ->scalarNode('register')
             ->defaultValue('app_register')
             ->info('name of the register route')
@@ -137,9 +146,14 @@ class SurvosBootstrapBundle extends AbstractBundle
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
+            ->scalarNode('offcanvas')->defaultValue('')->info("Offcanvas position (top,bottom,start,end")->end()
+//            ->scalarNode('offcanvas')
+//                ->defaultValue('')
+//                ->info("Offcanvas position (top,bottom,start,end")
+//            ->end()
             ->booleanNode('allow_login')
-            ->defaultValue(false)
-            ->info("Login route exists")
+                ->defaultValue(false)
+                ->info("Login route exists")
             ->end();
         return $rootNode;
     }

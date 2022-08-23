@@ -36,7 +36,7 @@
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             leaf_class: "list-group-item footer-link me-4",
             rootAttributes: {
-                class:"nav nav-justify-end list-group list-group-horizontal"
+                class:"nav nav-justify-end list-group list-group-horizontal dropup"
             },
             style: 'footer',
             something_else: 'test render!!'
@@ -72,6 +72,15 @@
             #}
                         {{ menuHtml|raw }}
         </div>
+
+        {% if hasOffcanvas() %}
+            <button class="btn btn-primary " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings">
+                <span class="bx bx-filter"></span>
+            </button>
+        {% endif %}
+
+
+
 
 
     </div>

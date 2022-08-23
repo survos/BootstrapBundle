@@ -116,12 +116,45 @@
             </div>
 
             {{ include('@SurvosBootstrap/sneat/_footer.html.twig') }}
-            <div class="content-backdrop fade"></div>
+                <div class="content-backdrop fade"></div>
         </div>
         <!-- Content wrapper -->
     </div>
 
+{#        {{ hasOffcanvas() ? 'OC!' : 'no!' }}#}
+{#        {{ dump(theme_options()) }}#}
+{#        {{ theme_option('offcanvas') }}#}
+{#        {{ 'offcanvas'|route_alias }}#}
+{#        {% if theme_option('offcanvas') %}#}
+        {% if hasOffcanvas() %}
+        {% set hincludeUrl = url('offcanvas'|route_alias)  %}
+        <a href="{{ hincludeUrl }}">{{ hincludeUrl }}</a>
 
-    <!-- / Layout page -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettings">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasEndLabel" class="offcanvas-title">Offcanvas End</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                <p class="text-center">
+{#                    {{ c_link(href: , text: 'x') }}#}
+{#                    <a href="{{ hincludeUrl }}">{{ hincludeUrl }}</a>#}
+                    {{ render_hinclude(hincludeUrl, {default: 'Loading...' ~ hincludeUrl}) }}
+                </p>
+                <button type="button" class="btn btn-primary mb-2 d-grid w-100">Continue</button>
+                <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas">
+                    Cancel
+                </button>
+                <div>
+                    This form was loaded via hinclude.
+                    Even better would be to not load it until requested, see https://www.stimulus-components.com/docs/stimulus-content-loader/
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+        <!-- / Layout page -->
 </div>
 {% endblock %}
