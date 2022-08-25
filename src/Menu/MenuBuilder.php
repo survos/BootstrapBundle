@@ -24,13 +24,13 @@ class MenuBuilder
 
     public function createMenu(array $options): ItemInterface
     {
-        $options = (new OptionsResolver())
-            ->setDefaults([
-                'event' => KnpMenuEvent::MENU_EVENT,
-                'name' => KnpMenuEvent::MENU_EVENT
-            ])->resolve($options);
-        $menu = $this->factory->createItem($options['name']);
-        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $options['event']);
+//        $options = (new OptionsResolver())
+//            ->setDefaults([
+//                'event' => KnpMenuEvent::MENU_EVENT,
+//                'name' => KnpMenuEvent::MENU_EVENT
+//            ])->resolve($options);
+        $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::MENU_EVENT );
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $options['event'] ?? KnpMenuEvent::MENU_EVENT);
         return $menu;
     }
 

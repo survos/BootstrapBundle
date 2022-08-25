@@ -8,6 +8,7 @@ use Survos\BootstrapBundle\Components\BadgeComponent;
 use Survos\BootstrapBundle\Components\ButtonComponent;
 use Survos\BootstrapBundle\Components\CardComponent;
 use Survos\BootstrapBundle\Components\DividerComponent;
+use Survos\BootstrapBundle\Components\MenuComponent;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
@@ -30,6 +31,11 @@ class SurvosBootstrapBundle extends AbstractBundle
     /** @param array<mixed> $config */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+//        if ($twig = $container->import('twig')) {
+//            $twig->addGlobal('backend', array(
+//                'title' => $this->container->getParameter('backend.title')
+//            ));
+//        }
         assert(is_array($config['routes']), json_encode($config));
 
 //        $config = $this->getContextOptions($config);
@@ -44,6 +50,8 @@ class SurvosBootstrapBundle extends AbstractBundle
         $builder->register(CardComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(ButtonComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(BadgeComponent::class)->setAutowired(true)->setAutoconfigured(true);
+        $builder->register(MenuComponent::class)->setAutowired(true)->setAutoconfigured(true)
+            ->setArgument('$helper', new Reference('knp_menu.helper'));
 
         $definition = $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)
@@ -69,6 +77,7 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->addTag('knp_menu.menu_builder', ['method' => 'createAuthMenu', 'alias' => KnpMenuEvent::AUTH_MENU_EVENT])
             ->addTag('knp_menu.menu_builder', ['method' => 'createFooterMenu', 'alias' => KnpMenuEvent::FOOTER_MENU_EVENT])
             ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::MENU_EVENT])
+            ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::PAGE_MENU_EVENT])
         ;
 
 

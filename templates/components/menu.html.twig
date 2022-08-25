@@ -1,0 +1,12 @@
+    {#  this fires an event, all listeners/subscribers will respond.  use A #}
+    {% set menuItem = knp_menu_get(menuCode|default(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::SIDEBAR_MENU_EVENT')), menuItemToSelect|default([]), {project: project}) %}
+
+
+    {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
+        debug: app.request.get('debug', false),
+        menuItem: menuItem,
+        project: project,
+        title: project.code
+    }
+    ) }}
+
