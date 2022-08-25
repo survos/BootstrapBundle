@@ -51,7 +51,10 @@ class SurvosBootstrapBundle extends AbstractBundle
         $builder->register(ButtonComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(BadgeComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(MenuComponent::class)->setAutowired(true)->setAutoconfigured(true)
-            ->setArgument('$helper', new Reference('knp_menu.helper'));
+            ->setArgument('$helper', new Reference('knp_menu.helper'))
+            ->setArgument('$factory', new Reference('knp_menu.factory'))
+            ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
+        ;
 
         $definition = $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)
@@ -69,17 +72,17 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->setArgument('$authorizationChecker', new Reference('security.authorization_checker'))
             ;
 
-        $builder->register(MenuBuilder::class)
-            ->setArgument('$factory', new Reference('knp_menu.factory'))
-            ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
-            ->addTag('knp_menu.menu_builder', ['method' => 'createSidebarMenu', 'alias' => KnpMenuEvent::SIDEBAR_MENU_EVENT])
-            ->addTag('knp_menu.menu_builder', ['method' => 'createNavbarMenu', 'alias' => KnpMenuEvent::NAVBAR_MENU_EVENT])
-            ->addTag('knp_menu.menu_builder', ['method' => 'createAuthMenu', 'alias' => KnpMenuEvent::AUTH_MENU_EVENT])
-            ->addTag('knp_menu.menu_builder', ['method' => 'createFooterMenu', 'alias' => KnpMenuEvent::FOOTER_MENU_EVENT])
-            ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::MENU_EVENT])
-            ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::PAGE_MENU_EVENT])
-        ;
-
+//        $builder->register(MenuBuilder::class)
+//            ->setArgument('$factory', new Reference('knp_menu.factory'))
+//            ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
+////            ->addTag('knp_menu.menu_builder', ['method' => 'createSidebarMenu', 'alias' => KnpMenuEvent::SIDEBAR_MENU_EVENT])
+////            ->addTag('knp_menu.menu_builder', ['method' => 'createNavbarMenu', 'alias' => KnpMenuEvent::NAVBAR_MENU_EVENT])
+////            ->addTag('knp_menu.menu_builder', ['method' => 'createAuthMenu', 'alias' => KnpMenuEvent::AUTH_MENU_EVENT])
+////            ->addTag('knp_menu.menu_builder', ['method' => 'createFooterMenu', 'alias' => KnpMenuEvent::FOOTER_MENU_EVENT])
+////            ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::PAGE_MENU_EVENT])
+//            ->addTag('knp_menu.menu_builder', ['method' => 'createMenu', 'alias' => KnpMenuEvent::MENU_EVENT])
+//        ;
+//
 
 //        Survos\BaseBundle\Menu\MenuBuilder:
 //    class: Survos\BaseBundle\Menu\MenuBuilder

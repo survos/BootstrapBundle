@@ -63,7 +63,11 @@
                   </g>
                 </svg>
               </span>
-                    <span class="app-brand-text demo menu-text fw-bolder ms-2">{{ appShortName|default('appShortName') }}</span>
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">
+                        {% block logo_mini %}
+                        {{ appShortName|default('appShortName') }}
+                        {% endblock %}
+                    </span>
                 </a>
 
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -74,13 +78,16 @@
             <div class="menu-inner-shadow"></div>
 
 
-            {% set menuItem = knp_menu_get(menuCode|default(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::SIDEBAR_MENU_EVENT')), menuItemToSelect|default([]), menuOptions|default([])) %}
+{#            {% set menuItem = knp_menu_get(menuCode|default(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::SIDEBAR_MENU_EVENT')), menuItemToSelect|default([]), menuOptions|default([])) %}#}
             {% block sidebar %}
+                {{ component('menu', {type: 'sidebar'}) }}
+{#
                 {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
                 debug: app.request.get('debug', false),
                 menuItem: menuItem
             }
             ) }}
+#}
             {#            {{ include('_sidebar.html.twig') }} #}
             {% endblock %}
         </aside>
@@ -97,7 +104,9 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %}
+                    @todo: breadcrumbs
+{#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %}#}
+                    {% set breadcrumbs = [] %}
                     <h4 class="fw-bold py-3 mb-4">
                     {% for breadcrumb in breadcrumbs|slice(1) %}
                         {% if loop.last %}

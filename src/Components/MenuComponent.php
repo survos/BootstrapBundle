@@ -2,9 +2,14 @@
 
 namespace Survos\BootstrapBundle\Components;
 
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Twig\Helper;
+use Survos\BootstrapBundle\Event\KnpMenuEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 use function Symfony\Component\String\u;
 use Symfony\Component\String\Slugger\AsciiSlugger;
@@ -12,28 +17,69 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 #[AsTwigComponent('menu', template: '@SurvosBootstrap/components/menu.html.twig')]
 class MenuComponent
 {
-    public function __construct(private Helper $helper) {
+    public function __construct(
+        private Helper $helper,
+        private FactoryInterface $factory,
+        private EventDispatcherInterface $eventDispatcher)
+    {
+//    public function __construct(private Helper $helper) {
 
     }
-    public string $title;
-    public string $type;
+    public ?string $title;
+    #[ExposeInTemplate]
+    public string $type; // shortcut
+    public string $eventName; // this is the real event name, but shortcuts are easier.
+    public string $menuAlias = KnpMenuEvent::class;
+    public array $path = [];
+    public array $options = [];
 
-    #[PreMount]
-    public function preMount(array $data): array
+    public ItemInterface $menuItem;
+
+    private const SHORTCUTS = [
+        'sidebar' => KnpMenuEvent::SIDEBAR_MENU_EVENT,
+        'top_navbar' => KnpMenuEvent::NAVBAR_MENU_EVENT,
+        'top_auth' => KnpMenuEvent::AUTH_MENU_EVENT,
+        'footer' => KnpMenuEvent::FOOTER_MENU_EVENT,
+        'top_page' => KnpMenuEvent::PAGE_MENU_EVENT,
+    ];
+
+    public function mount(string $type, array $path=[], array $options=[]) {
+        $this->type = $type;
+        $this->path = $path;
+        $this->options = $options;
+        assert(array_key_exists($type, self::SHORTCUTS), "Invalid menu shortcut $type, use ".join(',', array_keys(self::SHORTCUTS)));
+//        $data['menuCode'] = $shortcuts[$data['type']];
+        $eventName = self::SHORTCUTS[$type];
+
+        $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::MENU_EVENT );
+        $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $eventName);
+        $this->menuItem = $this->helper->get($menu, $path, $options);
+
+
+    }
+
+//    #[PreMount]
+    public function xpreMount(array $data): array
     {
         // validate data
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'title' => null,
             'type' => null,
+            'path' => [],
+            'options' => []
         ]);
 //        $resolver->setRequired('body');
-        $resolver->setAllowedTypes('title', 'string');
-
-        $menuItem = $this->helper->get($data['type']);
+        $resolver->setAllowedTypes('title', ['null', 'string']);
 
 
         $data = $resolver->resolve($data);
+        $type = $data['type'];
+        $data['options']['type'] = $type; // so it's passed into the MenuBuilder, mostly for debugging
+        $data['menuCode'] = KnpMenuEvent::class;
+//        $data['menuAlias'] = KnpMenuEvent::class;
+//        $menuItem = $this->helper->get($shortcuts[$data['type']], $this->path, $data['options']);
+//        $data['menuItem'] = $menuItem;
         return $data;
     }
 

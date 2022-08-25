@@ -29,13 +29,7 @@
             </a>
         {% endblock %}
 
-        {% set menu = knp_menu_get(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::AUTH_MENU_EVENT'),
-            [], {'purpose': 'auth'}) %}
-        {% set menuHtml = knp_menu_render(menu, {
-            attributes: "dropdown-menu dropdown-menu-end",
-            template: '@SurvosBootstrap/knp_top_menu.html.twig',
-            style: 'dropdown'}) %}
-        {{ menuHtml|raw }}
+        {{ component('menu', {type: 'top_auth'}) }}
         {#                {{ dump(menuHtml) }} #}
 
         <ul class="dropdown-menu dropdown-menu-end">

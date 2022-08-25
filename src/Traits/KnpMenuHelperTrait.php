@@ -21,23 +21,32 @@ trait KnpMenuHelperTrait
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function addSubmenu(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
-    {
 
+
+    public function addSubmenu(ItemInterface $menu, ?string $label=null, ?string $icon=null): ItemInterface
+    {
+        // how internal,
+        $subMenu = $this->addMenuItem($menu, [
+            'label' => $label,
+            'icon' => $icon
+        ]);
+        return $subMenu;
     }
     public function addHeading(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
     {
 
     }
+
+    // add returns self, for chaining, by default.  Pass returnItem: true to get the item for adding options.
     public function add(
         ItemInterface $menu,
-        array|RouteParametersInterface|null $rp=null,
         ?string $route=null,
+        array|RouteParametersInterface|null $rp=null,
         ?string $label=null,
         ?string $uri=null,
         ?string $id=null,
-        bool $external = false,
-    ): self // for nesting.  Leaves only, requires route or uri.
+        bool $returnItem = false,
+    ): self|ItemInterface // for nesting.  Leaves only, requires route or uri.
     {
         if (!$id) {
             $id = uniqid();
@@ -59,7 +68,7 @@ trait KnpMenuHelperTrait
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
         $child->setLabel($label);
 
-        return $this;
+        return $returnItem ? $child : $this;
 
     }
     public function addMenuItem(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
@@ -117,8 +126,6 @@ trait KnpMenuHelperTrait
         if ($style = $options['style']) {
             $child->setAttribute('style', $style);
         }
-
-
 
         return $child;
 

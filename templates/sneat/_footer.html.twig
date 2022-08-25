@@ -23,25 +23,6 @@
 
     <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
 
-
-
-        {% set menu = knp_menu_get(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::MENU_EVENT'),
-            [],
-            {
-                'event' : constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::FOOTER_MENU_EVENT')
-            }
-
-        ) %}
-        {% set menuHtml = knp_menu_render(menu, {
-            template: '@SurvosBootstrap/knp_top_menu.html.twig',
-            leaf_class: "list-group-item footer-link me-4",
-            rootAttributes: {
-                class:"nav nav-justify-end list-group list-group-horizontal dropup"
-            },
-            style: 'footer',
-            something_else: 'test render!!'
-        }) %}
-
         <div class="mb-2 mb-md-0">
             {#  sb an unstyled list, or just spans #}
                         ©
@@ -70,7 +51,7 @@
             >Support</a
             >
             #}
-                        {{ menuHtml|raw }}
+                        {{ component('menu', {type: 'footer'}) }}
         </div>
 
         {% if hasOffcanvas() %}
