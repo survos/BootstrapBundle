@@ -57,9 +57,10 @@ trait KnpMenuHelperTrait
             $options['route'] = $route;
         }
         if ($rp) {
-            $options['route_parameters'] = is_array($rp) ? $rp : $rp->getrp();
+            $options['routeParameters'] = is_array($rp) ? $rp : $rp->getrp();
         }
         $child = $menu->addChild($id, $options);
+
         if (!$label) {
             $label = $route; // @todo, be smarter.
         }
