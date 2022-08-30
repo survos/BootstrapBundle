@@ -1,0 +1,10 @@
+{% set currentItem = knp_menu_get_current_item(menuItem) %}
+{% set breadcrumbs = knp_menu_get_breadcrumbs_array(currentItem) %}
+{% for breadcrumb in breadcrumbs|slice(1) %}
+                        {% if loop.last %}
+                            <a href="{{ breadcrumb.uri }}">{{ breadcrumb.label }}</a>
+                        {% else %}
+                            {{ not loop.first ? '/' }}
+                            <span class="text-muted fw-light">{{ breadcrumb.label }} /</span>
+                        {% endif %}
+{% endfor %}
