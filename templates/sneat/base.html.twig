@@ -104,6 +104,17 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
+
+                    {% for type, messages in app.flashes %}
+                        <div class="alert alert-{{ type }}" >
+                            {{ messages|join(',') }}
+                        </div>
+                    {% endfor %}
+
+                    {% for flash in app.flashes %}
+                        {{ dump(flash) }}
+                        {{ component('alert', {message: flash}) }}
+                    {% endfor %}
                     @todo: breadcrumbs
 {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %}#}
                     {% set breadcrumbs = [] %}
