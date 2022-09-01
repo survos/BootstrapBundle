@@ -2,19 +2,27 @@
 namespace Survos\BootstrapBundle\Traits;
 
 use Knp\Menu\ItemInterface;
+use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use function Symfony\Component\String\u;
 
+
 trait KnpMenuHelperTrait
 {
     private ?AuthorizationCheckerInterface $authorizationChecker=null;
 //    private ?ParameterBagInterface $bag=null;
 
-    private ?array $options;
+//    private ?array $options;
     private $childOptions;
+    protected $options; // the options passed to the menu listener, NOT the options passed to the KnpMenu.  Set in supports()
+
+//    public function supports(KnpMenuEvent $event): bool
+//    {
+//        return false;
+//    }
 
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
     {
@@ -59,12 +67,12 @@ trait KnpMenuHelperTrait
         if ($rp) {
             $options['routeParameters'] = is_array($rp) ? $rp : $rp->getrp();
         }
-        $child = $menu->addChild($id, $options);
 
         if (!$label) {
             $label = $route; // @todo, be smarter.
         }
         $options['label'] = $label;
+        $child = $menu->addChild($id, $options);
 
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
         $child->setLabel($label);
