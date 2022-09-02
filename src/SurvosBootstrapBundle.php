@@ -8,6 +8,7 @@ use Survos\BootstrapBundle\Components\BadgeComponent;
 use Survos\BootstrapBundle\Components\ButtonComponent;
 use Survos\BootstrapBundle\Components\CardComponent;
 use Survos\BootstrapBundle\Components\DividerComponent;
+use Survos\BootstrapBundle\Components\MenuBreadcrumbComponent;
 use Survos\BootstrapBundle\Components\MenuComponent;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
@@ -50,11 +51,13 @@ class SurvosBootstrapBundle extends AbstractBundle
         $builder->register(CardComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(ButtonComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(BadgeComponent::class)->setAutowired(true)->setAutoconfigured(true);
-        $builder->register(MenuComponent::class)->setAutowired(true)->setAutoconfigured(true)
-            ->setArgument('$helper', new Reference('knp_menu.helper'))
-            ->setArgument('$factory', new Reference('knp_menu.factory'))
-            ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
-        ;
+        foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
+            $builder->register($c)->setAutowired(true)->setAutoconfigured(true)
+                ->setArgument('$helper', new Reference('knp_menu.helper'))
+                ->setArgument('$factory', new Reference('knp_menu.factory'))
+                ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
+            ;
+        }
 
         $definition = $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)

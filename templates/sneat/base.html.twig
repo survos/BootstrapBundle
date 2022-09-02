@@ -7,7 +7,7 @@
 
             {% block sidebar_logo %}
             <div class="app-brand demo">
-                <a href="index.html" class="app-brand-link">
+                <a href="{{ path('home'|route_alias) }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                         width="25"
@@ -78,17 +78,8 @@
             <div class="menu-inner-shadow"></div>
 
 
-{#            {% set menuItem = knp_menu_get(menuCode|default(constant('Survos\\BootstrapBundle\\Event\\KnpMenuEvent::SIDEBAR_MENU_EVENT')), menuItemToSelect|default([]), menuOptions|default([])) %}#}
             {% block sidebar %}
                 {{ component('menu', {type: 'sidebar'}) }}
-{#
-                {{ include('@SurvosBootstrap/sneat/render_sidebar_menu.html.twig',  {
-                debug: app.request.get('debug', false),
-                menuItem: menuItem
-            }
-            ) }}
-#}
-            {#            {{ include('_sidebar.html.twig') }} #}
             {% endblock %}
         </aside>
 
@@ -96,10 +87,10 @@
         <div class="layout-page">
             <!-- Navbar -->
             {% block navbar %}
-            {{ include('@SurvosBootstrap/sneat/_navbar.html.twig') }}
+            {% embed('@SurvosBootstrap/sneat/_navbar.html.twig') %}
 {#            {{ include('@SurvosBootstrap/_navbar.html.twig') }}#}
+            {% endembed %}
             {% endblock %}
-
 
             <div class="content-wrapper">
                 <!-- Content -->
@@ -117,17 +108,11 @@
                     {% endfor %}
                     @todo: breadcrumbs
 {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %}#}
-                    {% set breadcrumbs = [] %}
+{#                    {% set breadcrumbs = [] %}#}
                     <h4 class="fw-bold py-3 mb-4">
-                    {% for breadcrumb in breadcrumbs|slice(1) %}
-                        {% if loop.last %}
-                            <a href="{{ breadcrumb.uri }}">{{ breadcrumb.label }}</a>
-                        {% else %}
-                            {{ not loop.first ? '/' }}
-                            <span class="text-muted fw-light">{{ breadcrumb.label }} /</span>
-                            {% endif %}
-{#                         Perfect Scrollbar#}
-                    {% endfor %}
+                        {% block breadcrumbs %}
+                        {{ component('menu_breadcrumb', {type: 'sidebar', project: project|default(null)}) }}
+                        {% endblock %}
                     </h4>
                     {% block body %}
                     Body goes here.  In the sneat pages, it appears to always begin with class=row.

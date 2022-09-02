@@ -18,8 +18,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 {#            {{ menuHtml|raw }}#}
-
+            {% block top_navbar_menu %}
             {{ component('menu', {type: 'top_navbar'}) }}
+            {% endblock %}
             {% block search %}
             <form class="d-flex" onsubmit="return false">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

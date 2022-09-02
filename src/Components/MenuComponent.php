@@ -18,9 +18,9 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 class MenuComponent
 {
     public function __construct(
-        private Helper $helper,
-        private FactoryInterface $factory,
-        private EventDispatcherInterface $eventDispatcher)
+        protected Helper $helper,
+        protected FactoryInterface $factory,
+        protected EventDispatcherInterface $eventDispatcher)
     {
 //    public function __construct(private Helper $helper) {
 
@@ -35,7 +35,7 @@ class MenuComponent
 
     public ItemInterface $menuItem;
 
-    private const SHORTCUTS = [
+    protected const SHORTCUTS = [
         'sidebar' => KnpMenuEvent::SIDEBAR_MENU_EVENT,
         'top_navbar' => KnpMenuEvent::NAVBAR_MENU_EVENT,
         'top_auth' => KnpMenuEvent::AUTH_MENU_EVENT,
