@@ -1,13 +1,13 @@
 {% extends "@SurvosBootstrap/sneat/shell.html.twig" %}
 
 {% block body_content %}
-<div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
-            {% block sidebar_logo %}
-            <div class="app-brand demo">
-                <a href="{{ path('home'|route_alias) }}" class="app-brand-link">
+                {% block sidebar_logo %}
+                    <div class="app-brand demo">
+                        <a href="{{ path('home'|route_alias) }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                         width="25"
@@ -63,102 +63,118 @@
                   </g>
                 </svg>
               </span>
-                    <span class="app-brand-text demo menu-text fw-bolder ms-2">
+                            <span class="app-brand-text demo menu-text fw-bolder ms-2">
                         {% block logo_mini %}
-                        {{ appShortName|default('appShortName') }}
+                            {{ appShortName|default('appShortName') }}
                         {% endblock %}
                     </span>
-                </a>
+                        </a>
 
-                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
-                </a>
-            </div>
-            {% endblock %}
-            <div class="menu-inner-shadow"></div>
-
-
-            {% block sidebar %}
-                {{ component('menu', {type: 'sidebar'}) }}
-            {% endblock %}
-        </aside>
-
-        <!-- Layout container -->
-        <div class="layout-page">
-            <!-- Navbar -->
-            {% block navbar %}
-            {% embed('@SurvosBootstrap/sneat/_navbar.html.twig') %}
-{#            {{ include('@SurvosBootstrap/_navbar.html.twig') }}#}
-            {% endembed %}
-            {% endblock %}
-
-            <div class="content-wrapper">
-                <!-- Content -->
-                <div class="container-xxl flex-grow-1 container-p-y">
-
-                    {% for type, messages in app.flashes %}
-                        <div class="alert alert-{{ type }}" >
-                            {{ messages|join(',') }}
-                        </div>
-                    {% endfor %}
-
-                    {% for flash in app.flashes %}
-                        {{ dump(flash) }}
-                        {{ component('alert', {message: flash}) }}
-                    {% endfor %}
-                    @todo: breadcrumbs
-{#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %}#}
-{#                    {% set breadcrumbs = [] %}#}
-                    <h4 class="fw-bold py-3 mb-4">
-                        {% block breadcrumbs %}
-                        {{ component('menu_breadcrumb', {type: 'sidebar', project: project|default(null)}) }}
-                        {% endblock %}
-                    </h4>
-                    {% block body %}
-                    Body goes here.  In the sneat pages, it appears to always begin with class=row.
+                        <a href="javascript:void(0);"
+                           class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                        </a>
+                    </div>
                 {% endblock %}
-            </div>
+                <div class="menu-inner-shadow"></div>
 
-            {{ include('@SurvosBootstrap/sneat/_footer.html.twig') }}
-                <div class="content-backdrop fade"></div>
-        </div>
-        <!-- Content wrapper -->
-    </div>
 
-{#        {{ hasOffcanvas() ? 'OC!' : 'no!' }}#}
-{#        {{ dump(theme_options()) }}#}
-{#        {{ theme_option('offcanvas') }}#}
-{#        {{ 'offcanvas'|route_alias }}#}
-{#        {% if theme_option('offcanvas') %}#}
-        {% if hasOffcanvas() %}
-        {% set hincludeUrl = url('offcanvas'|route_alias)  %}
-        <a href="{{ hincludeUrl }}">{{ hincludeUrl }}</a>
+                {% block sidebar %}
+                    {{ component('menu', {type: 'sidebar'}) }}
+                {% endblock %}
+            </aside>
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettings">
-            <div class="offcanvas-header">
-                <h5 id="offcanvasEndLabel" class="offcanvas-title">Offcanvas End</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body my-auto mx-0 flex-grow-0">
-                <p class="text-center">
-{#                    {{ c_link(href: , text: 'x') }}#}
-{#                    <a href="{{ hincludeUrl }}">{{ hincludeUrl }}</a>#}
-                    {{ render_hinclude(hincludeUrl, {default: 'Loading...' ~ hincludeUrl}) }}
-                </p>
-                <button type="button" class="btn btn-primary mb-2 d-grid w-100">Continue</button>
-                <button type="button" class="btn btn-outline-secondary d-grid w-100" data-bs-dismiss="offcanvas">
-                    Cancel
-                </button>
-                <div>
-                    This form was loaded via hinclude.
-                    Even better would be to not load it until requested, see https://www.stimulus-components.com/docs/stimulus-content-loader/
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                {% block navbar %}
+                    {% embed('@SurvosBootstrap/sneat/_navbar.html.twig') %}
+                        {#            {{ include('@SurvosBootstrap/_navbar.html.twig') }} #}
+                    {% endembed %}
+                {% endblock %}
+
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+
+                        {% for type, messages in app.flashes %}
+                            <div class="alert alert-{{ type }}">
+                                {{ messages|join(',') }}
+                            </div>
+                        {% endfor %}
+
+                        {% for flash in app.flashes %}
+                            {{ dump(flash) }}
+                            {{ component('alert', {message: flash}) }}
+                        {% endfor %}
+                        {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %} #}
+                        {#                    {% set breadcrumbs = [] %} #}
+                        <h4 class="fw-bold py-3 mb-4">
+                            {% block breadcrumbs %}
+                                {{ component('menu_breadcrumb', {type: 'sidebar', project: project|default(null)}) }}
+                            {% endblock %}
+                        </h4>
+                        {% block body %}
+                            Body goes here.  In the sneat pages, it appears to always begin with class=row.
+                        {% endblock %}
+                    </div>
+
+                    {% block footer %}
+                        {% embed('@SurvosBootstrap/sneat/_footer.html.twig') %}
+                            {% block footer_menu %}
+                                {# dispatch a menu event to populate the footer menu.  Overwrite this block to customize with options or a custom menu event #}
+                                {{ component('menu', {
+                                    type: 'footer',
+                                    options: {
+                                    }
+                                }) }}
+                            {% endblock %}
+                        {% endembed %}
+                    {% endblock %}
+
+                    <div class="content-backdrop fade"></div>
                 </div>
+                <!-- Content wrapper -->
             </div>
-        </div>
-        {% endif %}
 
-    </div>
+            {#        {{ hasOffcanvas() ? 'OC!' : 'no!' }} #}
+            {#        {{ dump(theme_options()) }} #}
+            {#        {{ theme_option('offcanvas') }} #}
+            {#        {{ 'offcanvas'|route_alias }} #}
+            {#        {% if theme_option('offcanvas') %} #}
+            {% if hasOffcanvas() %}
+                {% set hincludeUrl = url('offcanvas'|route_alias) %}
+                <a href="{{ hincludeUrl }}">{{ hincludeUrl }}</a>
+
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasSettings"
+                     aria-labelledby="offcanvasSettings">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasEndLabel" class="offcanvas-title">Offcanvas End</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body my-auto mx-0 flex-grow-0">
+                        <p class="text-center">
+                            {#                    {{ c_link(href: , text: 'x') }} #}
+                            {#                    <a href="{{ hincludeUrl }}">{{ hincludeUrl }}</a> #}
+                            {{ render_hinclude(hincludeUrl, {default: 'Loading...' ~ hincludeUrl}) }}
+                        </p>
+                        <button type="button" class="btn btn-primary mb-2 d-grid w-100">Continue</button>
+                        <button type="button" class="btn btn-outline-secondary d-grid w-100"
+                                data-bs-dismiss="offcanvas">
+                            Cancel
+                        </button>
+                        <div>
+                            This form was loaded via hinclude.
+                            Even better would be to not load it until requested, see
+                            https://www.stimulus-components.com/docs/stimulus-content-loader/
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
 
         <!-- / Layout page -->
-</div>
+    </div>
 {% endblock %}

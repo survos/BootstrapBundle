@@ -51,7 +51,9 @@
             >Support</a
             >
             #}
-                        {{ component('menu', {type: 'footer'}) }}
+                        {% block footer_menu %}
+{#            {{ component('menu', {type: 'footer'}) }}#}
+                        {% endblock %}
         </div>
 
         {% if hasOffcanvas() %}
