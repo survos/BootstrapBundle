@@ -53,6 +53,7 @@ trait KnpMenuHelperTrait
         ?string $label=null,
         ?string $uri=null,
         ?string $id=null,
+        bool $external = false,
         bool $returnItem = false,
     ): self|ItemInterface // for nesting.  Leaves only, requires route or uri.
     {
@@ -73,6 +74,10 @@ trait KnpMenuHelperTrait
         }
         $options['label'] = $label;
         $child = $menu->addChild($id, $options);
+        if ($external) {
+            $child->setLinkAttribute('target',  '_blank');
+            $options['icon'] = 'fas fa-external-alt';
+        }
 
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
         $child->setLabel($label);
