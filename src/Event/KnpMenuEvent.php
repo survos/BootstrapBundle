@@ -42,6 +42,12 @@ class KnpMenuEvent extends Event
         return $this->options;
     }
 
+    public function getOption(string $key): mixed
+    {
+        // @todo: validate with keys from $config
+        return $this->options[$key];
+    }
+
     public function getChildOptions(): array
     {
         return $this->childOptions;

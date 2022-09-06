@@ -53,6 +53,7 @@ class SurvosBootstrapBundle extends AbstractBundle
         $builder->register(BadgeComponent::class)->setAutowired(true)->setAutoconfigured(true);
         foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
             $builder->register($c)->setAutowired(true)->setAutoconfigured(true)
+                ->setArgument('$menuOptions', $config['menu_options'])
                 ->setArgument('$helper', new Reference('knp_menu.helper'))
                 ->setArgument('$factory', new Reference('knp_menu.factory'))
                 ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
@@ -108,7 +109,12 @@ class SurvosBootstrapBundle extends AbstractBundle
             ->append($this->getRouteAliasesConfig())
             ->append($this->getContextConfig())
             ->scalarNode('auth_menu')->defaultValue(2)->end()
-
+            ->arrayNode('menu_options')
+//            ->isRequired()
+//            ->requiresAtLeastOneElement()
+            ->useAttributeAsKey('name')
+            ->prototype('scalar')->end()
+            ->end()
             ->end();
         ;
     }

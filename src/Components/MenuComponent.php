@@ -18,6 +18,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 class MenuComponent
 {
     public function __construct(
+        private array $menuOptions,
         protected Helper $helper,
         protected FactoryInterface $factory,
         protected EventDispatcherInterface $eventDispatcher)
@@ -43,15 +44,24 @@ class MenuComponent
         'top_page' => KnpMenuEvent::PAGE_MENU_EVENT,
     ];
 
-    public function mount(string $type, array $path=[], array $options=[]) {
+    public function mount(string $type, ?string $eventName=null, array $path=[], array $options=[]) {
         $this->type = $type;
         $this->path = $path;
         $this->options = $options;
-        assert(array_key_exists($type, self::SHORTCUTS), "Invalid menu shortcut $type, use ".join(',', array_keys(self::SHORTCUTS)));
+        assert(array_key_exists($type, self::SHORTCUTS),
+            "Invalid menu shortcut $type, use ".join(',', array_keys(self::SHORTCUTS)));
 //        $data['menuCode'] = $shortcuts[$data['type']];
-        $eventName = self::SHORTCUTS[$type];
+        if (!$eventName) {
+            $eventName = self::SHORTCUTS[$type];
+        }
 
         $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::MENU_EVENT );
+
+        $options = (new OptionsResolver())
+            ->setDefaults($this->menuOptions)
+            ->resolve($options);
+
+//        dd($this->menuOptions, $options);
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $eventName);
         $this->menuItem = $this->helper->get($menu, $path, $options);
 

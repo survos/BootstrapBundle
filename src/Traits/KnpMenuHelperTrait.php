@@ -17,7 +17,6 @@ trait KnpMenuHelperTrait
 
 //    private ?array $options;
     private $childOptions;
-    protected $options; // the options passed to the menu listener, NOT the options passed to the KnpMenu.  Set in supports()
 
 //    public function supports(KnpMenuEvent $event): bool
 //    {
