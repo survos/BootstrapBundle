@@ -320,9 +320,6 @@
 
         </table>
     {% endif %}
-    {#
-    {{ options.data|length ? tabledump(options.data) }}
-    #}
 {% endmacro %}
 
 {% macro val_or_array_to_table(array, popup, label, class) %}
@@ -531,8 +528,6 @@
     {% if options.workflow %}
         {# argh, it'd be nice to get this from the workflow directly, because getting the metadata requires an object, not a string
     <b>Transition Key: </b>
-        {{ dump(options.workflow.name) }}
-        {{ dump(options.workflow.definition) }}
         #}
     {% for transition in options.workflow.definition.transitions %}
         {% set currentMarking = app.request.get('markings') %} {# hack! #}

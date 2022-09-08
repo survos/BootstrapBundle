@@ -23,7 +23,8 @@ class KnpMenuEvent extends Event
         protected ItemInterface $menu,
         protected FactoryInterface $factory,
         private array $options = [],
-        private array $childOptions = [])
+        private array $childOptions = [],
+    )
     {
     }
 
@@ -45,6 +46,7 @@ class KnpMenuEvent extends Event
     public function getOption(string $key): mixed
     {
         // @todo: validate with keys from $config
+        assert(array_key_exists($key, $this->options), "$key is invalid, use " . join(', ', $this->options));
         return $this->options[$key];
     }
 

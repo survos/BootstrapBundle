@@ -61,7 +61,6 @@ class MenuComponent
             ->setDefaults($this->menuOptions)
             ->resolve($options);
 
-//        dd($this->menuOptions, $options);
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $eventName);
         $this->menuItem = $this->helper->get($menu, $path, $options);
 

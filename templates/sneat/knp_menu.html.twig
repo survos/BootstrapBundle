@@ -108,7 +108,6 @@
         {% import _self as knp_menu %}
         <li{{ knp_menu.attributes(attributes) }} >
             {# if uri is set, it must be a leaf. #}
-            {#            {{ dump(item) }}#}
             {% set ulId = item.name %}
             {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
                 {{ block('linkElement') }}

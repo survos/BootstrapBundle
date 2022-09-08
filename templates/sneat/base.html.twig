@@ -104,7 +104,6 @@
                         {% endfor %}
 
                         {% for flash in app.flashes %}
-                            {{ dump(flash) }}
                             {{ component('alert', {message: flash}) }}
                         {% endfor %}
                         {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %} #}
@@ -138,7 +137,6 @@
             </div>
 
             {#        {{ hasOffcanvas() ? 'OC!' : 'no!' }} #}
-            {#        {{ dump(theme_options()) }} #}
             {#        {{ theme_option('offcanvas') }} #}
             {#        {{ 'offcanvas'|route_alias }} #}
             {#        {% if theme_option('offcanvas') %} #}

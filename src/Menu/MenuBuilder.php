@@ -82,7 +82,6 @@ class MenuBuilder
 //        return $menu;
 //
 //
-//        dump($options, 'from knp_menu_get');
 //        // this builds the root item
 //        $menu = $this->factory->createItem('footer', [
 //            'listAttributes' => [
