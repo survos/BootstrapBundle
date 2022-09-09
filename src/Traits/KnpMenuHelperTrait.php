@@ -18,10 +18,10 @@ trait KnpMenuHelperTrait
 //    private ?array $options;
     private $childOptions;
 
-//    public function supports(KnpMenuEvent $event): bool
-//    {
-//        return false;
-//    }
+    public function supports(KnpMenuEvent $event): bool
+    {
+        return true;
+    }
 
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
     {
@@ -39,8 +39,12 @@ trait KnpMenuHelperTrait
         ]);
         return $subMenu;
     }
-    public function addHeading(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
+    public function addHeading(ItemInterface $menu, string $label, string $icon=null): void
     {
+        $this->addMenuItem($menu, [
+            'label' => $label,
+            'icon' => $icon
+        ]);
 
     }
 
@@ -52,6 +56,7 @@ trait KnpMenuHelperTrait
         ?string $label=null,
         ?string $uri=null,
         ?string $id=null,
+        ?string $icon=null,
         bool $external = false,
         bool $returnItem = false,
     ): self|ItemInterface // for nesting.  Leaves only, requires route or uri.
@@ -66,6 +71,9 @@ trait KnpMenuHelperTrait
         }
         if ($rp) {
             $options['routeParameters'] = is_array($rp) ? $rp : $rp->getrp();
+        }
+        if ($icon) {
+            $options['icon'] = $icon;
         }
 
         if (!$label) {

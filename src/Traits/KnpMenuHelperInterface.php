@@ -14,7 +14,7 @@ interface KnpMenuHelperInterface
 {
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker);
     public function addSubmenu(ItemInterface $menu, ?string $label=null, ?string $icon=null): ItemInterface;
-    public function addHeading(ItemInterface $menu, array $options, array $extra=[]): ItemInterface;
+    public function addHeading(ItemInterface $menu, string $label, string $icon=null): void;
     public function add(
         ItemInterface $menu,
         ?string $route=null,
@@ -22,6 +22,7 @@ interface KnpMenuHelperInterface
         ?string $label=null,
         ?string $uri=null,
         ?string $id=null,
+        ?string $icon=null,
         bool $returnItem = false,
     ): self|ItemInterface;
 

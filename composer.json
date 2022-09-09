@@ -19,7 +19,8 @@
         "symfony/security-bundle": "^6.1",
         "symfony/ux-twig-component": "^2.3",
         "twig/string-extra": "^3.4",
-        "twig/twig": "^3.4"
+        "twig/twig": "^3.4",
+        "survos/core-bundle": "^1.0"
     },
     "autoload": {
         "psr-4": {

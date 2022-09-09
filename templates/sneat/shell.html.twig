@@ -33,7 +33,9 @@
 
 
 </head>
-<body>
+{#  @todo: configure from bundle, especially turbo #}
+<body data-turbo='false'  class="{% block body_class %} env-{{ app.environment }}"  {% endblock %}>
+
 {% block body_content %}
 
 {% endblock %}
