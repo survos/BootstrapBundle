@@ -134,10 +134,8 @@ class SurvosBootstrapBundle extends AbstractBundle
                 ->info('name of the homepage route')
                 ->end()
 
-            ->scalarNode('login')
-            ->defaultValue('app_login')
-            ->info('name of the login')
-            ->end()
+            ->scalarNode('login')->defaultValue('app_login')->info('name of the login')->end()
+            ->scalarNode('homepage')->defaultValue('app_homepage')->info('name of the home routes')->end()
 
             ->scalarNode('logout')
             ->defaultValue('app_logout')

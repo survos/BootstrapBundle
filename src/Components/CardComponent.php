@@ -14,6 +14,7 @@ class CardComponent
     public ?string $alt;
     public ?string $body;
     public ?string $title;
+    public ?string $footer;
     public ?string $text;
     public ?array $links;
 
@@ -27,6 +28,7 @@ class CardComponent
             'alt' => null,
             'body' => null,
             'title' => null,
+            'footer' => null,
             'text' => null,
             'links' => null,
             'h' => null

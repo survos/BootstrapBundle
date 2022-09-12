@@ -12,7 +12,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 class AccordionComponent
 {
     public string $header;
-    public ?string $body;
+    public ?string $accordion_body;
     public ?string $bsParent;
     public ?string $id;
     public bool $open;
@@ -25,7 +25,7 @@ class AccordionComponent
         $resolver->setDefaults([
             'header' => null,
             'id' => null,
-            'body' => null,
+            'accordion_body' => null,
             'bsParent' => null,
             'open' => false,
         ]);

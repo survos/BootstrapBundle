@@ -110,7 +110,7 @@
                         {#                    {% set breadcrumbs = [] %} #}
                         <h4 class="fw-bold py-3 mb-4">
                             {% block breadcrumbs %}
-                                {{ component('menu_breadcrumb', {type: 'sidebar', project: project|default(null)}) }}
+                                {{ component('menu_breadcrumb', {type: 'sidebar'}) }}
                             {% endblock %}
                         </h4>
                         {% block body %}

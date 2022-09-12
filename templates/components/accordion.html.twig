@@ -6,8 +6,8 @@
 
 <div id="accordion{{ id }}" class="accordion-collapse collapse {{ open ? 'show' }}" {{ bsParent ? 'data-bs-parent="%s"'|format(bsParent) }}>
     <div class="accordion-body">
-        {% block body %}
-        {{ body }}
+        {% block accordion_body %}
+        {{ accordion_body }}
         {% endblock %}
     </div>
 </div>
