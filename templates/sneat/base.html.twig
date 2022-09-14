@@ -88,6 +88,7 @@
             <div class="layout-page">
                 <!-- Navbar -->
                 {% block navbar %}
+
                     {% embed('@SurvosBootstrap/sneat/_navbar.html.twig') %}
                         {#            {{ include('@SurvosBootstrap/_navbar.html.twig') }} #}
                     {% endembed %}
@@ -109,10 +110,20 @@
                         {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %} #}
                         {#                    {% set breadcrumbs = [] %} #}
                         <h4 class="fw-bold py-3 mb-4">
+                            Breadcrumbs
                             {% block breadcrumbs %}
+                                {{ _self }}
                                 {{ component('menu_breadcrumb', {type: 'sidebar'}) }}
                             {% endblock %}
                         </h4>
+
+                        <div class="fw-bold py-3 mb-4">
+                            Top of page menu
+                            {% block top_navbar_menu %}
+                                {{ component('menu', {type: 'top_navbar'}) }}
+                            {% endblock %}
+                        </div>
+
                         {% block body %}
                             Body goes here.  In the sneat pages, it appears to always begin with class=row.
                         {% endblock %}

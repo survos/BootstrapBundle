@@ -1,6 +1,6 @@
 <?php
 
-namespace Survos\BaseBundle\Traits;
+namespace Survos\BootstrapBundle\Traits;
 
 interface QueryBuilderHelperInterface
 {

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Survos\BaseBundle\Traits;
+namespace Survos\BootstrapBundle\Traits;
 
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
