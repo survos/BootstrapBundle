@@ -10,6 +10,7 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class CardComponent
 {
     public ?string $image;
+    public ?string $icon;
     public ?int $h;
     public ?string $alt;
     public ?string $body;
@@ -25,6 +26,7 @@ class CardComponent
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
             'image' => null,
+            'icon' => null,
             'alt' => null,
             'body' => null,
             'title' => null,

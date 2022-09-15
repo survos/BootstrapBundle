@@ -43,6 +43,7 @@ trait KnpMenuHelperTrait
     {
         $this->addMenuItem($menu, [
             'label' => $label,
+            'style' => 'header',
             'icon' => $icon
         ]);
 

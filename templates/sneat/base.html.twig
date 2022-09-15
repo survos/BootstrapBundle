@@ -7,7 +7,7 @@
 
                 {% block sidebar_logo %}
                     <div class="app-brand demo">
-                        <a href="{{ path('home'|route_alias) }}" class="app-brand-link">
+                        <a href="{% block logo_path path('home'|route_alias)  %}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <svg
                         width="25"
@@ -110,17 +110,14 @@
                         {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %} #}
                         {#                    {% set breadcrumbs = [] %} #}
                         <h4 class="fw-bold py-3 mb-4">
-                            Breadcrumbs
                             {% block breadcrumbs %}
-                                {{ _self }}
                                 {{ component('menu_breadcrumb', {type: 'sidebar'}) }}
                             {% endblock %}
                         </h4>
 
                         <div class="fw-bold py-3 mb-4">
-                            Top of page menu
                             {% block top_navbar_menu %}
-                                {{ component('menu', {type: 'top_navbar'}) }}
+                                {{ component('menu', {type: 'top_page'}) }}
                             {% endblock %}
                         </div>
 
