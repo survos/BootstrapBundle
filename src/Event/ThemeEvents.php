@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Survos\BaseBundle\Event;
+namespace Survos\BootstrapBundle\Event;
 
 /**
  * Holds all events used by the theme
