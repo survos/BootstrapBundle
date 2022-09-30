@@ -9,17 +9,18 @@
 
 namespace Survos\BootstrapBundle\Menu;
 
-use Knp\Menu\ItemInterface;
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MenuBuilder
 {
-
-    public function __construct(private FactoryInterface $factory, private EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        private FactoryInterface $factory,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
 //    public function createMenu(array $options): ItemInterface
@@ -181,5 +182,4 @@ class MenuBuilder
 //
 //        return $menu;
 //    }
-
 }

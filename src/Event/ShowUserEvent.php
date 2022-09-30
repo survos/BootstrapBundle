@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Survos\BaseBundle\Event;
+namespace Survos\BootstrapBundle\Event;
 
-//use Survos\BaseBundle\Model\NavBarUserLink;
-//use Survos\BaseBundle\Model\UserInterface;
+//use Survos\BootstrapBundle\Model\NavBarUserLink;
+//use Survos\BootstrapBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -22,10 +22,12 @@ abstract class ShowUserEvent extends ThemeEvent
      * @var UserInterface
      */
     private $user;
+
     /**
      * @var bool
      */
     private $showProfileLink = true;
+
     /**
      * @var bool
      */
@@ -44,9 +46,7 @@ abstract class ShowUserEvent extends ThemeEvent
         return $this;
     }
 
-    /**
-     * @return UserInterface|null
-     */
+
     public function getUser(): ?UserInterface
     {
         return $this->user;
@@ -68,16 +68,13 @@ abstract class ShowUserEvent extends ThemeEvent
         return $this;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isShowProfileLink(): bool
     {
         return $this->showProfileLink;
     }
 
     /**
-     * @param bool $showProfileLink
      * @return ShowUserEvent
      */
     public function setShowProfileLink(bool $showProfileLink)
@@ -87,16 +84,13 @@ abstract class ShowUserEvent extends ThemeEvent
         return $this;
     }
 
-    /**
-     * @return bool
-     */
+
     public function isShowLogoutLink(): bool
     {
         return $this->showLogoutLink;
     }
 
     /**
-     * @param bool $showLogoutLink
      * @return ShowUserEvent
      */
     public function setShowLogoutLink(bool $showLogoutLink)

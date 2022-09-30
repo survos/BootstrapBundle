@@ -1,6 +1,6 @@
 <?php
 
-namespace Survos\BaseBundle\Traits;
+namespace Survos\BootstrapBundle\Traits;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -13,7 +13,7 @@ trait CreateFromTrait
             ->enableExceptionOnInvalidIndex()
             ->getPropertyAccessor();
 
-        foreach ($data as $var=>$value) {
+        foreach ($data as $var => $value) {
             $propertyAccessor->setValue($obj, $var, $value);
         }
 
@@ -28,11 +28,12 @@ trait CreateFromTrait
         foreach ($reflectionParameters as $reflectionParameter) {
             $parameterName = $reflectionParameter->getName();
             # In case an array key is not found in the constructor, throw an exception
-            if (!\array_key_exists($parameterName, $data) && !$reflectionParameter->isOptional()) {
+            if (! \array_key_exists($parameterName, $data) && ! $reflectionParameter->isOptional()) {
                 # In a real project, create your own custom exception class
                 throw new \LogicException(
-                    'Unable to instantiate \'' . static::class . '\' from an array, argument ' . $parameterName .' is missing.
-                     Only the following arguments are available: ' . implode(', ', \array_keys($data)));
+                    'Unable to instantiate \'' . static::class . '\' from an array, argument ' . $parameterName . ' is missing.
+                     Only the following arguments are available: ' . implode(', ', \array_keys($data))
+                );
             }
             $parameter = $data[$parameterName] ?? $reflectionParameter->getDefaultValue();
             if (\is_array($parameter) && $reflectionParameter->isVariadic()) {
