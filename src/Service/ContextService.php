@@ -1,12 +1,12 @@
 <?php
+
 // wrapper around a public class that can be used from twig or php
 
 namespace Survos\BootstrapBundle\Service;
 
-
 class ContextService
 {
-    const THEME_COLORS = [
+    public const THEME_COLORS = [
         "primary",
         "secondary",
         "success",
@@ -14,11 +14,10 @@ class ContextService
         "warning",
         "danger",
         "light",
-        "dark"];
+        "dark", ];
 
     public function __construct(private array $options = [])
     {
-
     }
 
     public function getOption(string $option): mixed
@@ -30,6 +29,4 @@ class ContextService
     {
         return $this->options;
     }
-
-
 }

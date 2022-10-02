@@ -9,16 +9,12 @@ namespace Survos\BootstrapBundle\Helper;
 
 class ContextHelper extends \ArrayObject
 {
-    /**
-     * @return array
-     */
     public function getOptions(): array
     {
         return $this->getArrayCopy();
     }
 
     /**
-     * @param string $name
      * @param mixed $value
      * @return $this
      */
@@ -29,17 +25,13 @@ class ContextHelper extends \ArrayObject
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
+
     public function hasOption(string $name): bool
     {
         return $this->offsetExists($name);
     }
 
     /**
-     * @param string $name
      * @param mixed $default
      * @return mixed|null
      */
