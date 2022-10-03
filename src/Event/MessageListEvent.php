@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Survos\BaseBundle\Event;
+namespace Survos\BootstrapBundle\Event;
 
-use Survos\BaseBundle\Model\MessageInterface;
+use Survos\BootstrapBundle\Model\MessageInterface;
 
 /**
  * The MessageListEvent collects all MessageInterface objects that should be rendered in the messages section.

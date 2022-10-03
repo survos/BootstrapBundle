@@ -11,7 +11,9 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class AlertComponent
 {
     public string $type;
+
     public string $message;
+
     public bool $dismissible;
 
     #[PreMount]
@@ -19,12 +21,14 @@ class AlertComponent
     {
         // validate data
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(['type' => 'success', 'dismissible' => false]);
+        $resolver->setDefaults([
+            'type' => 'success',
+            'dismissible' => false,
+        ]);
         $resolver->setAllowedValues('type', ContextService::THEME_COLORS);
         $resolver->setRequired('message');
         $resolver->setAllowedTypes('message', 'string');
 
         return $resolver->resolve($data);
     }
-
 }

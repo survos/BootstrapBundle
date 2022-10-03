@@ -3,18 +3,22 @@
 namespace Survos\BootstrapBundle\Components;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
 use function Symfony\Component\String\u;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 
 #[AsTwigComponent('accordion', template: '@SurvosBootstrap/components/accordion.html.twig')]
 class AccordionComponent
 {
     public string $header;
+
     public ?string $accordion_body;
+
     public ?string $bsParent;
+
     public ?string $id;
+
     public bool $open;
 
     #[PreMount]
@@ -29,7 +33,7 @@ class AccordionComponent
             'bsParent' => null,
             'open' => false,
         ]);
-//        $resolver->setRequired('body');
+        //        $resolver->setRequired('body');
         $resolver->setAllowedTypes('header', 'string');
 
         $data = $resolver->resolve($data);
@@ -39,5 +43,4 @@ class AccordionComponent
         }
         return $data;
     }
-
 }
