@@ -10,13 +10,21 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class CardComponent
 {
     public ?string $image;
+
     public ?string $icon;
+
     public ?int $h;
+
     public ?string $alt;
+
     public ?string $body;
+
     public ?string $title;
+
     public ?string $footer;
+
     public ?string $text;
+
     public ?array $links;
 
     #[PreMount]
@@ -33,10 +41,9 @@ class CardComponent
             'footer' => null,
             'text' => null,
             'links' => null,
-            'h' => null
-            ]);
+            'h' => null,
+        ]);
 
         return $resolver->resolve($data);
     }
-
 }
