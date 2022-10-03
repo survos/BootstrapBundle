@@ -1,6 +1,6 @@
 <?php
 
-namespace Survos\BaseBundle\Traits;
+namespace Survos\BootstrapBundle\Traits;
 
 trait FacebookTrait
 {
@@ -27,5 +27,4 @@ trait FacebookTrait
 
         return $this;
     }
-
 }
