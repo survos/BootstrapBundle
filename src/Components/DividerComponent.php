@@ -11,8 +11,11 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class DividerComponent
 {
     public ?string $alignment;
+
     public ?string $color;
+
     public ?string $message;
+
     public ?string $style;
 
     #[PreMount]
@@ -24,9 +27,9 @@ class DividerComponent
             'alignment' => null,
             'color' => null,
             'style' => null, // solid
-            'message' => null]);
+            'message' => null,
+        ]);
 
         return $resolver->resolve($data);
     }
-
 }
