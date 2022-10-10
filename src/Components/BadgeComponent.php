@@ -11,10 +11,15 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class BadgeComponent
 {
     public ?string $alignment;
+
     public ?string $message;
+
     public ?string $style;
+
     public ?string $color; // background color
+
     public ?string $text; // text color, e.g. primary, white
+
     public ?bool $label;
 
     #[PreMount]
@@ -28,7 +33,8 @@ class BadgeComponent
             'text' => null,
             'label' => null,
             'style' => null, // pill
-            'message' => null]);
+            'message' => null,
+        ]);
 
         $data = $resolver->resolve($data);
         if (empty($data['message'])) {
@@ -36,5 +42,4 @@ class BadgeComponent
         }
         return $data;
     }
-
 }

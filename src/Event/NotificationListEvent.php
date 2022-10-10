@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Survos\BaseBundle\Event;
+namespace Survos\BootstrapBundle\Event;
 
-//use Survos\BaseBundle\Model\NotificationInterface;
+//use Survos\BootstrapBundle\Model\NotificationInterface;
 
 /**
  * The NotificationListEvent collects all NotificationInterface objects that should be rendered in the notification section.

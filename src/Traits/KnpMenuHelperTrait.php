@@ -1,4 +1,6 @@
-<?php // Simplies the construction of menu items,
+<?php
+
+// Simplies the construction of menu items,
 namespace Survos\BootstrapBundle\Traits;
 
 use Knp\Menu\ItemInterface;
@@ -9,13 +11,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use function Symfony\Component\String\u;
 
-
 trait KnpMenuHelperTrait
 {
-    private ?AuthorizationCheckerInterface $authorizationChecker=null;
-//    private ?ParameterBagInterface $bag=null;
+    private ?AuthorizationCheckerInterface $authorizationChecker = null;
+    //    private ?ParameterBagInterface $bag=null;
 
-//    private ?array $options;
+    //    private ?array $options;
     private $childOptions;
 
     public function supports(KnpMenuEvent $event): bool
@@ -28,44 +29,41 @@ trait KnpMenuHelperTrait
         $this->authorizationChecker = $authorizationChecker;
     }
 
-
-
-    public function addSubmenu(ItemInterface $menu, ?string $label=null, ?string $icon=null): ItemInterface
+    public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null): ItemInterface
     {
         // how internal,
         $subMenu = $this->addMenuItem($menu, [
             'label' => $label,
-            'icon' => $icon
+            'icon' => $icon,
         ]);
         return $subMenu;
     }
-    public function addHeading(ItemInterface $menu, string $label, string $icon=null): void
+
+    public function addHeading(ItemInterface $menu, string $label, string $icon = null): void
     {
         $this->addMenuItem($menu, [
             'label' => $label,
             'style' => 'header',
-            'icon' => $icon
+            'icon' => $icon,
         ]);
-
     }
 
     // add returns self, for chaining, by default.  Pass returnItem: true to get the item for adding options.
     public function add(
         ItemInterface $menu,
-        ?string $route=null,
-        array|RouteParametersInterface|null $rp=null,
-        ?string $label=null,
-        ?string $uri=null,
-        ?string $id=null,
-        ?string $icon=null,
+        ?string $route = null,
+        array|RouteParametersInterface|null $rp = null,
+        ?string $label = null,
+        ?string $uri = null,
+        ?string $id = null,
+        ?string $icon = null,
         bool $external = false,
         bool $returnItem = false,
-    ): self|ItemInterface // for nesting.  Leaves only, requires route or uri.
-    {
-        if (!$id) {
+    ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
+        if (! $id) {
             $id = uniqid();
         }
-        assert(!($route && $uri));
+        assert(! ($route && $uri));
         $options = [];
         if ($route) {
             $options['route'] = $route;
@@ -77,13 +75,13 @@ trait KnpMenuHelperTrait
             $options['icon'] = $icon;
         }
 
-        if (!$label) {
+        if (! $label) {
             $label = $route; // @todo, be smarter.
         }
         $options['label'] = $label;
         $child = $menu->addChild($id, $options);
         if ($external) {
-            $child->setLinkAttribute('target',  '_blank');
+            $child->setLinkAttribute('target', '_blank');
             $options['icon'] = 'fas fa-external-alt';
         }
 
@@ -91,32 +89,32 @@ trait KnpMenuHelperTrait
         $child->setLabel($label);
 
         return $returnItem ? $child : $this;
-
     }
-    public function addMenuItem(ItemInterface $menu, array $options, array $extra=[]): ItemInterface
+
+    public function addMenuItem(ItemInterface $menu, array $options, array $extra = []): ItemInterface
     {
         assert(count($extra) === 0, json_encode($extra));
         $options = $this->menuOptions($options);
         // must pass in either route, icon or menu_code
 
         // especially for collapsible menus.  Cannot start with a digit.
-        if (!$options['id']) {
+        if (! $options['id']) {
             $options['id'] = 'id_' . md5(json_encode($options));
         }
 
         $child = $menu->addChild($options['id'], $options);
-//        $child->setChildrenAttribute('class', 'branch');
+        //        $child->setChildrenAttribute('class', 'branch');
 
         if ($options['external']) {
-            $child->setLinkAttribute('target',  '_blank');
+            $child->setLinkAttribute('target', '_blank');
             $options['icon'] = 'fas fa-external-alt';
         }
 
-//        if ($icon = $options['icon']) {
-//            $child->setLinkAttribute('icon', $icon);
-//            $child->setLabelAttribute('icon', $icon);
-//            $child->setAttribute('icon', $icon);
-//        }
+        //        if ($icon = $options['icon']) {
+        //            $child->setLinkAttribute('icon', $icon);
+        //            $child->setLabelAttribute('icon', $icon);
+        //            $child->setAttribute('icon', $icon);
+        //        }
 
         if ($icon = $options['feather']) {
             $child->setLinkAttribute('feather', $icon);
@@ -124,17 +122,16 @@ trait KnpMenuHelperTrait
             $child->setAttribute('feather', $icon);
         }
 
-        if (!empty($extra['safe_label'])) {
+        if (! empty($extra['safe_label'])) {
             $child->setExtra('safe_label', true);
         }
 
         // if this is a collapsible menu item, we need to set the data target to next element.  OR we can let knp_menu renderer handle it.
-        if (!$options['route'] && !$options['uri']) {
-
+        if (! $options['route'] && ! $options['uri']) {
             // only if there are children, but otherwise this is just a label
-//            $child->setAttribute('collapse_type', 'collapse');
-//            $child->setAttribute('class', 'collapse collapsed');
-//            $child->setAttribute('data-bs-target', 'hmm');
+            //            $child->setAttribute('collapse_type', 'collapse');
+            //            $child->setAttribute('class', 'collapse collapsed');
+            //            $child->setAttribute('data-bs-target', 'hmm');
         }
 
         if ($classes = $options['classes']) {
@@ -142,7 +139,9 @@ trait KnpMenuHelperTrait
         }
 
         if ($badge = $options['badge']) {
-            $child->setExtra('badge', is_array($badge) ? $badge: ['value' => $badge]);
+            $child->setExtra('badge', is_array($badge) ? $badge : [
+                'value' => $badge,
+            ]);
         }
 
         if ($style = $options['style']) {
@@ -150,8 +149,8 @@ trait KnpMenuHelperTrait
         }
 
         return $child;
-
     }
+
     private function menuOptions(array $options, array $extra = []): array
     {
         // idea: make the label a . version of the route, e.g. project_show could be project.show
@@ -175,7 +174,7 @@ trait KnpMenuHelperTrait
                 'style' => null,
                 'childOptions' => $this->childOptions,
                 'description' => null,
-                'attributes' => []
+                'attributes' => [],
             ])->resolve($options);
 
         // rename rp
@@ -183,7 +182,7 @@ trait KnpMenuHelperTrait
             $options['routeParameters'] = $options['rp']->getRp();
             if (empty($options['icon'])) {
                 $iconConstant = get_class($options['rp']) . '::ICON';
-                $options['icon'] =  defined($iconConstant) ? constant($iconConstant) : 'fas fa-database'; // generic database entity
+                $options['icon'] = defined($iconConstant) ? constant($iconConstant) : 'fas fa-database'; // generic database entity
             }
         } elseif (is_array($options['rp'])) {
             $options['routeParameters'] = $options['rp'];
@@ -216,10 +215,9 @@ trait KnpMenuHelperTrait
         // default icons, should be configurable in survos_base.yaml
         if ($options['icon'] === null) {
             foreach ([
-                         'show' => 'fas fa-eye',
-                         'edit' => 'fas fa-wrench'
-                     ] as $regex=>$icon) {
-
+                'show' => 'fas fa-eye',
+                'edit' => 'fas fa-wrench',
+            ] as $regex => $icon) {
                 if ($route = $options['route']) {
                     if (preg_match("|$regex|", $route)) {
                         $options['data-icon'] = $icon;
@@ -231,55 +229,65 @@ trait KnpMenuHelperTrait
         // move the icon to attributes, where it belongs
         if ($options['icon']) {
             $options['attributes']['data-icon'] = $options['icon'];
-//            $options['attributes']['class'] = 'text-danger';
+            //            $options['attributes']['class'] = 'text-danger';
             $options['label_attributes']['data-icon'] = $options['icon'];
             unset($options['icon']);
         }
-//        if ($options['label'] == 'Layouts') {
-//            dd($options);
-//        }
+        //        if ($options['label'] == 'Layouts') {
+        //            dd($options);
+        //        }
 
         if ($options['style'] === 'header') {
             $options['attributes']['class'] = 'menu-header';
         }
 
-        if (!$options['id']) {
+        if (! $options['id']) {
             $options['id'] = $options['menu_code'];
         }
         return $options;
     }
 
-    public function isGranted($attribute, $subject=null) {
-        if (!$this->authorizationChecker) {
+    public function isGranted($attribute, $subject = null)
+    {
+        if (! $this->authorizationChecker) {
             throw new \Exception("call setAuthorizationChecker() before making this call.");
         }
-        return $this->authorizationChecker ? $this->authorizationChecker->isGranted($attribute, $subject): false;
+        return $this->authorizationChecker ? $this->authorizationChecker->isGranted($attribute, $subject) : false;
     }
 
-    public function authMenu(AuthorizationCheckerInterface $security, ItemInterface $menu, $childOptions=[])
+    public function authMenu(AuthorizationCheckerInterface $security, ItemInterface $menu, $childOptions = [])
     {
         if ($security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $menu->addChild(
                 'logout',
-                ['route' => 'app_logout', 'label' => 'menu.logout', 'childOptions' => $childOptions]
+                [
+                    'route' => 'app_logout',
+                    'label' => 'menu.logout',
+                    'childOptions' => $childOptions,
+                ]
             )->setLabelAttribute('icon', 'fas fa-sign-out-alt');
         } else {
             $menu->addChild(
                 'login',
-                ['route' => 'app_login', 'label' => 'menu.login', 'childOptions' => $childOptions]
+                [
+                    'route' => 'app_login',
+                    'label' => 'menu.login',
+                    'childOptions' => $childOptions,
+                ]
             )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
 
             try {
                 $menu->addChild(
                     'register',
-                    ['route' => 'app_register', 'label' => 'menu.register', 'childOptions' => $childOptions]
+                    [
+                        'route' => 'app_register',
+                        'label' => 'menu.register',
+                        'childOptions' => $childOptions,
+                    ]
                 )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
             } catch (\Exception $exception) {
                 // route is likely missing
             }
         }
-
     }
-
-
 }

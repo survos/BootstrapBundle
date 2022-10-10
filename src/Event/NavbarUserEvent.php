@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Survos\BaseBundle\Event;
+namespace Survos\BootstrapBundle\Event;
 
 class NavbarUserEvent extends ShowUserEvent
 {
