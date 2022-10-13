@@ -8,8 +8,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UserCreatedEvent extends Event
 {
-
     private ?string $extra;
+
     private UserInterface $user;
 
     public function getExtra(): ?string
@@ -17,19 +17,15 @@ class UserCreatedEvent extends Event
         return $this->extra;
     }
 
-    /**
-     * @return UserInterface
-     */
+
     public function getUser(): UserInterface
     {
         return $this->user;
     }
 
-    public function __construct(UserInterface $user, ?string $extra=null) {
+    public function __construct(UserInterface $user, ?string $extra = null)
+    {
         $this->extra = $extra;
         $this->user = $user;
     }
-
-
 }
-

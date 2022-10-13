@@ -1,6 +1,6 @@
 <?php
 
-namespace Survos\BaseBundle\Traits;
+namespace Survos\BootstrapBundle\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -23,5 +23,4 @@ trait GithubTrait
 
         return $this;
     }
-
 }
