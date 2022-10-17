@@ -10,12 +10,19 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class ButtonComponent
 {
     public ?string $label;
+
     public ?string $color;
+
     public ?string $style;
+
     public ?string $icon;
+
     public ?string $size;
+
     public ?bool $outline;
+
     public ?array $links;
+
     public ?array $a;
 
     #[PreMount]
@@ -32,17 +39,16 @@ class ButtonComponent
             'size' => null,
             'outline' => false,
             'a' => null, // href, target
-            ]);
+        ]);
 
         $data = $resolver->resolve($data);
         if ($a = $data['a']) {
             $data['a'] = (new OptionsResolver())
                 ->setDefaults([
                     'href' => '#',
-                    'target' => '_blank'
+                    'target' => '_blank',
                 ])->resolve($a);
         }
         return $data;
     }
-
 }
