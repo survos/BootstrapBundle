@@ -1,6 +1,7 @@
-
-<a href="{{ href }}" class="{{ class }}">
-    {% block body %}
-    {{ body }}
-    {% endblock %}
-</a>
+{% if if %}
+    <a href="{{ href }}" class="{{ class }}">
+        {% block body %}
+            {{ body }}
+        {% endblock %}
+    </a>
+{% endif %}
