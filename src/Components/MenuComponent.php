@@ -39,6 +39,8 @@ class MenuComponent
 
     public array $options = [];
 
+    public bool $print = false;
+
     public ItemInterface $menuItem;
 
     protected const SHORTCUTS = [
@@ -82,6 +84,7 @@ class MenuComponent
             'title' => null,
             'type' => null,
             'path' => [],
+            'print' => false,
             'options' => [],
         ]);
         //        $resolver->setRequired('body');

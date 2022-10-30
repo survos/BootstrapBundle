@@ -118,18 +118,20 @@
                             </div>
                         {% endfor %}
 
-                        {% for flash in app.flashes %}
-                            {{ component('alert', {message: flash}) }}
-                        {% endfor %}
+                        <div class="d-print-none">
+                            {% for flash in app.flashes %}
+                                {{ component('alert', {message: flash}) }}
+                            {% endfor %}
+                        </div>
                         {#                    {% set breadcrumbs = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item(menuItem)) %} #}
                         {#                    {% set breadcrumbs = [] %} #}
-                        <h4 class="fw-bold py-3 mb-4">
+                        <h4 class="fw-bold py-3 mb-4 d-print-none">
                             {% block breadcrumbs %}
                                 {{ component('menu_breadcrumb', {type: 'sidebar'}) }}
                             {% endblock %}
                         </h4>
 
-                        <div class="fw-bold py-3 mb-4">
+                        <div class="fw-bold py-3 mb-4 d-print-none">
                             {% block top_navbar_menu %}
                                 {{ component('menu', {type: 'top_page'}) }}
                             {% endblock %}
