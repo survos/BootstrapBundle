@@ -158,7 +158,7 @@
     <div data-i18n="{{ item.label }}" class="position-relative">
         {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}
     {% if badge %}
-        <span class="position-absolute top-0 start-120 translate-middle p-1 bg-success border border-light rounded-circle">
+        <span class="xxposition-absolute top-30 xxstart-120 translate-middle p-1 bg-success border border-light rounded-circle">{{ badge.value }}</span>
     {% endif %}
 
     <span class="visually-hidden">New alerts</span>
@@ -190,5 +190,8 @@
 {% endblock %}
 
 {% macro badge(badge) %}
-    <div class="mm-counter"><span class="badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span></div>
+    {{ dump(badge) }}
+    <div class="mm-counter"><span class="badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span>
+        {{ badge.value }}
+    </div>
 {% endmacro %}

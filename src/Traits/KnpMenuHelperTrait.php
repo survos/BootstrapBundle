@@ -3,12 +3,14 @@
 // Simplies the construction of menu items,
 namespace Survos\BootstrapBundle\Traits;
 
+use Google\Auth\Cache\Item;
 use Knp\Menu\ItemInterface;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use function Symfony\Component\String\u;
 
 trait KnpMenuHelperTrait
@@ -29,12 +31,13 @@ trait KnpMenuHelperTrait
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null): ItemInterface
+    public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null, ?string $id = null): ItemInterface
     {
         // how internal,
         $subMenu = $this->addMenuItem($menu, [
             'label' => $label,
             'icon' => $icon,
+            'id' => $id,
         ]);
         return $subMenu;
     }
@@ -45,7 +48,14 @@ trait KnpMenuHelperTrait
             'label' => $label,
             'style' => 'header',
             'icon' => $icon,
+            'id' => (new AsciiSlugger())->slug($label)->toString()
         ]);
+    }
+
+    private function createId(ItemInterface $menu): string
+    {
+        $label = $menu->getLabel();
+        return (new AsciiSlugger())->slug($label)->toString() . '_' . uniqid();
     }
 
     // add returns self, for chaining, by default.  Pass returnItem: true to get the item for adding options.
@@ -57,17 +67,21 @@ trait KnpMenuHelperTrait
         ?string $uri = null,
         ?string $id = null,
         ?string $icon = null,
+        string|int|null $badge = null,
         bool $external = false,
         bool $returnItem = false,
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
-        if (! $id) {
-            $id = uniqid();
-        }
+
         assert(! ($route && $uri));
         $options = [];
         if ($route) {
             $options['route'] = $route;
         }
+
+        if ($badge) {
+            $options['badge'] = $badge;
+        }
+
         if ($rp) {
             $options['routeParameters'] = is_array($rp) ? $rp : $rp->getrp();
         }
@@ -79,6 +93,9 @@ trait KnpMenuHelperTrait
             $label = $route; // @todo, be smarter.
         }
         $options['label'] = $label;
+        if (! $id) {
+            $id = $this->createId($menu);
+        }
         $child = $menu->addChild($id, $options);
         if ($external) {
             $child->setLinkAttribute('target', '_blank');
@@ -87,6 +104,9 @@ trait KnpMenuHelperTrait
 
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
         $child->setLabel($label);
+
+        $options = $this->menuOptions($options);
+        $this->setChildOptions($child, $options);
 
         return $returnItem ? $child : $this;
     }
@@ -98,12 +118,19 @@ trait KnpMenuHelperTrait
         // must pass in either route, icon or menu_code
 
         // especially for collapsible menus.  Cannot start with a digit.
-        if (! $options['id']) {
-            $options['id'] = 'id_' . md5(json_encode($options));
+        if (!$options['id']) {
+            $options['id'] = 'id_' . (new AsciiSlugger())->slug($options['label'])->toString() . '_' . md5(json_encode($options));
         }
 
         $child = $menu->addChild($options['id'], $options);
+        $this->setChildOptions($child, $options);
+        return $child;
         //        $child->setChildrenAttribute('class', 'branch');
+
+    }
+
+    private function setChildOptions(ItemInterface $child, array $options)
+    {
 
         if ($options['external']) {
             $child->setLinkAttribute('target', '_blank');
@@ -144,6 +171,10 @@ trait KnpMenuHelperTrait
             ]);
         }
 
+        if ($routes = $options['routes']) {
+            $child->setExtra('routes', $routes);
+        }
+
         if ($style = $options['style']) {
             $child->setAttribute('style', $style);
         }
@@ -163,6 +194,8 @@ trait KnpMenuHelperTrait
                 'id' => null,
                 'route' => null,
                 'rp' => null,
+                'routeParameters' => [],
+                'routes' => null,
                 'external' => false,
                 '_fragment' => null,
                 'label' => null,
@@ -238,7 +271,9 @@ trait KnpMenuHelperTrait
         //        }
 
         if ($options['style'] === 'header') {
-            $options['attributes']['class'] = 'menu-header';
+            // @warning: will probably break sneat!
+//            $options['attributes']['class'] = 'menu-header menu-title';
+            $options['attributes']['class'] = 'menu-title';
         }
 
         if (! $options['id']) {

@@ -27,6 +27,7 @@ interface KnpMenuHelperInterface
         ?string $uri = null,
         ?string $id = null,
         ?string $icon = null,
+        string|int|null $badge = null,
         bool $returnItem = false,
     ): self|ItemInterface;
 

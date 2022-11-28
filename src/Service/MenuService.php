@@ -220,8 +220,9 @@ class MenuService
             unset($options['icon']);
         }
 
+        // @todo: move to knp_menu or menu_component
         if ($options['style'] === 'header') {
-            $options['attributes']['class'] = 'menu-header';
+            $options['attributes']['class'] = 'menu-header menu-title';
         }
 
         if (! $options['id']) {
