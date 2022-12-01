@@ -1,0 +1,33 @@
+<div{{ attributes }}>
+    <!-- component html -->
+</div>
+
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        {% for idx, slide in slides %}
+        <li data-bs-target="#carouselExample" data-bs-slide-to="{{ idx }}" class="{{ slide.active ? 'active' }}"></li>
+        {% endfor %}
+    </ol>
+    <div class="carousel-inner">
+        {% for idx, slide in slides %}
+            <div class="carousel-item {{ slide.active ? 'active' }}">
+                <img class="d-block w-100" src="{{ slide.src }}"
+                     alt="slide #{{ idx }}">
+                <div class="carousel-caption d-none d-md-block">
+                    <h3>#{{ idx }} {{ slide.src }}</h3>
+                    <p>{{ slide.caption }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
+</div>

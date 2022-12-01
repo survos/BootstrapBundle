@@ -7,6 +7,7 @@ use Survos\BootstrapBundle\Components\AlertComponent;
 use Survos\BootstrapBundle\Components\BadgeComponent;
 use Survos\BootstrapBundle\Components\ButtonComponent;
 use Survos\BootstrapBundle\Components\CardComponent;
+use Survos\BootstrapBundle\Components\CarouselComponent;
 use Survos\BootstrapBundle\Components\DividerComponent;
 use Survos\BootstrapBundle\Components\LinkComponent;
 use Survos\BootstrapBundle\Components\MenuBreadcrumbComponent;
@@ -65,6 +66,19 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $builder->register(ContextService::class)
             ->setArgument('$options', $config['options'])
             ->setAutowired(true);
+
+        foreach ([AlertComponent::class, AccordionComponent::class,
+//                     BrandComponent::class,
+        CarouselComponent::class,
+                     DividerComponent::class,
+                     CardComponent::class,
+                     ButtonComponent::class,
+                     BadgeComponent::class,
+                     LinkComponent::class
+                 ] as $componentClass) {
+            $builder->register($componentClass)->setAutowired(true)->setAutoconfigured(true);
+        }
+
 
         $builder->register(AlertComponent::class)->setAutowired(true)->setAutoconfigured(true);
         $builder->register(AccordionComponent::class)->setAutowired(true)->setAutoconfigured(true);
