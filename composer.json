@@ -20,7 +20,7 @@
         "symfony/ux-twig-component": "^2.3",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4",
-        "survos/core-bundle": "^1.2"
+        "survos/core-bundle": "^1.2.39"
     },
     "autoload": {
         "psr-4": {
@@ -43,25 +43,25 @@
         "phpstan/phpstan": "^1.8"
     },
     "conflict": {
-        "survos/maker-bundle": "<1.2.38",
-        "survos/html-prettify-bundle": "<1.2.38",
-        "survos/barcode-bundle": "<1.2.38",
-        "survos/api-grid-bundle": "<1.2.38",
-        "survos/inspection-bundle": "<1.2.38",
-        "survos/faker-bundle": "<1.2.38",
-        "survos/doc-bundle": "<1.2.38",
-        "survos/grid-bundle": "<1.2.38",
-        "survos/tree-bundle": "<1.2.38",
-        "survos/auth-bundle": "<1.2.38",
-        "survos/workflow-helper-bundle": "<1.2.38",
-        "survos/crawler-bundle": "<1.2.38",
-        "survos/location-bundle": "<1.2.38",
-        "survos/command-bundle": "<1.2.38",
-        "survos/ruler-bundle": "<1.2.38",
-        "survos/providence-bundle": "<1.2.38",
-        "survos/stripe-product": "<1.2.38",
-        "survos/wiki-bundle": "<1.2.38",
-        "survos/import-bridge": "<1.2.38",
-        "survos/grid-group-bundle": "<1.2.38"
+        "survos/maker-bundle": "<1.2.39",
+        "survos/html-prettify-bundle": "<1.2.39",
+        "survos/barcode-bundle": "<1.2.39",
+        "survos/api-grid-bundle": "<1.2.39",
+        "survos/inspection-bundle": "<1.2.39",
+        "survos/faker-bundle": "<1.2.39",
+        "survos/doc-bundle": "<1.2.39",
+        "survos/grid-bundle": "<1.2.39",
+        "survos/tree-bundle": "<1.2.39",
+        "survos/auth-bundle": "<1.2.39",
+        "survos/workflow-helper-bundle": "<1.2.39",
+        "survos/crawler-bundle": "<1.2.39",
+        "survos/location-bundle": "<1.2.39",
+        "survos/command-bundle": "<1.2.39",
+        "survos/ruler-bundle": "<1.2.39",
+        "survos/providence-bundle": "<1.2.39",
+        "survos/stripe-product": "<1.2.39",
+        "survos/wiki-bundle": "<1.2.39",
+        "survos/import-bridge": "<1.2.39",
+        "survos/grid-group-bundle": "<1.2.39"
     }
 }
