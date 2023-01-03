@@ -190,7 +190,6 @@
 {% endblock %}
 
 {% macro badge(badge) %}
-    {{ dump(badge) }}
     <div class="mm-counter"><span class="badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span>
         {{ badge.value }}
     </div>
