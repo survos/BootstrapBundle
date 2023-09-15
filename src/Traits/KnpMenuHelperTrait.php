@@ -48,14 +48,14 @@ trait KnpMenuHelperTrait
             'label' => $label,
             'style' => 'header',
             'icon' => $icon,
-            'id' => (new AsciiSlugger())->slug($label)->toString()
+            'id' => (new AsciiSlugger())->slug($label??'')->toString()
         ]);
     }
 
     private function createId(ItemInterface $menu): string
     {
         $label = $menu->getLabel();
-        return (new AsciiSlugger())->slug($label)->toString() . '_' . uniqid();
+        return (new AsciiSlugger())->slug($label??null)->toString() . '_' . uniqid();
     }
 
     // add returns self, for chaining, by default.  Pass returnItem: true to get the item for adding options.
@@ -119,7 +119,7 @@ trait KnpMenuHelperTrait
 
         // especially for collapsible menus.  Cannot start with a digit.
         if (!$options['id']) {
-            $options['id'] = 'id_' . (new AsciiSlugger())->slug($options['label'])->toString() . '_' . md5(json_encode($options));
+            $options['id'] = 'id_' . (new AsciiSlugger())->slug($options['label']??'')->toString() . '_' . md5(json_encode($options));
         }
 
         $child = $menu->addChild($options['id'], $options);
