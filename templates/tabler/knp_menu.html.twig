@@ -9,7 +9,8 @@
 
 {% block list %}
     {% if layout_type is not defined %}
-        {% set layout_type = 'horizontal' %}
+{#        {% set layout_type = 'horizontal' %}#}
+        {% set layout_type = 'vertical' %}
     {% endif %}
     <ul class="navbar-nav {{ navbar_class | default('') }}">
         {% for itemId, item in item.children %}
@@ -39,7 +40,17 @@
 
 {% macro item_childs(item, layout_type, matcher) %}
     {% if item.hasChildren %}
-        <div class="dropdown-menu {{ layout_type is same as "vertical" and (item.isActive or item.isExpanded) ? 'show':'' }}" data-bs-popper="none">
+
+        {# another approach
+        {%- if matcher.isCurrent(item) %}
+            {%- set classes = classes|merge([options.currentClass]) %}
+        {%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+            {%- set classes = classes|merge([options.ancestorClass]) %}
+        {%- endif %}
+        #}
+
+        {% set isActive = matcher.isCurrent(item) or matcher.isAncestor(item) %}
+        <div class="dropdown-menu {{ layout_type is same as "vertical" and (isActive) ? 'show':'' }}" data-bs-popper="none">
             <div class="dropdown-menu-columns">
                 <div class="dropdown-menu-column">
                     {% for child in item.children %}

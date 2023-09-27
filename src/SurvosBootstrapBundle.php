@@ -33,6 +33,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 {
     // protected string $extensionAlias = 'survos_bootstrap';
 
+    // removed in favor of using the ContextService global
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -41,6 +42,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         // https://stackoverflow.com/questions/73814467/how-do-i-add-a-twig-global-from-a-bundle-config
         $container->addCompilerPass($this);
     }
+
     // The compiler pass
     public function process(ContainerBuilder $container)
     {
@@ -49,6 +51,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         }
         $theme = $container->getParameter('my.theme');
         $def = $container->getDefinition('twig');
+        // I think we did this before we added ContextService, so use the twig function to get what we want, e.g. theme_option('theme')
         $def->addMethodCall('addGlobal', ['theme', $theme]);
     }
 
@@ -58,18 +61,20 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
 
-        $container->parameters()
-            ->set('my.theme', $config['theme']);
+        // inject into parameters, so we can access it in the compiler pass and inject it globally.
 
         assert(is_array($config['routes']), json_encode($config));
 
         $builder->register(ContextService::class)
             ->setArgument('$options', $config['options'])
             ->setAutowired(true);
+        $container->parameters()->set('my.theme', $config['options']['theme']);
 
-        foreach ([AlertComponent::class, AccordionComponent::class,
+
+        foreach ([AlertComponent::class,
+                     AccordionComponent::class,
 //                     BrandComponent::class,
-        CarouselComponent::class,
+                     CarouselComponent::class,
                      DividerComponent::class,
                      CardComponent::class,
                      ButtonComponent::class,
@@ -94,8 +99,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 ->setArgument('$menuOptions', $config['menu_options'])
                 ->setArgument('$helper', new Reference('knp_menu.helper'))
                 ->setArgument('$factory', new Reference('knp_menu.factory'))
-                ->setArgument('$eventDispatcher', new Reference('event_dispatcher'))
-            ;
+                ->setArgument('$eventDispatcher', new Reference('event_dispatcher'));
         }
 
         $builder
@@ -110,8 +114,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 
         $builder->register(MenuService::class)
             ->setAutowired(true)
-            ->setArgument('$authorizationChecker', new Reference('security.authorization_checker'))
-        ;
+            ->setArgument('$authorizationChecker', new Reference('security.authorization_checker'));
 
     }
 
@@ -122,15 +125,12 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->children()
             ->append($this->getRouteAliasesConfig())
             ->append($this->getContextConfig())
-            ->scalarNode('theme')->defaultValue('sneat')->end()
             ->arrayNode('menu_options')
 //            ->isRequired()
 //            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('scalar')->end()
-            ->end()
-            ->end();
-        ;
+                ->useAttributeAsKey('name')->prototype('scalar')->end()
+            ->end() // arrayNode
+            ->end(); // rootNode
     }
 
     // inspired by AdminLTEBundle
@@ -147,25 +147,20 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->defaultValue('app_homepage')
             ->info('name of the homepage route')
             ->end()
-
             ->scalarNode('login')->defaultValue('app_login')->info('name of the login')->end()
             ->scalarNode('homepage')->defaultValue('app_homepage')->info('name of the home routes')->end()
-
             ->scalarNode('logout')
             ->defaultValue('app_logout')
             ->info('name of the logout route')
             ->end()
-
             ->scalarNode('offcanvas')
             ->defaultValue('app_settings')
             ->info('name of the offcanvas route (e.g. a settings sidebar)')
             ->end()
-
             ->scalarNode('register')
             ->defaultValue('app_register')
             ->info('name of the register route')
             ->end()
-
             ->end();
         return $rootNode;
     }
@@ -179,15 +174,14 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-            ->scalarNode('offcanvas')->defaultValue('')->info("Offcanvas position (top,bottom,start,end")->end()
+            ->scalarNode('layout_direction')->defaultValue('vertical')->end()
+            ->scalarNode('offcanvas')->defaultValue('end')->info("Offcanvas position (top,bottom,start,end")->end()
+            ->scalarNode('theme')->defaultValue('tabler')->info("theme name")->end()
 //            ->scalarNode('offcanvas')
 //                ->defaultValue('')
 //                ->info("Offcanvas position (top,bottom,start,end")
 //            ->end()
-            ->booleanNode('allow_login')
-            ->defaultValue(false)
-            ->info("Login route exists")
-            ->end();
+            ->booleanNode('allow_login')->defaultValue(false)->info("Login route exists")->end();
         return $rootNode;
     }
 
@@ -200,13 +194,13 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
     {
         $sidebar = [];
 
-        if (isset($config['control_sidebar']) && ! empty($config['control_sidebar'])) {
+        if (isset($config['control_sidebar']) && !empty($config['control_sidebar'])) {
             $sidebar = $config['control_sidebar'];
         }
 
-        $contextOptions = (array) ($config['options'] ?? []);
+        $contextOptions = (array)($config['options'] ?? []);
         $contextOptions['control_sidebar'] = $sidebar;
-        $contextOptions['knp_menu'] = (array) $config['knp_menu'];
+        $contextOptions['knp_menu'] = (array)$config['knp_menu'];
         $contextOptions = array_merge($contextOptions, $config['theme']);
 
         return $contextOptions;

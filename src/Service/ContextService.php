@@ -14,7 +14,8 @@ class ContextService
         "warning",
         "danger",
         "light",
-        "dark", ];
+        "dark",
+        ];
 
     public function __construct(private array $options = [])
     {
