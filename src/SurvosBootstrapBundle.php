@@ -9,6 +9,7 @@ use Survos\BootstrapBundle\Components\ButtonComponent;
 use Survos\BootstrapBundle\Components\CardComponent;
 use Survos\BootstrapBundle\Components\CarouselComponent;
 use Survos\BootstrapBundle\Components\DividerComponent;
+use Survos\BootstrapBundle\Components\DropdownComponent;
 use Survos\BootstrapBundle\Components\LinkComponent;
 use Survos\BootstrapBundle\Components\MenuBreadcrumbComponent;
 use Survos\BootstrapBundle\Components\MenuComponent;
@@ -27,7 +28,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-
 
 class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterface
 {
@@ -71,28 +71,22 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $container->parameters()->set('my.theme', $config['options']['theme']);
 
 
-        foreach ([AlertComponent::class,
-                     AccordionComponent::class,
+        foreach (
+            [AlertComponent::class,
+                AccordionComponent::class,
+                     AlertComponent::class,
 //                     BrandComponent::class,
+                BadgeComponent::class,
+                ButtonComponent::class,
+                CardComponent::class,
                      CarouselComponent::class,
+                     DropdownComponent::class,
                      DividerComponent::class,
-                     CardComponent::class,
-                     ButtonComponent::class,
-                     BadgeComponent::class,
                      LinkComponent::class
-                 ] as $componentClass) {
+                 ] as $componentClass
+        ) {
             $builder->register($componentClass)->setAutowired(true)->setAutoconfigured(true);
         }
-
-
-        $builder->register(AlertComponent::class)->setAutowired(true)->setAutoconfigured(true);
-        $builder->register(AccordionComponent::class)->setAutowired(true)->setAutoconfigured(true);
-        $builder->register(DividerComponent::class)->setAutowired(true)->setAutoconfigured(true);
-        $builder->register(CardComponent::class)->setAutowired(true)->setAutoconfigured(true);
-        $builder->register(ButtonComponent::class)->setAutowired(true)->setAutoconfigured(true);
-        $builder->register(BadgeComponent::class)->setAutowired(true)->setAutoconfigured(true);
-
-        $builder->register(LinkComponent::class)->setAutowired(true)->setAutoconfigured(true);
 
         foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
             $builder->register($c)->setAutowired(true)->setAutoconfigured(true)
@@ -112,10 +106,17 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 //            ->setArgument('$componentRenderer', new Reference('ux.twig_component.component_renderer'))
         ;
 
+//        $builder
+//            ->autowire('survos.bootstrap_page_top_renderer', PageTopRenderer::class)
+//            ->addTag('knp_menu.renderer', ['alias' =>  'custom'])
+//            ->setArgument('$matcher', new Reference('knp_menu.matcher'))
+//            ->setArgument('$charset', '%kernel.charset%')
+//        ;
+
+
         $builder->register(MenuService::class)
             ->setAutowired(true)
             ->setArgument('$authorizationChecker', new Reference('security.authorization_checker'));
-
     }
 
     public function configure(DefinitionConfigurator $definition): void

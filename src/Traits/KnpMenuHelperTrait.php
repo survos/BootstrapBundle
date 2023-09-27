@@ -284,6 +284,8 @@ trait KnpMenuHelperTrait
 
     public function isGranted($attribute, $subject = null)
     {
+        return $this->security->isGranted($attribute, $subject);
+
         if (! $this->authorizationChecker) {
             throw new \Exception("call setAuthorizationChecker() before making this call.");
         }

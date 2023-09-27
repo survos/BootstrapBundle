@@ -31,9 +31,12 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
     {
         // consider something like https://github.com/a-r-m-i-n/font-awesome-bundle
         return [
-            new TwigFilter('icon', [$this, 'icon'], [
-                'is_safe' => ['html'],
-            ]),
+            new TwigFilter('icon', [$this, 'icon'], ['is_safe' => ['html']]),
+            new TwigFilter('fas_icon',
+                // candidate for component
+                fn(string $value, string $extra=''): string => sprintf('<span class="fas fa-%s %s"></span>', $value, $extra),
+                ['is_safe' => ['html']]),
+            new TwigFilter('bx_icon', [$this, 'bx_icon'], ['is_safe' => ['html']]),
             new TwigFilter('route_alias', fn (string $routeName): string => $this->routes[$routeName] ?? $routeName),
         ];
     }
@@ -63,8 +66,9 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
         return $this->options[$value] ?? false;
     }
 
-    public function icon(string $value): string
+    // @todo: replace with component
+    public function icon(string $value, string $extra='', string $title=''): string
     {
-        return sprintf('<span class="fas fa-%s"></span>', $value);
+        return sprintf('<span class="%s %s" title="%s" ></span>', $value, $extra, $title);
     }
 }

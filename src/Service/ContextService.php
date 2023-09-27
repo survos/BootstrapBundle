@@ -21,9 +21,9 @@ class ContextService
     {
     }
 
-    public function getOption(string $option): mixed
+    public function getOption(string $option, string $default=null): mixed
     {
-        return $this->options[$option];
+        return $this->options[$option]??$default;
     }
 
     public function getOptions(): array
