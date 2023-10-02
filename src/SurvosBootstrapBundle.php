@@ -18,6 +18,10 @@ use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
+use Survos\BootstrapBundle\Twig\Components\MiniCard;
+use Survos\BootstrapBundle\Twig\Components\TablerHead;
+use Survos\BootstrapBundle\Twig\Components\TablerIcon;
+use Survos\BootstrapBundle\Twig\Components\TablerPageHeader;
 use Survos\BootstrapBundle\Twig\TwigExtension;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -72,18 +76,24 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 
 
         foreach (
-            [AlertComponent::class,
+            [
+                AlertComponent::class,
                 AccordionComponent::class,
-                     AlertComponent::class,
+                AlertComponent::class,
 //                     BrandComponent::class,
                 BadgeComponent::class,
                 ButtonComponent::class,
                 CardComponent::class,
-                     CarouselComponent::class,
-                     DropdownComponent::class,
-                     DividerComponent::class,
-                     LinkComponent::class
-                 ] as $componentClass
+                CarouselComponent::class,
+                DropdownComponent::class,
+                DividerComponent::class,
+                LinkComponent::class,
+
+                MiniCard::class,
+                TablerIcon::class,
+                TablerHead::class,
+                TablerPageHeader::class,
+            ] as $componentClass
         ) {
             $builder->register($componentClass)->setAutowired(true)->setAutoconfigured(true);
         }
@@ -129,7 +139,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->arrayNode('menu_options')
 //            ->isRequired()
 //            ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('name')->prototype('scalar')->end()
+            ->useAttributeAsKey('name')->prototype('scalar')->end()
             ->end() // arrayNode
             ->end(); // rootNode
     }

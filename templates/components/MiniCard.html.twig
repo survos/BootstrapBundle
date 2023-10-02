@@ -1,0 +1,29 @@
+<div class="card card-sm" {{ attributes }}>
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <i class="ti ti-air-traffic-control"></i>
+                <twig:tabler:icon bgColor="red" :icon="icon">
+
+                </twig:tabler:icon>
+
+                            <span class="bg-{{ bgColor }} text-{{ textColor }} avatar">
+                {{ tabler_icon(icon) }}
+                            </span>
+
+            </div>
+            <div class="col">
+                <div class="font-weight-medium">
+                    {{ msg }}
+                </div>
+                <div class="text-secondary">
+                    {{ tagline }}
+                </div>
+            </div>
+        </div>
+        <div>
+            {{ tabler_icon(icon)|raw }}
+            {{ block('content') }}
+        </div>
+    </div>
+</div>

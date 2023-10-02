@@ -1,19 +1,23 @@
 {#
-Use this as your new starter template page, use it to start your new project,
-by adding this code to your own base template:
-
-{% extends '@Tabler/layout-vertical.html.twig' %}
-
-Enjoy your theme!
+based on '@Tabler/layout-vertical.html.twig' %}
 #}
 <!doctype html{% block html_start %}{% endblock %}>
 <html lang="{{ app.request.locale }}"{% if tabler_bundle.isRightToLeft() %} dir="rtl"{% endif %}>
+<twig:tabler:head>
+
+</twig:tabler:head>
 <head>
     {% block head %}
-        {% include '@Tabler/includes/html_head.html.twig' %}
+        {# from '@Tabler/includes/html_head.html.twig' #}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+{#        <meta name="robots" content="noindex,nofollow">#}{# ??? #}
     {% endblock %}
-    <title>{% block title %}{{ block('page_title') }}{% endblock %}</title>
+    <title>{% block title %}{{ page_title|default('') }}{% endblock %}</title>
     {% block stylesheets %}
+        {# @todo: use AssetMapper, or webpack #}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
         {% if tabler_bundle.isRightToLeft() %}
             <link rel="stylesheet" href="{{ asset('bundles/tabler/tabler-rtl.css') }}?{{ tabler_asset_version() }}">
         {% else %}
@@ -46,9 +50,10 @@ Enjoy your theme!
                 </div>
                 <div id="navbar-menu" class="collapse navbar-collapse">
                     {% block navbar_menu_start %}{% endblock %}
+                    {# bootstrap bundle uses knp menu only #}
                     {{ component('menu', {type: 'sidebar'}) }}
 
-                    {% include '@Tabler/includes/menu.html.twig' with {layout_type: 'vertical', navbar_class : 'pt-lg-3'} %}
+{#                    {% include '@Tabler/includes/menu.html.twig' with {layout_type: 'vertical', navbar_class : 'pt-lg-3'} %}#}
                     {% block navbar_menu_end %}{% endblock %}
                 </div>
             </div>
@@ -79,46 +84,8 @@ Enjoy your theme!
     {# *************************** #}
 
     <div id="{% block page_wrapper_id %}{% endblock %}" class="page-wrapper">
-        <twig:tabler:page_header>
-
-        </twig:tabler:page_header>
         {% block page_header %}
-            <div class="{{ ''|tabler_container }}">
-                {# Page title #}
-                <div id="{% block page_header_id %}{% endblock %}" class="page-header d-print-none">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            {% block page_intro %}
-                                {% block breadcrumb %}
-                                    <div class="page-pretitle">
-                                        {% block page_pretitle %}Overview{% endblock %}
-                                    </div>
-                                {% endblock %}
-                                <h2 class="page-title">
-                                    {% block page_title %}Dashboard{% endblock %}
-                                </h2>
-                                {% block page_subtitle %}
-                                    <div class="text-body-secondary mt-1">
-                                        1-10 of 100
-                                    </div>
-                                {% endblock %}
-                            {% endblock %}
-                        </div>
-                        <div class="{% block page_actions_class %}col-12 col-md-auto ms-auto d-print-none{% endblock %}">
-                            {% block page_actions %}
-                                <div class="btn-list">
-                                    <a href="#" class="btn btn-white">
-                                        New view
-                                    </a>
-                                    <a href="#" class="btn btn-primary d-none d-sm-inline-block">
-                                        Create new report
-                                    </a>
-                                </div>
-                            {% endblock %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <h1>page_header in  {{ _self }}</h1>
         {% endblock %}
 
         <div class="page-body">
