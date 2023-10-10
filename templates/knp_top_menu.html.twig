@@ -151,7 +151,7 @@
         {{ block('dividerElementDropdown') }}
     {%- endif %}
 
-    {%- if item.uri is not empty and (not item.current or options.currentAsLink) %}
+    {%- if item.uri is not empty %} {#  and (not item.current or options.currentAsLink) #}
         {# collapse?
         {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'dropdown-item') }}
         #}
@@ -170,7 +170,6 @@
 {% endblock %}
 
 {% block spanElementDropdown %}
-    'spanElementDropdown
     {% import "knp_menu.html.twig" as macros %}
     {% import _self as ownmacro %}
     {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'dropdown-header') }}

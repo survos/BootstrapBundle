@@ -68,7 +68,7 @@ trait KnpMenuHelperTrait
         ?string $id = null,
         ?string $icon = null,
         string|int|null $badge = null,
-        bool $external = false,
+        ?bool $external = null, 
         bool $returnItem = false,
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
@@ -90,13 +90,19 @@ trait KnpMenuHelperTrait
         }
 
         if (! $label) {
-            $label = $route; // @todo, be smarter.
+            $label = $route  ?? $uri; // @todo, be smarter.
         }
         $options['label'] = $label;
         if (! $id) {
             $id = $this->createId($menu);
         }
         $child = $menu->addChild($id, $options);
+        if ($uri) {
+            $child->setUri($uri);
+            if (is_null($external)) {
+                $external = true;
+            }
+        }
         if ($external) {
             $child->setLinkAttribute('target', '_blank');
             $options['icon'] = 'fas fa-external-alt';

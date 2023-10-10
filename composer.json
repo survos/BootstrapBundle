@@ -2,6 +2,9 @@
     "name": "survos/bootstrap-bundle",
     "description": "Integrates a simple bootstrap theme in a Symfony application",
     "type": "symfony-bundle",
+    "keywords": [
+        "symfony-ux"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +23,7 @@
         "symfony/ux-twig-component": "^2.8",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4",
-        "survos/core-bundle": "^1.5.37"
+        "survos/core-bundle": "^1.5"
     },
     "autoload": {
         "psr-4": {
