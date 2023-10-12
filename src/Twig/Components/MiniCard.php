@@ -8,7 +8,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 final class MiniCard
 {
     public string $msg = '';
-    public string $tagline='';
+        public string $tagline='';
     public string $icon='';
     public string $bgColor='green';
     public string $textColor='white';

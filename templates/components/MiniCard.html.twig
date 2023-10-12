@@ -8,7 +8,8 @@
                 </twig:tabler:icon>
 
                             <span class="bg-{{ bgColor }} text-{{ textColor }} avatar">
-                {{ tabler_icon(icon) }}
+                                {{ icon }}
+{#                {{ tabler_icon(icon) }}#}
                             </span>
 
             </div>
@@ -22,7 +23,8 @@
             </div>
         </div>
         <div>
-            {{ tabler_icon(icon)|raw }}
+            {{ icon }}
+{#            {{ tabler_icon(icon)|raw }}#}
             {{ block('content') }}
         </div>
     </div>

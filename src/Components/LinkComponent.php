@@ -65,7 +65,6 @@ class LinkComponent
             }
             $data['href'] = $href;
         }
-
         return $resolver->resolve($data);
     }
 }

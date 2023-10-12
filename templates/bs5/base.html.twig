@@ -1,4 +1,4 @@
-{% extends "@SurvosBootstrap/sneat/shell.html.twig" %}
+{% extends "@SurvosBootstrap/bootstrap_5_layout.html.twig" %}
 
 {% block body_content %}
     <div class="layout-wrapper layout-content-navbar">
@@ -6,15 +6,12 @@
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
                 {% block sidebar_logo %}
-                    {{ 'home'|route_alias }}
                     <div class="app-brand demo">
                         {% component link with {
                             path: 'home'|route_alias,
                             class: 'app-brand-link'
                         } %}
                             {% block body %}
-                                {# where should translation be? #}
-                                {{ 'home'|route_alias }}
                             {% endblock %}
                         {% endcomponent %}
                         {% component link with {
