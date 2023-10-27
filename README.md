@@ -39,46 +39,54 @@ symfony server:start -d
 
 ```
 
-## Bootstrap CSS
+## Knp Menu Bundle
 
 ```bash
-symfony new bootstrap-64 --webapp --version=next && cd bootstrap-64 
+
+symfony new menu7 --webapp --version=next && cd menu7
 composer config minimum-stability dev
+composer config prefer-stable false
 composer config extra.symfony.allow-contrib true
-bin/console --version
+sed -i 's/"6.4.*"/"^7.0"/' composer.json
+composer update
+composer config repositories.knp_menu_bundle '{"type": "vcs", "url": "git@github.com:tacman/KnpMenuBundle.git"}'
+composer require knplabs/knp-menu-bundle
 composer req symfony/asset-mapper
-bin/console importmap:require bootstrap
-bin/console make:controller -i ButtonController
+bin/console make:controller -i Menu
 
-cat > config/packages/twig.yaml << END
-twig:
-    default_path: '%kernel.project_dir%/templates'
-    form_themes:
-        - 'bootstrap_5_layout.html.twig'
-        - 'bootstrap_5_horizontal_layout.html.twig'
-
-when@test:
-    twig:
-        strict_variables: true
-END
-
-cat > assets/app.js <<END
-import './styles/app.css'
-import 'bootstrap/dist/css/bootstrap.min.css' // from importmap.php
-console.log('app.js is loading app.css and bootstrap')
-END
-
-cat > templates/button.html.twig <<END
+cat > templates/menu.html.twig <<END
 {% extends 'base.html.twig' %}
 {% block body %}
-    <button class="btn btn-primary">Primary</button>
+    {{ knp_menu_render('App:Builder:mainMenu') }}
 {% endblock %}  
 END
 
+cat > src/Menu/Builder.php << 'END'
+namespace App\Menu;
+
+use App\Entity\Blog;
+use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+
+final class Builder 
+{
+
+    public function mainMenu(FactoryInterface $factory, array $options): ItemInterface
+    {
+        $menu = $factory->createItem('root');
+
+        $menu->addChild('Home', ['route' => 'app_app']);
+
+        return $menu;
+    }
+}
+END
+
 symfony server:start -d
-symfony open:local --path=/button
-
-```
+symfony open:local --path=/menu
 
 
 ```
+

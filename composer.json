@@ -15,15 +15,14 @@
     "require": {
         "php": "^8.1",
         "knplabs/knp-menu-bundle": "^3.2",
-        "symfony/config": "^6.1.0",
-        "symfony/dependency-injection": "^6.1.0",
-        "symfony/http-kernel": "^6.1.0",
-        "symfony/options-resolver": "^6.1.0",
-        "symfony/security-bundle": "^6.1.0",
+        "symfony/config": "^6.3 | ^7.0",
+        "symfony/dependency-injection": "^6.3 | ^7.0",
+        "symfony/http-kernel": "^6.3 | ^7.0",
+        "symfony/options-resolver": "^6.3 | ^7.0",
         "symfony/ux-twig-component": "^2.8",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4",
-        "survos/core-bundle": "^1.5.64"
+        "survos/core-bundle": "^1.6"
     },
     "autoload": {
         "psr-4": {
@@ -34,15 +33,16 @@
     "extra": {
         "branch-alias": {
             "dev-main": "1.6-dev"
-        },
-        "symfony": {
-            "require": "^6.1.0"
         }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
         "phpstan": "vendor/bin/phpstan analyse"
     },
+    "suggest": {
+        "symfony/security-bundle": "User authentication"
+    },
+
     "require-dev": {
         "phpstan/phpstan": "^1.8"
     },
