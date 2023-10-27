@@ -23,6 +23,8 @@ use Survos\BootstrapBundle\Twig\Components\TablerHead;
 use Survos\BootstrapBundle\Twig\Components\TablerIcon;
 use Survos\BootstrapBundle\Twig\Components\TablerPageHeader;
 use Survos\BootstrapBundle\Twig\TwigExtension;
+use Survos\CoreBundle\HasAssetMapperInterface;
+use Survos\CoreBundle\Traits\HasAssetMapperTrait;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
@@ -33,8 +35,9 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterface
+class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
+    use HasAssetMapperTrait;
     // protected string $extensionAlias = 'survos_bootstrap';
 
     // removed in favor of using the ContextService global
@@ -48,7 +51,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
     }
 
     // The compiler pass
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (false === $container->hasDefinition('twig')) {
             return;
@@ -143,6 +146,15 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->end() // arrayNode
             ->end(); // rootNode
     }
+
+    public function getPaths(): array
+    {
+        $dir = realpath(__DIR__.'/../assets/');
+        assert(file_exists($dir), 'asset path must exist for the assets in ' . __DIR__);
+        return [$dir => '@survos/bootstrap'];
+    }
+
+
 
     // inspired by AdminLTEBundle
     private function getRouteAliasesConfig(): ArrayNodeDefinition
