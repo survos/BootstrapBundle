@@ -6,6 +6,8 @@
             <span class="{{ icon }}"></span>&nbsp;
     {% endif %}
         {{ label }}
+        {% block content %}
+        {% endblock %}
     {% if a %}
         </a>
     {% endif %}

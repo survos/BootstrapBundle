@@ -30,6 +30,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -129,7 +130,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 
         $builder->register(MenuService::class)
             ->setAutowired(true)
-            ->setArgument('$authorizationChecker', new Reference('security.authorization_checker'));
+            ->setArgument('$authorizationChecker', new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE));
     }
 
     public function configure(DefinitionConfigurator $definition): void
@@ -199,7 +200,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->children()
             ->scalarNode('layout_direction')->defaultValue('vertical')->end()
             ->scalarNode('offcanvas')->defaultValue('end')->info("Offcanvas position (top,bottom,start,end")->end()
-            ->scalarNode('theme')->defaultValue('tabler')->info("theme name")->end()
+            ->scalarNode('theme')->defaultValue('bs5')->info("theme name")->end()
 //            ->scalarNode('offcanvas')
 //                ->defaultValue('')
 //                ->info("Offcanvas position (top,bottom,start,end")
