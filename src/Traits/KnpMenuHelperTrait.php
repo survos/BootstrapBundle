@@ -68,8 +68,11 @@ trait KnpMenuHelperTrait
         ?string $id = null,
         ?string $icon = null,
         string|int|null $badge = null,
-        ?bool $external = null, 
+        ?bool $external = null,
         bool $returnItem = false,
+        bool $if = true,
+        string $translationDomain = 'routes',
+
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
         assert(! ($route && $uri));
@@ -107,6 +110,11 @@ trait KnpMenuHelperTrait
             $child->setLinkAttribute('target', '_blank');
             $options['icon'] = 'fas fa-external-alt';
         }
+
+        if (!$child->getExtra('translation_domain')) {
+            $child->setExtra('translation_domain', $translationDomain);
+        }
+
 
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
         $child->setLabel($label);

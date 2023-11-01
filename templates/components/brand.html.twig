@@ -1,0 +1,47 @@
+<!-- LOGO -->
+<div class="navbar-brand-box">
+    {% if not lightImage %}
+    <button class="logo-text btn-large btn-warning">{{ lgLogoHtml|raw }}</button>
+    {% endif %}
+    <!-- Dark Logo-->
+    <a href="{{ logoLink }}"
+       class="logo logo-dark">
+            <span class="logo-sm">
+                {% if smImage %}
+                <img src="{{ smImage }}" alt="{{ smImage }}">
+                {% endif %}
+                <span class="logo-text">{{ smLogoHtml|raw }}</span>
+
+            </span>
+        <span class="logo-lg">
+            {% if darkImage %}
+                <img src="{{ darkImage }}" alt="">
+                {% else %}
+            {% endif %}
+
+                <button class="logo-text btn-large btn-warning">{{ lgLogoHtml|raw }}</button>
+            </span>
+    </a>
+    <!-- Light Logo-->
+    <a href="{{ logoLink }}"
+       class="logo logo-light">
+            <span class="logo-sm">
+
+                {% if smImage %}
+                    <img src="{{ smImage }}" alt="" height="22">
+                {% endif %}
+                <span class="logo-text">{{ smLogoHtml|raw }}</span>
+            </span>
+        <span class="logo-lg logo-text">
+            {% if lightImage %}
+{#                <img src="{{ lightImage }}" alt="" >#}
+                <img src="{{ lightImage }}" alt="" height="21" width="80">
+            {% endif %}
+{#                <span class="logo-text">{{ lgLogoHtml|raw }}</span>#}
+            </span>
+    </a>
+    <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+            id="vertical-hover">
+        <i class="ri-record-circle-line"></i>
+    </button>
+</div>

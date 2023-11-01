@@ -60,7 +60,7 @@
                                    data-bs-toggle="dropdown" data-bs-auto-close="{{ layout_type is same as "vertical" ? 'false' : 'outside' }}"
                                    aria-expanded="{{ layout_type is same as "vertical" }}">
                                     {{ _self.item_icon(child) }}
-                                    {{ child.label|trans({}, child.translationDomain) }}
+                                    {{ child.label|trans({}, child.translationDomain|default(false)) }}
                                     {{ _self.item_badge(child) }}
                                 </a>
                                 {{ _self.item_childs(child, layout_type, matcher) }}

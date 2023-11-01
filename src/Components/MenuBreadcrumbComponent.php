@@ -17,4 +17,6 @@ use function Symfony\Component\String\u;
 #[AsTwigComponent('menu_breadcrumb', template: '@SurvosBootstrap/components/menu_breadcrumb.html.twig')]
 class MenuBreadcrumbComponent extends MenuComponent
 {
+    public string|bool|null $translationDomain  = false;
+
 }

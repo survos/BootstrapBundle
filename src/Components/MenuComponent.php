@@ -43,12 +43,15 @@ class MenuComponent
 
     public ItemInterface $menuItem;
 
+    public string|bool|null $translationDomain  = false;
+
     protected const SHORTCUTS = [
         'sidebar' => KnpMenuEvent::SIDEBAR_MENU_EVENT,
         'top_navbar' => KnpMenuEvent::NAVBAR_MENU_EVENT,
         'top_auth' => KnpMenuEvent::AUTH_MENU_EVENT,
         'footer' => KnpMenuEvent::FOOTER_MENU_EVENT,
         'top_page' => KnpMenuEvent::PAGE_MENU_EVENT,
+        'profile_dropdown' => KnpMenuEvent::PROFILE_DROPDOWN_MENU_EVENT,
     ];
 
     public function mount(string $type, ?string $eventName = null, array $path = [], array $options = [])

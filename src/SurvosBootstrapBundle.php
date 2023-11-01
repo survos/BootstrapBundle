@@ -5,6 +5,7 @@ namespace Survos\BootstrapBundle;
 use Survos\BootstrapBundle\Components\AccordionComponent;
 use Survos\BootstrapBundle\Components\AlertComponent;
 use Survos\BootstrapBundle\Components\BadgeComponent;
+use Survos\BootstrapBundle\Components\BrandComponent;
 use Survos\BootstrapBundle\Components\ButtonComponent;
 use Survos\BootstrapBundle\Components\CardComponent;
 use Survos\BootstrapBundle\Components\CarouselComponent;
@@ -84,7 +85,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 AlertComponent::class,
                 AccordionComponent::class,
                 AlertComponent::class,
-//                     BrandComponent::class,
+                BrandComponent::class,
                 BadgeComponent::class,
                 ButtonComponent::class,
                 CardComponent::class,
