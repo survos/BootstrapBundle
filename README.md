@@ -47,9 +47,9 @@ symfony new menu7 --webapp --version=next && cd menu7
 composer config minimum-stability dev
 composer config prefer-stable false
 composer config extra.symfony.allow-contrib true
-sed -i 's/"6.4.*"/"^7.0"/' composer.json
+#sed -i 's/"6.4.*"/"^7.0"/' composer.json
 composer update
-composer config repositories.knp_menu_bundle '{"type": "vcs", "url": "git@github.com:tacman/KnpMenuBundle.git"}'
+#composer config repositories.knp_menu_bundle '{"type": "vcs", "url": "git@github.com:tacman/KnpMenuBundle.git"}'
 composer require knplabs/knp-menu-bundle
 composer req symfony/asset-mapper
 bin/console make:controller -i Menu

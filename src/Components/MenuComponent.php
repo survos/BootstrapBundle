@@ -45,6 +45,8 @@ class MenuComponent
 
     public string|bool|null $translationDomain  = false;
 
+    public string $wrapperClass;
+
     protected const SHORTCUTS = [
         'sidebar' => KnpMenuEvent::SIDEBAR_MENU_EVENT,
         'top_navbar' => KnpMenuEvent::NAVBAR_MENU_EVENT,

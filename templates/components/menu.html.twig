@@ -1,5 +1,6 @@
 {#  this fires an event, all listeners/subscribers will respond.  use A #}
-{#    {% set menuItem = knp_menu_get(menuAlias, path, options) %}#}
+{#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
+
     {% if type == 'sidebar' %}
         {{ knp_menu_render(menuItem, {
             "template"      : "@SurvosBootstrap/sneat/knp_menu.html.twig",
@@ -24,7 +25,7 @@
 
         }) }}
 
-    {% elseif type in ['footer']  %}
+    {% elseif type in ['footer'] %}
 
         {{ knp_menu_render(menuItem, {
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
@@ -37,7 +38,7 @@
         }) }}
 
 
-    {% elseif type in ['top_auth']  %}
+    {% elseif type in ['top_auth'] %}
         {% set menuHtml = knp_menu_render(menuItem, {
             attributes: "dropdown-menu dropdown-menu-end",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
@@ -45,14 +46,18 @@
         {{ menuHtml|raw }}
 
     {% elseif type in ['top_navbar', 'top_page'] %}
-        {{ knp_menu_render(menuItem, {
-            rootAttributes: {
-                class:"navbar-nav me-auto mb-2 mb-lg-0 list-group-horizontal"
-            },
-            currentClass  : "active",
-
-            template: '@SurvosBootstrap/knp_top_menu.html.twig',
-            style: 'navbar'}) }}
+        {% set menu = knp_menu_get(menuItem) %}
+        {% if menu.children|length %}
+            {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
+            {{ knp_menu_render(menuItem, {
+                rootAttributes: {
+                    class:"navbar-nav me-auto mb-2 mb-lg-0 list-group-horizontal"
+                },
+                currentClass  : "active",
+                template: '@SurvosBootstrap/knp_top_menu.html.twig',
+                style: 'navbar'}) }}
+            {% if wrapperClass|default(false) %}</div>{% endif %}
+        {% endif %}
     {% else %}
         <div class="text-danger">Invalid menu type: {{ type }}</div>
     {% endif %}
