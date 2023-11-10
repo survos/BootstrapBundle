@@ -1,0 +1,39 @@
+{#https://getbootstrap.com/docs/5.2/components/navbar/#}
+
+{#    {% set menu = knp_menu_get('survos_navbar_menu', [], {'some_option': 'my_value'}) %}#}
+
+{#someday we can use these and have just one menu renderer#}
+{#template: '@SurvosBootstrap/sneat/knp_menu.html.twig',#}
+{#branch_class: 'nav-item dropdown',#}
+{#leaf_class: 'nav-item',#}
+{#link_class: 'nav-link',#}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-1">
+    <div class="container-fluid">
+        {% block brand %}
+            {{ component('link', {path: 'home'|route_alias, body: 'home'|trans}) }}
+        {% endblock %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+{#            {{ menuHtml|raw }}#}
+            {% block top_navbar_menu %}
+            {{ component('menu', {type: 'top_navbar'}) }}
+            {% endblock %}
+            {% block search %}
+{#            <form class="d-flex" onsubmit="return false">#}
+{#                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">#}
+{#                <button class="btn btn-outline-primary" type="submit">Search</button>#}
+{#            </form>#}
+            {% endblock %}
+        </div>
+    </div>
+
+    {% if theme_option('allow_login') %}
+    {{ include('@SurvosBootstrap/sneat/_navbar_auth.html.twig') }}
+    {% endif %}
+
+    {#    {{ include('@SurvosBootstrap/sneat/_navbar_auth_example.html.twig') }}#}
+
+</nav>

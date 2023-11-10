@@ -42,6 +42,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 {% block sidebar %}
+{#                    {{ include('@SurvosBootstrap/bs5/_sidebar.html.twig') }}#}
                     {{ component('menu', {type: 'sidebar'}) }}
                 {% endblock %}
             </aside>
@@ -50,7 +51,7 @@
             <div class="layout-page">
                 <!-- Navbar -->
                 {% block navbar %}
-                    {% embed('@SurvosBootstrap/sneat/_navbar.html.twig') %}
+                    {% embed('@SurvosBootstrap/bs5/_navbar.html.twig') %}
                     {% endembed %}
                 {% endblock %}
 
@@ -83,16 +84,17 @@
                     </div>
 
                     {% block footer %}
-                        {% embed('@SurvosBootstrap/sneat/_footer.html.twig') %}
+                    <footer class="c">
                             {% block footer_menu %}
                                 {# dispatch a menu event to populate the footer menu.  Overwrite this block to customize with options or a custom menu event #}
                                 {{ component('menu', {
                                     type: 'footer',
+                                    wrapperClass: 'content-footer footer bg-footer-theme fixed-bottom ',
                                     options: {
                                     }
                                 }) }}
                             {% endblock %}
-                        {% endembed %}
+                    </footer>
                     {% endblock %}
 
                     <div class="content-backdrop fade"></div>

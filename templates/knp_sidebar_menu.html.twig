@@ -1,0 +1,195 @@
+{% extends '@KnpMenu/menu.html.twig' %}
+{% set debug = options['debug']|default(false) %}
+{% block root %}
+    <!-- {{ _self }} -->
+    {% set listAttributes = item.childrenAttributes %}
+    {{ block('list') -}}
+{% endblock %}
+
+{#<ul class="menu-inner py-1">#}
+{#    <!-- Dashboard -->#}
+{#    <li class="menu-item">#}
+{#        <a href="index.html" class="menu-link">#}
+{#            <i class="menu-icon tf-icons bx bx-home-circle"></i>#}
+{#            <div data-i18n="Analytics">Dashboard</div>#}
+{#        </a>#}
+{#    </li>#}
+
+{% block list %}
+    {% set depth = depth is defined ? depth + 1 : 0 %}
+    {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {% import "knp_menu.html.twig" as macros %}
+
+        {% if matcher.isAncestor(item) %}
+            {%- set listAttributes = listAttributes|merge({class: (listAttributes.class|default(''))|trim}) -%}
+        {% endif %}
+        {% if item.isRoot %}
+            {%- set listAttributes = item.isRoot
+                ? options['rootAttributes']
+                : (listAttributes|merge({class: (listAttributes.class|default('') ~ ' ')}))
+                |trim -%}
+        {% endif %}
+        {% if depth > 0 %}
+            {%- set listAttributes = listAttributes|merge({class: ' menu-sub'}) %}
+        {% endif %}
+        <ul{{ macros.attributes(listAttributes) }}>
+            {{ block('children') }}
+        </ul>
+        {% set depth = depth - 1 %}
+    {% endif %}
+{% endblock %}
+
+{% block linkElement %}
+    {% import "knp_menu.html.twig" as macros %}
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class'), ' menu-link'] : [' menu-link'] %}
+    <!-- linkElement -->
+
+    {%- set attributes = item.linkAttributes %}
+    {% if matcher.isCurrent(item) %}
+        {%- set classes = classes|default([])|merge([options.currentClass]) %}
+        {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.currentClass} ) %}
+    {% endif %}
+
+    {# passed in via render_sidebar.html.twig #}
+    {% set attributes = attributes|merge({ 'class': attributes.class|default([])|join(' ') ~ ' ' ~ options.link_class|default('')} ) %}
+
+    <a href="{{ item.uri }}" {{ macros.attributes(attributes) }}>
+        {{ block('icon') }}
+{#        {% if item.attribute('data-icon') is not empty  %}#}
+{#            <i class="menu-icon tf-icons bx bx-copy"></i>#}
+{#            <i class="{{ item.attribute('data-icon') }}"></i>#}
+{#        {% endif %}#}
+        {{ block('label') }}
+    </a>
+{% endblock %}
+
+{% block icon %}
+<!-- icon -->
+<i class="menu-icon {{ item.attribute('data-icon') is not empty ? item.attribute('data-icon') : 'fas fa-circle' }}"></i>
+{% endblock %}
+
+{% block item %}
+    {%- set is_collapsable = item.hasChildren %} {# was attributes.collapsable|default(false) %} #}
+
+    {% if item.displayed %}
+        {# building the class of the item #}
+        {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+        {%- if matcher.isCurrent(item) %}
+            {%- set classes = classes|merge([options.currentClass]) %}
+        {%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+            {%- set classes = classes|merge([options.ancestorClass]) %}
+        {%- endif %}
+        {%- if item.actsLikeFirst %}
+            {%- set classes = classes|merge([options.firstClass]) %}
+        {%- endif %}
+        {%- if item.actsLikeLast %}
+            {%- set classes = classes|merge([options.lastClass]) %}
+        {%- endif %}
+
+        {# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+        {% if item.hasChildren and options.depth is not same as(0) %}
+            {% if options.branch_class is not empty and item.displayChildren %}
+                <!-- branch, has leaves ({{  matcher.isAncestor(item, options.matchingDepth) ? 'open' : 'closed' }}) -->
+                {% set classes = classes|merge([options.branch_class]) %}
+            {% endif %}
+        {% elseif options.leaf_class is not empty %}
+            <!-- has leaf_class -->
+            {%- set classes = classes|merge([options.leaf_class]) %}
+        {%- endif %}
+
+        {%- set attributes = item.attributes %}
+        {%- if classes is not empty %}
+            {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+        {%- endif %}
+        {% if matcher.isAncestor(item, options.matchingDepth) %}
+            {%- set attributes = attributes|merge({'class': classes|join(' menu.item.open open active ')}) %}
+            {% endif %}
+{#        {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}#}
+        {# displaying the item #}
+        {% import _self as knp_menu %}
+        <li{{ knp_menu.attributes(attributes) }} >
+            {# if uri is set, it must be a leaf. #}
+            {% set ulId = item.name %}
+            {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) %}
+                {{ block('linkElement') }}
+            {%- else %}
+                {% if item.hasChildren %}
+                    {#                    <a data-bs-target="#{{ ulId }}" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">#}
+                    {#                        <i class="uil-table"></i>#}
+                    {#                        <span class="align-middle">Locations</span>#}
+                    {#                    </a>#}
+
+                    {#                collapsible {{  matcher.isAncestor(item, options.matchingDepth) ? 'ancestor' : 'not ancestor' }}#}
+                    <a
+{#                            data-bs-target="#{{ ulId }}"#}
+{#                       data-bs-toggle="collapse"#}
+                       aria-expanded="false"
+                       class="menu-link menu-toggle {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}">
+                        {{ block('icon') }}
+                        {{ block('spanElement') }}
+                        {{ block('badge') }}
+                        {#                        <span class="end fas fa-angle-left"></span>#}
+                    </a>
+                {% else %}
+                    {{ block('spanElement') }}
+                {% endif %}
+
+            {%- endif %}
+            {# render the list of children#}
+            {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+            {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+            {#            {%- set childrenClasses = childrenClasses|merge(['nav-treeview']) %}#}
+            {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+            {%- set listAttributes = listAttributes|merge({'id': ulId, 'class':  matcher.isAncestor(item, options.matchingDepth) ? 'show' : 'collapse' }) %}
+            {{ block('list') }}
+        </li>
+    {% endif %}
+{% endblock %}
+
+
+{% block spanElement %}
+    {% import _self as knp_menu %}
+    <!-- spanElement, includes label -->
+    <span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span>
+{% endblock %}
+
+{% block label %}
+    {% set badge = item.extras.badge|default(false) %}
+
+    <div data-i18n="{{ item.label }}" class="position-relative">
+        {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}
+    {% if badge %}
+        <span class="xxposition-absolute top-30 xxstart-120 translate-middle p-1 bg-success border border-light rounded-circle">{{ badge.value }}</span>
+    {% endif %}
+
+    </div>
+
+    {% endblock %}
+
+{% macro badges(item) %}
+    {% import _self as selfMacros %}
+    {% if item.getExtra('badge') is not null %}
+        {{ selfMacros.badge(item.getExtra('badge')) }}
+    {% elseif item.getExtra('badges') is not null %}
+        {% for badge in item.getExtra('badges') %}
+            {{ selfMacros.badge(badge) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% block badge %}
+    {% set badge = item.extras.badge|default(false) %}
+{% if badge %}
+    {#  moved to label
+        <span class="float-end">
+                {{ component('badge', {style: 'right', color: 'white', text: 'primary', message: badge.value}) }}
+        </span>
+    #}
+    {% endif %}
+{% endblock %}
+
+{% macro badge(badge) %}
+    <div class="mm-counter"><span class="badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span>
+        {{ badge.value }}
+    </div>
+{% endmacro %}
