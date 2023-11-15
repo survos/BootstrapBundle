@@ -17,8 +17,23 @@ class ContextService
         "dark",
         ];
 
-    public function __construct(private array $options = [])
+    public function __construct(
+        private array $options = [],
+        private array $config = []
+
+    )
     {
+    }
+
+    public function getConfig(): array
+    {
+        return $this->config;
+    }
+
+    public function setConfig(array $config): ContextService
+    {
+        $this->config = $config;
+        return $this;
     }
 
     public function getOption(string $option, string $default=null): mixed

@@ -28,7 +28,7 @@
 
         }) }}
 
-    {% elseif type in ['footer'] %}
+    {% elseif type in ['footer', FOOTER_MENU] %}
 
         {% set menu = knp_menu_get(menuItem) %}
         {% if menu.children|length %}
@@ -47,14 +47,14 @@
         {% endif %}
 
 
-    {% elseif type in ['top_auth'] %}
+    {% elseif type in ['top_auth', AUTH_MENU] %}
         {% set menuHtml = knp_menu_render(menuItem, {
             attributes: "dropdown-menu dropdown-menu-end",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             style: 'dropdown'}) %}
         {{ menuHtml|raw }}
 
-    {% elseif type in ['top_navbar', 'top_page'] %}
+    {% elseif type in ['top_navbar', 'top_page', NAVBAR_MENU, NAVBAR_MENU2, NAVBAR_MENU3] %}
         {% set menu = knp_menu_get(menuItem) %}
         {% if menu.children|length %}
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}

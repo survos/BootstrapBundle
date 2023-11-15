@@ -38,11 +38,13 @@
     {% set use_multilevel = true %}
 
     {% if item.displayed %}
-
-
         {%- set attributes = item.attributes %}
         {%- set is_dropdown = attributes.dropdown|default(false) %}
         {%- set is_collapsable = item.hasChildren %} {# was attributes.collapsable|default(false) %} #}
+        {% if item.attribute('divider_append') is not empty  %}
+            {{ block('dividerElement') }}
+        {% endif %}
+
         {%- set divider_prepend = attributes.divider_prepend|default(false) %}
         {%- set divider_append = attributes.divider_append|default(false) %}
         {# unset bootstrap specific attributes #}
@@ -104,9 +106,9 @@
                 {{ block('spanElement') }}
             {%- endif %}
 
-            {%- if divider_append %}
-                {{ block('dividerElement') }}
-            {%- endif %}
+{#            {%- if divider_append %}#}
+{#                {{ block('dividerElement') }}#}
+{#            {%- endif %}#}
 
             {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
                 {%- if is_dropdown %}
@@ -193,8 +195,13 @@
 {% endblock %}
 
 {% block dividerElement %}
+
     {% if item.level == 1 %}
-        <li class="divider-vertical"></li>
+{#        <li class="divider-vertical"></li>#}
+        <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+            <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+            <hr class="d-lg-none my-2 text-white-50">
+        </li>
     {% else %}
         <li class="divider"></li>
     {% endif %}
@@ -222,7 +229,6 @@
 {% block linkElement %}
     {% import "knp_menu.html.twig" as macros %}
     {% import _self as ownmacro %}
-
     {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'nav-link depth-' ~ item.level ) }}
 {#    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'dropdown-item', ' depth-' ~ item.level ) }}#}
 

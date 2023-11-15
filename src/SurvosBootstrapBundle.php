@@ -40,6 +40,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
     use HasAssetMapperTrait;
+
     // protected string $extensionAlias = 'survos_bootstrap';
 
     // removed in favor of using the ContextService global
@@ -58,8 +59,15 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         if (false === $container->hasDefinition('twig')) {
             return;
         }
-        $theme = $container->getParameter('my.theme');
         $def = $container->getDefinition('twig');
+
+        $eventClass = (new \ReflectionClass(KnpMenuEvent::class));
+        foreach ($eventClass->getConstants() as $name => $value) {
+            $def->addMethodCall('addGlobal', [$name, $value]);
+        }
+//        dd($def);
+
+        $theme = $container->getParameter('my.theme');
         // I think we did this before we added ContextService, so use the twig function to get what we want, e.g. theme_option('theme')
         $def->addMethodCall('addGlobal', ['theme', $theme]);
     }
@@ -75,6 +83,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         assert(is_array($config['routes']), json_encode($config));
 
         $builder->register(ContextService::class)
+            ->setArgument('$config', $config)
             ->setArgument('$options', $config['options'])
             ->setAutowired(true);
         $container->parameters()->set('my.theme', $config['options']['theme']);
@@ -114,6 +123,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)
             ->addTag('twig.extension')
+            ->setArgument('$config', $config)
             ->setArgument('$routes', $config['routes'])
             ->setArgument('$options', $config['options'])
             ->setArgument('$contextService', new Reference(ContextService::class))
@@ -139,6 +149,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         // since the configuration is short, we can add it here
         $definition->rootNode()
             ->children()
+            ->append($this->getAppConfig())
             ->append($this->getRouteAliasesConfig())
             ->append($this->getContextConfig())
             ->arrayNode('menu_options')
@@ -151,9 +162,25 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 
     public function getPaths(): array
     {
-        $dir = realpath(__DIR__.'/../assets/');
+        $dir = realpath(__DIR__ . '/../assets/');
         assert(file_exists($dir), 'asset path must exist for the assets in ' . __DIR__);
         return [$dir => '@survos/bootstrap'];
+    }
+
+    private function getAppConfig(): ArrayNodeDefinition
+    {
+        $treeBuilder = new TreeBuilder('app');
+        /** @var ArrayNodeDefinition $rootNode */
+        $rootNode = $treeBuilder->getRootNode();
+
+        $rootNode
+            ->addDefaultsIfNotSet()
+            ->children()
+                ->arrayNode('social')->useAttributeAsKey('name')->prototype('scalar')->end()->info('links to facebook, etc.')->end()
+                ->scalarNode('code')->defaultValue('my-project')->info('project code, default for repo, dokku deployment, etc.')->end()
+                ->scalarNode('abbr')->defaultValue('my<b>Project</b>')->info('text abbreviation')->end()
+            ->end();
+        return $rootNode;
     }
 
 

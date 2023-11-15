@@ -19,7 +19,7 @@ trait KnpMenuHelperTrait
     //    private ?ParameterBagInterface $bag=null;
 
     //    private ?array $options;
-    private $childOptions;
+    private array $childOptions=[];
 
     public function supports(KnpMenuEvent $event): bool
     {
@@ -71,6 +71,8 @@ trait KnpMenuHelperTrait
         ?bool $external = null,
         bool $returnItem = false,
         bool $if = true,
+        bool $dividerPrepend = false,
+        bool $dividerAppend = false,
         string $translationDomain = 'routes',
 
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
@@ -95,11 +97,16 @@ trait KnpMenuHelperTrait
         if (! $label) {
             $label = $route  ?? $uri; // @todo, be smarter.
         }
+
         $options['label'] = $label;
         if (! $id) {
             $id = $this->createId($menu);
         }
         $child = $menu->addChild($id, $options);
+        if (!$label) {
+            $child->setLabel(null);
+        }
+//        if (!$label) dd($id, $options, $child->getName());
         if ($uri) {
             $child->setUri($uri);
             if (is_null($external)) {
@@ -108,7 +115,9 @@ trait KnpMenuHelperTrait
         }
         if ($external) {
             $child->setLinkAttribute('target', '_blank');
-            $options['icon'] = 'fas fa-external-alt';
+            if (!$icon) {
+                $options['icon'] = 'fas fa-external-alt';
+            }
         }
 
         if (!$child->getExtra('translation_domain')) {
@@ -119,8 +128,24 @@ trait KnpMenuHelperTrait
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.
         $child->setLabel($label);
 
+        if ($options['icon']??false) {
+            $child->setAttribute('icon', $options['icon']);
+        }
+
+        if ($dividerPrepend) {
+            $child->setAttribute('divider_prepend', true);
+        }
+        if ($dividerAppend) {
+            $child->setAttribute('divider_append', true);
+        }
+
         $options = $this->menuOptions($options);
         $this->setChildOptions($child, $options);
+
+        if ($dividerAppend) {
+//            dd($label, $child->getLabel());
+        }
+
 
         return $returnItem ? $child : $this;
     }
@@ -240,7 +265,11 @@ trait KnpMenuHelperTrait
             // _index is commonly used to list entities
             $routeLabel = preg_replace('/_index$/', '', $routeLabel);
             $routeLabel = preg_replace('/^app_/', '', $routeLabel);
-            $options['label'] = u($routeLabel)->replace('_', ' ')->title(true)->toString();
+            if ($options['label'] !== false) {
+                $options['label'] = u($routeLabel)->replace('_', ' ')->title(true)->toString();
+            } else {
+                $options['noLabel'] = true;
+            }
         }
 
         if (empty($options['label']) && $options['menu_code']) {

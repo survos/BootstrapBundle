@@ -1,0 +1,22 @@
+survos_bootstrap:
+  app:
+    code: dt-demo
+    name: DataTables Demo
+    github: survos-sites/dt-demo
+  routes:
+    login: app_login
+    logout: app_logout
+    home: app_homepage
+    register: app_register
+    offcanvas: app_settings
+  options:
+    # consider https://startbootstrap.com/previews/simple-sidebar as another theme
+    theme: bs5
+    layout_direction: vertical
+    allow_login: true
+    offcanvas: end
+
+  menu_options:
+    project: null
+    frontPage: false
+    showAppMenu: true

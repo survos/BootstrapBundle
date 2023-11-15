@@ -47,30 +47,24 @@ class MenuComponent
 
     public string $wrapperClass;
 
-    protected const SHORTCUTS = [
-        'sidebar' => KnpMenuEvent::SIDEBAR_MENU_EVENT,
-        'top_navbar' => KnpMenuEvent::NAVBAR_MENU_EVENT,
-        'top_auth' => KnpMenuEvent::AUTH_MENU_EVENT,
-        'footer' => KnpMenuEvent::FOOTER_MENU_EVENT,
-        'top_page' => KnpMenuEvent::PAGE_MENU_EVENT,
-        'profile_dropdown' => KnpMenuEvent::PROFILE_DROPDOWN_MENU_EVENT,
-    ];
-
+//    protected const SHORTCUTS = [
+//        'sidebar' => KnpMenuEvent::SIDEBAR_MENU_EVENT,
+//        'top_navbar' => KnpMenuEvent::NAVBAR_MENU_EVENT,
+//        'top_auth' => KnpMenuEvent::AUTH_MENU_EVENT,
+//        'footer' => KnpMenuEvent::FOOTER_MENU_EVENT,
+//        'top_page' => KnpMenuEvent::PAGE_MENU_EVENT,
+//        'profile_dropdown' => KnpMenuEvent::PROFILE_DROPDOWN_MENU_EVENT,
+//    ];
+//
     public function mount(string $type, ?string $eventName = null, array $path = [], array $options = [])
     {
         $this->type = $type;
         $this->path = $path;
         $this->options = $options;
-        assert(
-            array_key_exists($type, self::SHORTCUTS),
-            "Invalid menu shortcut $type, use " . join(',', array_keys(self::SHORTCUTS))
-        );
-        //        $data['menuCode'] = $shortcuts[$data['type']];
-        if (! $eventName) {
-            $eventName = self::SHORTCUTS[$type];
-        }
+//        dd(constant(KnpMenuEvent::NAVBAR_MENU), $type, $eventName);
+        $eventName = constant(KnpMenuEvent::class . '::' .  $type);
 
-        $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::MENU_EVENT);
+        $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::class);
 
         $options = (new OptionsResolver())
             ->setDefaults($this->menuOptions)
