@@ -43,7 +43,7 @@
 
                 {% block sidebar %}
 {#                    {{ include('@SurvosBootstrap/bs5/_sidebar.html.twig') }}#}
-                    {{ component('menu', {type: 'sidebar'}) }}
+                    {{ component('menu', {type: SIDEBAR_MENU}) }}
                 {% endblock %}
             </aside>
 
@@ -69,13 +69,13 @@
                             {% block breadcrumbs %}
                                 {{ component('menu_breadcrumb', {
                                     wrapperClass: 'fw-bold py-3 mb-4 d-print-none',
-                                    type: 'sidebar'}) }}
+                                    type: SIDEBAR_MENU}) }}
                             {% endblock %}
 
                             {% block page_menu %}
                                 {{ component('menu', {
                                     wrapperClass: 'fw-bold py-3 mb-4 d-print-none',
-                                    type: 'top_page'}) }}
+                                    type: NAVBAR_MENU}) }}
                             {% endblock %}
 
                         {% block body %}

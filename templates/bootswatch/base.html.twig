@@ -5,15 +5,15 @@
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        body {
-            padding-top: 160px;
-        }
-    </style>
+{#    <style>#}
+{#        body {#}
+{#            padding-top: 460px;#}
+{#        }#}
+{#    </style>#}
 
 {% endblock %}
 {% block body_content %}
-    <div class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark">
+    <div class="navbar navbar-expand-lg sticky-top xxfixed-top bg-primary" data-bs-theme="dark">
         <div class="container">
             <a href="../" class="navbar-brand">{{ config().app.abbr|raw }}</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
