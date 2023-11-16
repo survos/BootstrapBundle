@@ -104,7 +104,7 @@ trait KnpMenuHelperTrait
         }
         $child = $menu->addChild($id, $options);
         if (!$label) {
-            $child->setLabel(null);
+            $child->setLabel(' '); // ideally so id isn't used.
         }
 //        if (!$label) dd($id, $options, $child->getName());
         if ($uri) {
@@ -237,7 +237,7 @@ trait KnpMenuHelperTrait
                 'routes' => null,
                 'external' => false,
                 '_fragment' => null,
-                'label' => null,
+                'label' => '', // null will use id as label
                 'icon' => null,
                 'badge' => null,
                 'feather' => null,
@@ -267,8 +267,6 @@ trait KnpMenuHelperTrait
             $routeLabel = preg_replace('/^app_/', '', $routeLabel);
             if ($options['label'] !== false) {
                 $options['label'] = u($routeLabel)->replace('_', ' ')->title(true)->toString();
-            } else {
-                $options['noLabel'] = true;
             }
         }
 
