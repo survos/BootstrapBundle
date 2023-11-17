@@ -90,3 +90,29 @@ symfony open:local --path=/menu
 
 ```
 
+
+# bootstrap-icons bug
+```bash
+symfony new bootstrap-icons-bug --webapp --version=next --php=8.2 && cd bootstrap-icons-bug
+composer config minimum-stability beta
+composer config extra.symfony.allow-contrib true
+composer req symfony/asset-mapper:^6.4 
+bin/console importmap:require bootstrap-icons/font/bootstrap-icons.min.css
+echo "import 'bootstrap/dist/css/bootstrap.min.css'" >> assets/app.js
+bin/console make:controller App -i
+sed -i "s|/app|/|" src/Controller/AppController.php 
+
+cat > templates/app.html.twig <<'END'
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  icon: 
+  <span class="bi bi-github"></span>
+{% endblock %}
+END
+
+composer req survos/deployment-bundle
+bin/console dokku:config bootstrap-icons-bug
+
+
+```
