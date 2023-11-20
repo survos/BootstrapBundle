@@ -13,5 +13,27 @@
 <body>
 {% block body_content %}
 {% endblock %}
+
+{% block footer %}
+    <footer class="text-center text-md-start fixed-bottom">
+{#        {% block footer_copyright %}#}
+{#        <span class="text-center p-3">#}
+{#            © 2023#}
+{#            <a class="text-dark">{{ _self }}</a>#}
+{#        </span>#}
+{#        {% endblock %}#}
+{#        wrapperClass: 'container p-4',#}
+
+        {% block footer_menu %}
+            {# dispatch a menu event to populate the footer menu.  Overwrite this block to customize with options or a custom menu event #}
+            {{ component('menu', {
+                type: FOOTER_MENU,
+                options: {
+                }
+            }) }}
+        {% endblock %}
+
+    </footer>
+{% endblock %}
 </body>
 </html>

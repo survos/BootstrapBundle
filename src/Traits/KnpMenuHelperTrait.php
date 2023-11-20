@@ -7,6 +7,7 @@ use Google\Auth\Cache\Item;
 use Knp\Menu\ItemInterface;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -15,7 +16,7 @@ use function Symfony\Component\String\u;
 
 trait KnpMenuHelperTrait
 {
-    private ?AuthorizationCheckerInterface $authorizationChecker = null;
+//    private ?AuthorizationCheckerInterface $authorizationChecker = null;
     //    private ?ParameterBagInterface $bag=null;
 
     //    private ?array $options;
@@ -39,17 +40,19 @@ trait KnpMenuHelperTrait
             'icon' => $icon,
             'id' => $id,
         ]);
+//        if ($subMenu->getLabel() == 'tt@survos.com') dd($subMenu, $subMenu->getAttributes());
         return $subMenu;
     }
 
     public function addHeading(ItemInterface $menu, string $label, string $icon = null): void
     {
-        $this->addMenuItem($menu, [
+        $item = $this->addMenuItem($menu, [
             'label' => $label,
             'style' => 'header',
             'icon' => $icon,
             'id' => (new AsciiSlugger())->slug($label??'')->toString()
         ]);
+
     }
 
     private function createId(ItemInterface $menu): string
@@ -120,6 +123,8 @@ trait KnpMenuHelperTrait
             }
         }
 
+        // hack to align navigation if no link
+
         if (!$child->getExtra('translation_domain')) {
             $child->setExtra('translation_domain', $translationDomain);
         }
@@ -141,6 +146,8 @@ trait KnpMenuHelperTrait
 
         $options = $this->menuOptions($options);
         $this->setChildOptions($child, $options);
+        $child->setExtra('safe_label', true);
+
 
         if ($dividerAppend) {
 //            dd($label, $child->getLabel());
@@ -333,10 +340,27 @@ trait KnpMenuHelperTrait
         return $this->authorizationChecker ? $this->authorizationChecker->isGranted($attribute, $subject) : false;
     }
 
-    public function authMenu(AuthorizationCheckerInterface $security, ItemInterface $menu, $childOptions = [])
+    public function authMenu(AuthorizationCheckerInterface $authorizationChecker,
+                             Security $security,
+
+                             ItemInterface                 $menu, $childOptions = [])
     {
-        if ($security->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $menu->addChild(
+
+        if ($authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $subMenu = $this->addSubmenu($menu,
+                $security->getUser()->getUserIdentifier(),
+                id: 'user_menu'
+            );
+            // why both??
+            $subMenu->setExtra('btn', 'btn btn-danger');
+//            dd($subMenu);
+//            $subMenu->setLinkAttribute('class', 'btn btn-danger');
+//            $subMenu->setLabelAttribute('class', 'btn btn-danger');
+
+            //            $subMenu->setLinkAttribute('classxx', 'btn btn-danger');
+//            dd($subMenu->getLinkAttributes(), $subMenu->getAttributes());
+
+            $subMenu->addChild(
                 'logout',
                 [
                     'route' => 'app_logout',

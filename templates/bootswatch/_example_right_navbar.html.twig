@@ -1,0 +1,57 @@
+{% if false %}
+    <ul class="navbar-nav ms-md-auto">
+        <li class="nav-item dropdown" data-bs-theme="light">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="version-menu"
+               aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static"
+               aria-label="Toggle theme">
+                <span class="d-lg-none me-2">Bootstrap </span>
+                <span>v5.3</span>
+            </a>
+            {# maybe for languages?  It's got some relevant classes. #}
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a href="https://bootswatch.com/"
+                       class="dropdown-item d-flex align-items-center justify-content-between"
+                       aria-current="true">
+                        <span class="ms-2">v5.3.x</span><i class="bi bi-check"></i>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <a href="https://bootswatch.com/4/"
+                       class="dropdown-item d-flex align-items-center justify-content-between">
+                        <span class="ms-2">v4.6.2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item py-2 py-lg-1 col-12 col-lg-auto">
+            <div class="vr d-none d-lg-flex h-100 mx-lg-2 text-white"></div>
+            <hr class="d-lg-none my-2 text-white-50">
+        </li>
+        <li class="nav-item dropdown" data-bs-theme="light">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="theme-menu"
+               aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static"
+               aria-label="Toggle theme">
+                <i class="bi bi-circle-half"></i>
+                <span class="d-lg-none ms-2">Toggle theme</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center"
+                            data-bs-theme-value="light" aria-pressed="false">
+                        <i class="bi bi-sun-fill"></i><span class="ms-2">Light</span>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="dropdown-item d-flex align-items-center"
+                            data-bs-theme-value="dark" aria-pressed="true">
+                        <i class="bi bi-moon-stars-fill"></i><span class="ms-2">Dark</span>
+                    </button>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endif %}

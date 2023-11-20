@@ -5,6 +5,7 @@
 namespace Survos\BootstrapBundle\Service;
 
 use Knp\Menu\ItemInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -16,7 +17,10 @@ class MenuService
 
     private $childOptions;
 
-    public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(
+        private AuthorizationCheckerInterface $authorizationChecker,
+        private Security $security
+    )
     {
     }
 

@@ -141,7 +141,11 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 
         $builder->register(MenuService::class)
             ->setAutowired(true)
-            ->setArgument('$authorizationChecker', new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+            ->setArgument('$authorizationChecker',
+                new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument('$security',
+                new Reference('security', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+            ;
     }
 
     public function configure(DefinitionConfigurator $definition): void
@@ -226,9 +230,9 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
+            ->scalarNode('theme')->defaultValue('bootswatch')->info("theme name")->end()
             ->scalarNode('layout_direction')->defaultValue('vertical')->end()
             ->scalarNode('offcanvas')->defaultValue('end')->info("Offcanvas position (top,bottom,start,end")->end()
-            ->scalarNode('theme')->defaultValue('bootswatch')->info("theme name")->end()
 //            ->scalarNode('offcanvas')
 //                ->defaultValue('')
 //                ->info("Offcanvas position (top,bottom,start,end")
@@ -253,6 +257,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $contextOptions = (array)($config['options'] ?? []);
         $contextOptions['control_sidebar'] = $sidebar;
         $contextOptions['knp_menu'] = (array)$config['knp_menu'];
+        dd($config);
         $contextOptions = array_merge($contextOptions, $config['theme']);
 
         return $contextOptions;

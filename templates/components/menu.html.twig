@@ -1,8 +1,6 @@
 {#  this fires an event, all listeners/subscribers will respond.  use A #}
 {#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
 {% set theme = theme_option('theme') %}
-
-
     {% if type == 'sidebar' %}
         {#        "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig", #}
         {{ knp_menu_render(menuItem, {
@@ -28,8 +26,7 @@
 
         }) }}
 
-    {% elseif type in ['footer', FOOTER_MENU] %}
-
+    {% elseif type in [FOOTER_MENU] %}
         {% set menu = knp_menu_get(menuItem) %}
         {% if menu.children|length %}
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
@@ -41,6 +38,7 @@
                     class:"nav nav-justify-end list-group list-group-horizontal dropup"
                 },
                 style: 'footer',
+                allow_safe_labels: true,
                 something_else: 'test render!!'
             }) }}
             {% if wrapperClass|default(false) %}</div>{% endif %}
@@ -49,9 +47,11 @@
 
     {% elseif type in ['top_auth', AUTH_MENU] %}
         {% set menuHtml = knp_menu_render(menuItem, {
-            attributes: "dropdown-menu dropdown-menu-end",
+            rootAttributes: {
+                class:"nav nav-justify-end list-group list-group-horizontal dropdown"
+            },
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
-            style: 'dropdown'}) %}
+            style: 'auth'}) %}
         {{ menuHtml|raw }}
 
     {% elseif type in ['top_navbar', 'top_page', NAVBAR_MENU, NAVBAR_MENU2, NAVBAR_MENU3] %}
@@ -59,6 +59,7 @@
         {% if menu.children|length %}
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
             {{ knp_menu_render(menuItem, {
+                allow_safe_labels: true,
                 rootAttributes: {
                     class:"navbar-nav me-auto mb-2 mb-lg-0 list-group-horizontal"
                 },

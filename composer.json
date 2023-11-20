@@ -22,7 +22,8 @@
         "symfony/ux-twig-component": "^2.8",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4",
-        "survos/core-bundle": "^1.6"
+        "survos/core-bundle": "^1.5",
+        "endroid/installer": "^1.4"
     },
     "autoload": {
         "psr-4": {
@@ -66,5 +67,10 @@
         "survos/wiki-bundle": "<1.2.57",
         "survos/import-bridge": "<1.2.57",
         "survos/grid-group-bundle": "<1.2.57"
+    },
+    "config": {
+        "allow-plugins": {
+            "endroid/installer": true
+        }
     }
 }

@@ -38,7 +38,10 @@
     {% set use_multilevel = true %}
 
     {% if item.displayed %}
-        {%- set attributes = item.attributes %}
+        {%- set attributes = item.attributes|merge(item.linkAttributes) %}
+{#        {{ attributes|length ? dump(attributes) }}#}
+{#        {{ dump(item.linkAttributes) }}#}
+
         {%- set is_dropdown = attributes.dropdown|default(false) %}
         {%- set is_collapsable = item.hasChildren %} {# was attributes.collapsable|default(false) %} #}
         {% if item.attribute('divider_append') is not empty  %}
@@ -94,6 +97,7 @@
 {#            <a class="nav-link" href="#">Link</a>#}
 {#        </li>#}
 
+{#        {{ attributes|length ? /attributes) }}#}
         <li{{ macros.attributes(attributes) }}>
             {# displaying the item #}
             {%- if is_dropdown %}
@@ -252,7 +256,7 @@
     {% import _self as ownmacro %}
     {{ matcher.isCurrent(item) ? 'current Span is ' ~ item.label }}
 
-    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'navbar-text') }}
+    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'navbar-text nav-linkxx') }}
     <span {{ macros.attributes(item.labelAttributes) }}>
         {% if item.attribute('icon') is not empty  %}
             <i class="{{ item.attribute('icon') }}"></i>
@@ -261,30 +265,33 @@
 	</span>
 {% endblock %}
 
-{% block dropdownElement %}
-    'dropdownElement'
-    {% import "knp_menu.html.twig" as macros %}
-    {%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
-    {%- set classes = classes|merge([' dropdown-toggle', 'nav-link']) %}
-    {%- set attributes = item.linkAttributes %}
-    {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
-    {%- set attributes = attributes|merge({'data-bs-toggle': 'dropdown'}) %}
-    {%- set attributes = attributes|merge({'role': 'button'}) %}
-    <a href="#"{{ macros.attributes(attributes) }}>
-        {% if item.attribute('icon') is not empty  %}
-            <i class="{{ item.attribute('icon') }}"></i>
-        {% endif %}
-        {{ block('label') }}
+{#{% block dropdownElement %}#}
+{#    'dropdownElement'#}
+{#    {% import "knp_menu.html.twig" as macros %}#}
+{#    {%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}#}
+{#    {%- set classes = classes|merge([' dropdown-toggle', 'nav-linkx']) %}#}
+{#    {%- set attributes = item.linkAttributes %}#}
+{#    {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}#}
+{#    {%- set attributes = attributes|merge({'data-bs-toggle': 'dropdown'}) %}#}
+{#    {%- set attributes = attributes|merge({'role': 'button'}) %}#}
+{#    <a href="#"{{ macros.attributes(attributes) }}>#}
+{#        {% if item.attribute('icon') is not empty  %}#}
+{#            <i class="{{ item.attribute('icon') }}"></i>#}
+{#        {% endif %}#}
+{#        {{ block('label') }}#}
 {#        <b class="caret"></b>#}
-    </a>
-{% endblock %}
+{#    </a>#}
+{#{% endblock %}#}
 
 {# this is the root link of something that can be collapsed #}
 {% block collapseElement %}
     {% import "knp_menu.html.twig" as macros %}
     {%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
 
-    {%- set classes = classes|merge(['nav-link ','dropdown-toggle']) %}
+    {# nav-link kills buttons, so we need to explicitly set it in the caller #}
+
+    {%- set classes = classes|merge(['dropdown-toggle']) %}
+    {%- set classes = classes|merge([item.extras['btn']|default('nav-link')]) %}
 
     {% if  matcher.isCurrent(item)%}
         {%- set classes = classes|merge(['selected-menu', 'nav-link ']) %}
@@ -310,7 +317,9 @@
     {% if item.labelAttribute('icon') %}<i class="nav-icon {{ item.labelAttribute('icon') }}"></i>{% endif %}
     #}
         {% if not item.labelAttribute('iconOnly') %}
-            {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|trans|raw }}{% else %}{{ item.label|trans }}{% endif %}
+{#            {{ item.name == 'copyright' ? dump(item, options) }}#}
+{#            and item.getExtra('safe_label', false)#}
+            {% if options.allow_safe_labels %}{{ item.label|trans|raw }}{% else %}{{ item.label|trans }}{% endif %}
         {% endif %}
         {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image') }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
 
