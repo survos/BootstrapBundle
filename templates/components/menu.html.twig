@@ -1,7 +1,7 @@
 {#  this fires an event, all listeners/subscribers will respond.  use A #}
 {#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
 {% set theme = theme_option('theme') %}
-    {% if type == 'sidebar' %}
+    {% if type in [SIDEBAR_MENU] %}
         {#        "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig", #}
         {{ knp_menu_render(menuItem, {
             "template"      : "@SurvosBootstrap/sneat/knp_menu.html.twig",
@@ -52,6 +52,16 @@
             },
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             style: 'auth'}) %}
+        {{ menuHtml|raw }}
+
+    {% elseif type in [PAGE_MENU] %}
+        {% set menuHtml = knp_menu_render(menuItem, {
+            rootAttributes: {
+                class:"nav nav-justify-end list-group list-group-horizontal dropdown"
+            },
+            currentClass  : "active selected current ",
+            template: '@SurvosBootstrap/knp_top_menu.html.twig',
+            style: 'navbar'}) %}
         {{ menuHtml|raw }}
 
     {% elseif type in ['top_navbar', 'top_page', NAVBAR_MENU, NAVBAR_MENU2, NAVBAR_MENU3] %}

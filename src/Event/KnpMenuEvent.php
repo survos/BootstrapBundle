@@ -53,7 +53,7 @@ class KnpMenuEvent extends Event
     public function getOption(string $key): mixed
     {
         // @todo: validate with keys from $config
-        assert(array_key_exists($key, $this->options), "$key is invalid, use " . join(', ', $this->options));
+        assert(array_key_exists($key, $this->options), "option '$key' is invalid, use " . join(', ', $this->options));
         return $this->options[$key];
     }
 

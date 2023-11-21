@@ -24,6 +24,7 @@
                 {{ component('menu', {type: NAVBAR_MENU}) }}
                 {{ component('menu', {type: NAVBAR_MENU2}) }}
                 {{ component('menu', {type: NAVBAR_MENU3}) }}
+                {{ component('menu', {type: AUTH_MENU}) }}
                 {# force this right? #}
 
 {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
@@ -31,9 +32,8 @@
             </div>
 
             <!-- Dropdown - User Actions -->
-            <div class="xnav-menu xtext-nowrap">
-                {{ component('menu', {type: AUTH_MENU}) }}
-            </div>
+{#            <div class="xnav-menu xtext-nowrap">#}
+{#            </div>#}
 
 {#            <div class="xnav-menu xtext-nowrap">#}
 {#                <!-- Nav Item - User Information -->#}
@@ -64,7 +64,7 @@
     <div class="container">
         {% block page_header %}
         <div class="page-header" id="banner">
-            {{ component('menu', {type: AUTH_MENU}) }}
+{#            {{ component('menu', {type: AUTH_MENU}) }}#}
 
 {#            page header, breadcrumbs, etc.#}
 {#            <div class="row">#}
@@ -81,7 +81,9 @@
         </div>
         {% endblock %}
 
-        {% block body 'overwrite the body...' %}
+        <div class="mt-4">
+            {% block body 'overwrite the body...' %}
+        </div>
     </div>
 
 

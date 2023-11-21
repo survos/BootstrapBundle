@@ -352,7 +352,7 @@ trait KnpMenuHelperTrait
                 id: 'user_menu'
             );
             // why both??
-            $subMenu->setExtra('btn', 'btn btn-danger');
+            $subMenu->setExtra('btn', 'btn btn-info');
 //            dd($subMenu);
 //            $subMenu->setLinkAttribute('class', 'btn btn-danger');
 //            $subMenu->setLabelAttribute('class', 'btn btn-danger');
