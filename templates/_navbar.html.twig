@@ -1,6 +1,6 @@
 {#  second arg is the branch of the menu we want #}
 
-    {% set menu = knp_menu_get('survos_navbar_menu', [], {'some_option': 'my_value'}) %}
+    {% set menu = knp_menu_get(NAVBAR_MENU, [], {'some_option': 'my_value'}) %}
 
     {#https://getbootstrap.com/docs/5.2/components/navbar/#}
     {% set menuHtml = knp_menu_render(menu, {
