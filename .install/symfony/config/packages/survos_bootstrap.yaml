@@ -6,15 +6,12 @@ survos_bootstrap:
     login: app_login
     logout: app_logout
     register: app_register
-    settings: app_settings
   options:
     # consider https://startbootstrap.com/previews/simple-sidebar as another theme
     theme: bootswatch
-    layout_direction: vertical
-    allow_login: true
+    allow_login: false
     offcanvas: end
   menu_options:
-    video: null
     frontPage: false
     showAppMenu: false
 
