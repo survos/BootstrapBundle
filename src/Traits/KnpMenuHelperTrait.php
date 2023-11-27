@@ -112,7 +112,7 @@ trait KnpMenuHelperTrait
 //        if (!$label) dd($id, $options, $child->getName());
         if ($uri) {
             $child->setUri($uri);
-            if (is_null($external)) {
+            if ($external !== false) {
                 $external = true;
             }
         }
@@ -217,7 +217,7 @@ trait KnpMenuHelperTrait
             ]);
         }
 
-        if ($routes = $options['routes']) {
+        if ($routes = $options['routes']??false) {
             $child->setExtra('routes', $routes);
         }
 
@@ -342,24 +342,23 @@ trait KnpMenuHelperTrait
 
     public function authMenu(AuthorizationCheckerInterface $authorizationChecker,
                              Security $security,
-
-                             ItemInterface                 $menu, $childOptions = [])
+                             ItemInterface                 $menu,
+                             $childOptions = [])
     {
 
+
         if ($authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $user = $security->getUser();
             $subMenu = $this->addSubmenu($menu,
-                $security->getUser()->getUserIdentifier(),
+                $user->getUserIdentifier(),
                 id: 'user_menu'
             );
-            // why both??
+
             $subMenu->setExtra('btn', 'btn btn-info');
-//            dd($subMenu);
-//            $subMenu->setLinkAttribute('class', 'btn btn-danger');
-//            $subMenu->setLabelAttribute('class', 'btn btn-danger');
 
-            //            $subMenu->setLinkAttribute('classxx', 'btn btn-danger');
-//            dd($subMenu->getLinkAttributes(), $subMenu->getAttributes());
-
+            if ($this->isGranted('IS_IMPERSONATOR')) {
+                $this->add($subMenu, '');
+            }
             $subMenu->addChild(
                 'logout',
                 [

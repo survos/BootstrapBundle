@@ -139,12 +139,16 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 //        ;
 
 
+        // do we need this?  Or is the trait better? Or both?
         $builder->register(MenuService::class)
             ->setAutowired(true)
+            ->setArgument('$impersonateUrlGenerator',
+                new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$authorizationChecker',
                 new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument('$usersToImpersonate', $config['impersonate'])
             ->setArgument('$security',
-                new Reference('security', ContainerInterface::NULL_ON_INVALID_REFERENCE));
+                new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE));
             ;
     }
 
@@ -156,11 +160,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->append($this->getAppConfig())
             ->append($this->getRouteAliasesConfig())
             ->append($this->getContextConfig())
-            ->arrayNode('menu_options')
-//            ->isRequired()
-//            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')->prototype('scalar')->end()
-            ->end() // arrayNode
+            ->arrayNode('menu_options')->useAttributeAsKey('name')->prototype('scalar')->end()->end() // arrayNode
+            ->arrayNode('impersonate')->useAttributeAsKey('name')->prototype('scalar')->end()->end() // arrayNode
             ->end(); // rootNode
     }
 
@@ -180,7 +181,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-                ->arrayNode('social')->useAttributeAsKey('name')->prototype('scalar')->end()->info('links to facebook, etc.')->end()
+            ->arrayNode('impersonate')->useAttributeAsKey('name')->prototype('scalar')->end()->info('identifiers of users to impersonate')->end()
+            ->arrayNode('social')->useAttributeAsKey('name')->prototype('scalar')->end()->info('links to facebook, etc.')->end()
                 ->scalarNode('code')->defaultValue('my-project')->info('project code, default for repo, dokku deployment, etc.')->end()
                 ->scalarNode('abbr')->defaultValue('my<b>Project</b>')->info('text abbreviation')->end()
             ->end();
