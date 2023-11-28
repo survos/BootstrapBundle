@@ -32,6 +32,17 @@ class MenuService implements KnpMenuHelperInterface
 
     }
 
+    public function getUsersToImpersonate(): array
+    {
+        return $this->usersToImpersonate;
+    }
+
+    public function setUsersToImpersonate(array $usersToImpersonate): MenuService
+    {
+        $this->usersToImpersonate = $usersToImpersonate;
+        return $this;
+    }
+
     public function getRouteRequirements(): array
     {
         static $requirements=null;
