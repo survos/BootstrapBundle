@@ -36,6 +36,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
@@ -43,7 +45,6 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 
     // protected string $extensionAlias = 'survos_bootstrap';
 
-    // removed in favor of using the ContextService global
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);
@@ -53,9 +54,53 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $container->addCompilerPass($this);
     }
 
+    private function getCachedDataFilename(ContainerBuilder $container)
+    {
+        $kernelCacheDir = $container->getParameter('kernel.cache_dir');
+        return $kernelCacheDir . '/route_requirements.json';
+
+    }
+
     // The compiler pass
     public function process(ContainerBuilder $container): void
     {
+        $isGranted = [];
+        $taggedServices = $container->findTaggedServiceIds('container.service_subscriber');
+//             $taggedServices = $container->findTaggedServiceIds('controller.service_arguments');
+        foreach (array_keys($taggedServices) as $controllerClass) {
+            if (!class_exists($controllerClass)) {
+                continue;
+            }
+            $reflectionClass = new \ReflectionClass($controllerClass);
+            $requirements = [];
+            // these are at the controller level, so they apply to all methods
+            foreach ($reflectionClass->getAttributes(IsGranted::class) as $attribute) {
+                $args = $attribute->getArguments();
+                $requirements = $args; // array of ROLE_...
+            }
+            foreach ($reflectionClass->getMethods() as $method) {
+                $methodRequirements = [];
+                foreach ($method->getAttributes(IsGranted::class) as $attribute) {
+                    $args = $attribute->getArguments();
+                    $methodRequirements = $args;
+//                    $requirements = array_merge($requirements, $args); // array of ROLE_...
+//                    dd($args);
+                }
+
+                /** @var $attribute \ReflectionAttribute */
+                foreach ($method->getAttributes(Route::class) as $attribute) {
+                    $args = $attribute->getArguments();
+                    $name = $args['name'] ?? $method->getName();
+//                         assert(array_key_exists('name', $args), json_encode($args));
+//                         dd($attribute->getArguments());
+                    $isGranted[$name] = array_merge($methodRequirements, $requirements);
+//                    if ($name == 'tag') { dd($requirements, $name); }
+                }
+            }
+        }
+
+        file_put_contents($fn = $this->getCachedDataFilename($container), json_encode($isGranted));
+
         if (false === $container->hasDefinition('twig')) {
             return;
         }
@@ -77,6 +122,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
      */
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
+
+//        dd($this->getCachedDataFilename($builder));
 
         // inject into parameters, so we can access it in the compiler pass and inject it globally.
 
@@ -142,14 +189,14 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         // do we need this?  Or is the trait better? Or both?
         $builder->register(MenuService::class)
             ->setAutowired(true)
+            ->setArgument('$routeRequirementsFilename', $this->getCachedDataFilename($builder))
             ->setArgument('$impersonateUrlGenerator',
                 new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$authorizationChecker',
                 new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$usersToImpersonate', $config['impersonate'])
             ->setArgument('$security',
-                new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE));
-            ;
+                new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE));;
     }
 
     public function configure(DefinitionConfigurator $definition): void
@@ -183,12 +230,11 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->children()
             ->arrayNode('impersonate')->useAttributeAsKey('name')->prototype('scalar')->end()->info('identifiers of users to impersonate')->end()
             ->arrayNode('social')->useAttributeAsKey('name')->prototype('scalar')->end()->info('links to facebook, etc.')->end()
-                ->scalarNode('code')->defaultValue('my-project')->info('project code, default for repo, dokku deployment, etc.')->end()
-                ->scalarNode('abbr')->defaultValue('my<b>Project</b>')->info('text abbreviation')->end()
+            ->scalarNode('code')->defaultValue('my-project')->info('project code, default for repo, dokku deployment, etc.')->end()
+            ->scalarNode('abbr')->defaultValue('my<b>Project</b>')->info('text abbreviation')->end()
             ->end();
         return $rootNode;
     }
-
 
 
     // inspired by AdminLTEBundle

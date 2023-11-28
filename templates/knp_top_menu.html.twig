@@ -37,9 +37,18 @@
     #}
     {% set use_multilevel = true %}
 
-    {% if item.displayed %}
+    {% set displayed = item.displayed %}
+    {# don't display item if no children and it's a dropdown? #}
+    {% if item.extras['is_submenu']|default(false) and (item.children|length == 0) %}
+        {% set displayed = false %}
+    {% endif %}
+{#    {% if item.name == 'tags_submenu' %} {{  item.children|length }} {% endif %}#}
+
+
+    {% if displayed %}
         {%- set attributes = item.attributes|merge(item.linkAttributes) %}
-{#        {{ attributes|length ? dump(attributes) }}#}
+        {%- set extras = item.extras %}
+{#        {{ extras|length ? dump(extras) }}#}
 {#        {{ dump(item.linkAttributes) }}#}
 
         {%- set is_dropdown = attributes.dropdown|default(false) %}

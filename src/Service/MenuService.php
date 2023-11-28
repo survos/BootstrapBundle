@@ -25,9 +25,20 @@ class MenuService implements KnpMenuHelperInterface
         private ?AuthorizationCheckerInterface $authorizationChecker,
         private ?Security $security,
         private ?ImpersonateUrlGenerator $impersonateUrlGenerator,
+        private string $routeRequirementsFilename,
         private array $usersToImpersonate=[]
     )
     {
+
+    }
+
+    public function getRouteRequirements(): array
+    {
+        static $requirements=null;
+        if (empty($requirements)) {
+            $requirements = json_decode(file_get_contents($this->routeRequirementsFilename), true);
+        }
+        return $requirements;
     }
 
     public function setAuthorizationChecker(AuthorizationCheckerInterface $authorizationChecker)
@@ -60,7 +71,7 @@ class MenuService implements KnpMenuHelperInterface
             // @todo: add custom user links, like profile
 
             if ($this->isGranted('IS_IMPERSONATOR')) {
-                $this->add($subMenu, external: false, uri: $this->impersonateUrlGenerator->generateExitPath(), label: 'exit impersonation');
+                $this->add($subMenu, external: false, uri: $this->impersonateUrlGenerator->generateExitPath('/'), label: 'exit impersonation');
             }
 
             if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
@@ -216,6 +227,7 @@ class MenuService implements KnpMenuHelperInterface
                     'uri' => null,
                     'classes' => [], // this doesn't feel quite right.  Maybe a "style: header"?
                     'style' => null,
+                    'is_submenu' => false,
                     'childOptions' => $this->childOptions,
                     'description' => null,
                     'attributes' => [],

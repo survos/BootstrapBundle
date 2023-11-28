@@ -39,7 +39,10 @@ trait KnpMenuHelperTrait
             'label' => $label,
             'icon' => $icon,
             'id' => $id,
+            'is_submenu' => true
         ]);
+        $subMenu->setExtra('is_submenu', true);
+//        $subMenu->setAttribute('is_submenu', true);
 //        if ($subMenu->getLabel() == 'tt@survos.com') dd($subMenu, $subMenu->getAttributes());
         return $subMenu;
     }
@@ -101,6 +104,23 @@ trait KnpMenuHelperTrait
             $label = $route  ?? $uri; // @todo, be smarter.
         }
 
+        if ($route) {
+            if (isset($this->menuService)) {
+                if (array_key_exists($route, $this->menuService->getRouteRequirements())) {
+                    $x = $this->menuService->getRouteRequirements()[$route];
+                    foreach ($x as $y) {
+                        if (!$this->isGranted($y)) {
+                            $label .= " NOT AUTHORIZED?";
+
+//                            dd(sprintf('rejecting %s %s %s', $route, json_encode($x), $this->security->getUser()));
+                            return $this;
+                        }
+                    }
+                }
+            }
+        }
+
+
         $options['label'] = $label;
         if (! $id) {
             $id = $this->createId($menu);
@@ -147,6 +167,11 @@ trait KnpMenuHelperTrait
         $options = $this->menuOptions($options);
         $this->setChildOptions($child, $options);
         $child->setExtra('safe_label', true);
+
+            $child->setExtra('is_submenu', $options['is_submenu']);
+            $child->setAttribute('is_submenu', $options['is_submenu']);
+        if ($options['is_submenu']) {
+        }
 
 
         if ($dividerAppend) {
@@ -243,6 +268,7 @@ trait KnpMenuHelperTrait
                 'routeParameters' => [],
                 'routes' => null,
                 'external' => false,
+                'is_submenu' => false,
                 '_fragment' => null,
                 'label' => '', // null will use id as label
                 'icon' => null,
