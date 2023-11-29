@@ -1,5 +1,7 @@
 <div class="alert alert-{{ type }} {{ dismissible ? 'alert-dismissible' }}" role="alert">
-    {{ message }}
+     <twig:block name="alert_message">
+         {{ message }}
+     </twig:block>
     {% if dismissible %}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     {% endif %}
