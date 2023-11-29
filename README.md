@@ -91,28 +91,33 @@ symfony open:local --path=/menu
 ```
 
 
-# bootstrap-icons bug
+# twig bug
 ```bash
-symfony new bootstrap-icons-bug --webapp --version=next --php=8.2 && cd bootstrap-icons-bug
-composer config minimum-stability beta
-composer config extra.symfony.allow-contrib true
-composer req symfony/asset-mapper:^6.4 
-bin/console importmap:require bootstrap-icons/font/bootstrap-icons.min.css
+symfony new bug --webapp --version=6.4 && cd bug
+composer require symfony/ux-twig-component symfony/asset-mapper 
+composer req survos/bootstrap-bundle
 echo "import 'bootstrap/dist/css/bootstrap.min.css'" >> assets/app.js
-bin/console make:controller App -i
-sed -i "s|/app|/|" src/Controller/AppController.php 
 
-cat > templates/app.html.twig <<'END'
+bin/console make:controller App
+cat > templates/app/index.html.twig <<'END'
 {% extends 'base.html.twig' %}
-
 {% block body %}
-  icon: 
-  <span class="bi bi-github"></span>
+<twig:alert message="hello" dismissible="true">
+        <twig:block name="alert_message">
+            I can override the alert_message block and access the {{ message }} too!
+        </twig:block>
+    </twig:alert>
 {% endblock %}
+
 END
 
-composer req survos/deployment-bundle
-bin/console dokku:config bootstrap-icons-bug
+symfony server:start -d
+symfony open:local --path=/app
+
+cd ../ux
+./link ../bug
+cd ../bug
+symfony open:local --path=/app
 
 
 ```
