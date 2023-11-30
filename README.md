@@ -93,12 +93,17 @@ symfony open:local --path=/menu
 
 # twig bug
 ```bash
-symfony new bug --webapp --version=6.4 && cd bug
+symfony new test --webapp --version=7.0 && cd test
 composer require symfony/ux-twig-component symfony/asset-mapper 
 composer req survos/bootstrap-bundle
+composer req survos/api-grid-bundle
+composer req survos/crawler-bundle
+composer req survos/command-bundle
+composer req survos/barcode-bundle
 echo "import 'bootstrap/dist/css/bootstrap.min.css'" >> assets/app.js
 
 bin/console make:controller App
+sed  -i "s|'/app'|'/'|" src/Controller/AppController.php # the landing page controller
 cat > templates/app/index.html.twig <<'END'
 {% extends 'base.html.twig' %}
 {% block body %}
@@ -108,7 +113,6 @@ cat > templates/app/index.html.twig <<'END'
         </twig:block>
     </twig:alert>
 {% endblock %}
-
 END
 
 symfony server:start -d
