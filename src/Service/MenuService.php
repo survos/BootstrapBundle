@@ -70,6 +70,7 @@ class MenuService implements KnpMenuHelperInterface
 
     public function addAuthMenu(ItemInterface $menu, $childOptions = []): ItemInterface
     {
+        $translationDomain = 'FOSUserBundle';
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $user = $this->security?->getUser();
             $subMenu = $this->addSubmenu($menu,
@@ -92,26 +93,24 @@ class MenuService implements KnpMenuHelperInterface
                 }
             }
 
-            $this->add($subMenu, 'app_logout', dividerPrepend: true, icon: 'fas fa-sign-out-alt');
+            $this->add($subMenu, 'app_logout', label: 'layout.logout',
+                translationDomain: $translationDomain,
+                dividerPrepend: true, icon: 'fas fa-sign-out-alt');
         } else {
-            $menu->addChild(
-                'login',
-                [
-                    'route' => 'app_login',
-                    'label' => 'menu.login',
-                    'childOptions' => $childOptions,
-                ]
-            )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
+            $this->add($menu, 'app_login', label: 'layout.login', id: 'login', translationDomain: $translationDomain);
+//            $menu->addChild(
+//                'login',
+//                [
+//                    'route' => 'app_login',
+//                    'label' => 'layout.login',
+//                    'childOptions' => $childOptions,
+//                ]
+//            )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
 
             try {
-                $menu->addChild(
-                    'register',
-                    [
-                        'route' => 'app_register',
-                        'label' => 'menu.register',
-                        'childOptions' => $childOptions,
-                    ]
-                )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
+                $this->add($menu, 'app_register', label: 'layout.register',
+                    icon: 'fas fa-sign-in-alt',
+                    translationDomain: $translationDomain);
             } catch (\Exception $exception) {
                 // route is likely missing
             }

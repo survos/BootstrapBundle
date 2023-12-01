@@ -148,6 +148,7 @@ trait KnpMenuHelperTrait
         if (!$child->getExtra('translation_domain')) {
             $child->setExtra('translation_domain', $translationDomain);
         }
+//        if ($child->getName() == 'login') dd($child->getExtras());
 
 
         // now add the various classes based on the style.  Unfortunately, this happens in the menu_get, not the render.

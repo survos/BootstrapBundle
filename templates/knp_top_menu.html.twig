@@ -328,7 +328,8 @@
         {% if not item.labelAttribute('iconOnly') %}
 {#            {{ item.name == 'copyright' ? dump(item, options) }}#}
 {#            and item.getExtra('safe_label', false)#}
-            {% if options.allow_safe_labels %}{{ item.label|trans|raw }}{% else %}{{ item.label|trans }}{% endif %}
+            {% set label = item.label|trans(domain=item.extra('translation_domain','routes')) %}
+            {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
         {% endif %}
         {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image') }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
 
