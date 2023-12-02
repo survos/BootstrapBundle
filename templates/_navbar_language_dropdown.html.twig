@@ -1,0 +1,61 @@
+{# _topnav_language_dropdown_selector #}
+
+<div class="dropdown ms-1 topbar-head-dropdown header-item">
+
+    {% set flagMap = {'en':'us','es':'mx', 'uk': 'ua', 'hi': 'in'} %}
+    {% set lang = app.request.locale %}
+    {% set flag = flagMap[lang]|default(lang) %}
+
+    <button type="button" class="btn border-info rounded" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="bi bi-globe"></span>
+        {#        <img id="header-lang-img-XX" src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="{{ app.request.locale|language_name }}" height="20" class="rounded">#}
+        {#        {{ app.request.locale|upper }}#}
+        &nbsp; {{ lang }}
+        {{ app.locale }}
+    </button>
+    <div class="dropdown-menu dropdown-menu-end">
+
+        {% for supportedLocale in app.enabled_locales %}
+            {% set flag = flagMap[supportedLocale]|default(supportedLocale) %}
+            {% set pathWithLocale = path(app.current_route, app.current_route_parameters|merge({_locale: supportedLocale})) %}
+            {#            <span class="align-middle">{{ supportedLocale }}</span>#}
+            {#            {% set langClass =  lang == app.request.locale ? 'fw-bold' : 'fw-light' %}#}
+            {#            <a href="{{ pathWithLocale }}" class="dropdown-item notify-item language py-2" data-lang="en" title="English">#}
+            {#                <img src="{{ asset('/bundles/survosvelzon/images/flags/us.svg') }}" alt="user-image" class="me-2 rounded" height="18">#}
+            {#                <span class="align-middle">{{ lang }}</span>#}
+            {#            </a>#}
+
+
+            <a href="{{ pathWithLocale}}" class="dropdown-item notify-item language py-2" title="{{ supportedLocale|language_name }}">
+                {#                    <img src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="user-image" class="me-2 rounded" height="18">#}
+                {#                    <span>{{ lang }}</span>#}
+
+                <div class="align-middle bold">
+                    {% set isCurrentLocale = app.locale == supportedLocale %}
+                    <span class="{{ isCurrentLocale ? 'text-success' : '' }}">
+                        {{ supportedLocale|language_name(supportedLocale) }}
+                        </span>
+
+                    {% if app.locale != supportedLocale %}
+                        <span class="text-muted">
+                        {{ supportedLocale|language_name(app.locale) }}
+                    </span>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+
+        {% if app.environment == 'dev' %}
+            <a href="{{ path(app.current_route, app.current_route_parameters) }}" class="dropdown-item notify-item language py-2" title="{{ lang|language_name }}">
+                {#                    <img src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="user-image" class="me-2 rounded" height="18">#}
+                {#                    <span>{{ lang }}</span>#}
+                <span class="fas fa-check"></span>
+                <span class="align-middle bold">
+                {{ 'enable.translation'|trans }}
+            </span>
+            </a>
+        {% endif %}
+
+
+    </div>
+</div>
