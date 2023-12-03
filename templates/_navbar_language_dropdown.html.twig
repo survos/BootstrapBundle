@@ -3,7 +3,7 @@
 <div class="dropdown ms-1 topbar-head-dropdown header-item">
 
     {% set flagMap = {'en':'us','es':'mx', 'uk': 'ua', 'hi': 'in'} %}
-    {% set lang = app.request.locale %}
+    {% set lang = app.locale %}
     {% set flag = flagMap[lang]|default(lang) %}
 
     <button type="button" class="btn border-info rounded" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -11,7 +11,6 @@
         {#        <img id="header-lang-img-XX" src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="{{ app.request.locale|language_name }}" height="20" class="rounded">#}
         {#        {{ app.request.locale|upper }}#}
         &nbsp; {{ lang }}
-        {{ app.locale }}
     </button>
     <div class="dropdown-menu dropdown-menu-end">
 

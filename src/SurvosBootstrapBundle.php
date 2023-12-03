@@ -19,6 +19,7 @@ use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
+use Survos\BootstrapBundle\Translation\RoutesTranslationLoader;
 use Survos\BootstrapBundle\Twig\Components\MiniCard;
 use Survos\BootstrapBundle\Twig\Components\TablerHead;
 use Survos\BootstrapBundle\Twig\Components\TablerIcon;
@@ -158,6 +159,15 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         ) {
             $builder->register($componentClass)->setAutowired(true)->setAutoconfigured(true);
         }
+
+        $builder
+            ->autowire('survos.bootstrap_translations', RoutesTranslationLoader::class)
+            ->setAutowired(true)
+            ->addTag(name: 'translation.loader', attributes: ['alias' => 'bin']);
+//        Survos\BootstrapBundle\Translation\RoutesTranslationLoader:
+//        tags:
+//            - { name: translation.loader, alias: bin }
+
 
         foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
             $builder->register($c)->setAutowired(true)->setAutoconfigured(true)

@@ -79,7 +79,7 @@ trait KnpMenuHelperTrait
         bool $if = true,
         bool $dividerPrepend = false,
         bool $dividerAppend = false,
-        string $translationDomain = 'routes',
+        string $translationDomain = 'routing', // from the method names
 
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
