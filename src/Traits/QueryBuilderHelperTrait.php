@@ -5,10 +5,15 @@ namespace Survos\BootstrapBundle\Traits;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @deprecated "Use core-bundle"
+ */
 trait QueryBuilderHelperTrait
 {
     public function getCounts($field): array
     {
+        assert(false, "deprecated, use core-bundle");
+
         $results = $this->createQueryBuilder('s')
             ->groupBy('s.' . $field)
             ->select(["s.$field, count(s) as count"])
@@ -24,6 +29,7 @@ trait QueryBuilderHelperTrait
 
     public function findBygetCountsByField($field = 'marking', $filters = [], ?string $idField = 'id'): array
     {
+        assert(false, "deprecated, use core-bundle");
         $filters = (new OptionsResolver())
             ->setDefaults([
                 'media' => null,
