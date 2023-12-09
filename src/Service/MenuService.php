@@ -5,6 +5,7 @@
 namespace Survos\BootstrapBundle\Service;
 
 use Knp\Menu\ItemInterface;
+use Survos\AuthBundle\Services\AuthService;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperInterface;
 use Survos\BootstrapBundle\Traits\KnpMenuHelperTrait;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -26,6 +27,7 @@ class MenuService implements KnpMenuHelperInterface
         private ?Security $security,
         private ?ImpersonateUrlGenerator $impersonateUrlGenerator,
         private string $routeRequirementsFilename,
+        private ?AuthService $authService=null,
         private array $usersToImpersonate=[]
     )
     {
@@ -70,7 +72,7 @@ class MenuService implements KnpMenuHelperInterface
 
     public function addAuthMenu(ItemInterface $menu, $childOptions = []): ItemInterface
     {
-        $translationDomain = 'FOSUserBundle';
+        $translationDomain = 'FOSUserBundle'; // should this be in AuthService or Bootstrap?
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             $user = $this->security?->getUser();
             $subMenu = $this->addSubmenu($menu,
@@ -78,6 +80,11 @@ class MenuService implements KnpMenuHelperInterface
                 id: 'user_menu'
             );
 
+            if ($this->authService) {
+                $this->add($subMenu, 'oauth_profile');
+            }
+
+            // if there's a profile
             $subMenu->setExtra('btn', 'btn btn-info');
 
             // @todo: add custom user links, like profile

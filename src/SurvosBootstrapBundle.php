@@ -202,6 +202,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->setArgument('$routeRequirementsFilename', $this->getCachedDataFilename($builder))
             ->setArgument('$impersonateUrlGenerator',
                 new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument('$authService',
+                new Reference('survos_auth.base_service', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$authorizationChecker',
                 new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$usersToImpersonate', $config['impersonate'])
