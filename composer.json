@@ -22,7 +22,7 @@
         "symfony/ux-twig-component": "^2.8",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4",
-        "survos/core-bundle": "^1.6",
+        "survos/core-bundle": "^1.5.109",
         "endroid/installer": "^1.4"
     },
     "autoload": {
