@@ -27,6 +27,7 @@ class MenuComponent
     }
 
     public ?string $title;
+    public ?string $caller;
 
     #[ExposeInTemplate]
     public string $type; // shortcut
@@ -47,19 +48,22 @@ class MenuComponent
 
     public string $wrapperClass;
 
-    public function mount(string $type, ?string $eventName = null, array $path = [], array $options = [])
+    public function mount(string $type,  string $caller = null, array $path = [], array $options = [])
     {
+        assert($caller);
         $this->type = $type;
-        $this->path = $path;
+        $this->path = $path; // use this to get a specific branch or node from the menu, e.g. in breadcrumbs.
         $this->options = $options;
 //        dd(constant(KnpMenuEvent::NAVBAR_MENU), $type, $eventName);
         $eventName = constant(KnpMenuEvent::class . '::' .  $type);
+//        dd(func_get_args(), $eventName, $caller);
 
         $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::class);
 
         $options = (new OptionsResolver())
             ->setDefaults($this->menuOptions)
             ->resolve($options);
+        $options['caller'] = $caller;
 
         $this->eventDispatcher->dispatch(new KnpMenuEvent($menu, $this->factory, $options), $eventName);
         $this->menuItem = $this->helper->get($menu, $path, $options);

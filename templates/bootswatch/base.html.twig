@@ -12,29 +12,40 @@
 {#    </style>#}
 
 {% endblock %}
+
+{% block PAGE_MENU %}
+    <!-- {{ _self }} (to be overwritten.) -->
+        {{ component('menu', {
+            caller: _self,
+            wrapperClass: 'fw-bold py-3 mb-4 d-print-none',
+            type: PAGE_MENU,
+        }) }}
+
+{% endblock %}
+
 {% block body_content %}
     {#  optional fixed-width in config? #}
     {% set containerClass = 'container-fluid' %}
     <div class="navbar navbar-expand-lg sticky-top xxfixed-top bg-primary" data-bs-theme="dark">
         <div class="{{ containerClass }}">
-            <a href="../" class="navbar-brand">{{ config().app.abbr|raw }}</a>
+
+            {% block brand %}
+            <a href="#" class="navbar-brand">{{ config().app.abbr|raw }}</a>
+            {% endblock %}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                {{ component('menu', {type: NAVBAR_MENU}) }}
-                {{ component('menu', {type: NAVBAR_MENU2}) }}
-                {{ component('menu', {type: NAVBAR_MENU3}) }}
-                {{ component('menu', {type: AUTH_MENU}) }}
+                {% block NAVBAR_MENU %}{{ component('menu', {type: NAVBAR_MENU, caller: _self}) }}{% endblock %}
+                {{ component('menu', {type: NAVBAR_MENU2, caller: _self}) }}
+                {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
+                {{ component('menu', {type: AUTH_MENU, caller: _self}) }}
                 {# force this right? #}
 
 {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
 
             </div>
-
-            {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
-
 
             <!-- Dropdown - User Actions -->
 {#            <div class="xnav-menu xtext-nowrap">#}
@@ -60,29 +71,19 @@
         </div>
     </div>
 
-    {# maybe page header?  Or secondary navbar? #}
-{#    <div>#}
-{#        {% embed('@SurvosBootstrap/bs5/_navbar.html.twig') %}#}
-{#        {% endembed %}#}
-{#    </div>#}
-
     <div class="{{ containerClass }}">
         {% block page_header %}
         <div class="page-header" id="banner">
-{#            {{ component('menu', {type: AUTH_MENU}) }}#}
-
-{#            page header, breadcrumbs, etc.#}
-{#            <div class="row">#}
-{#                <div class="col-lg-8 col-md-7 col-sm-6">#}
-{#                    <h1>Cerulean</h1>#}
-{#                    <p class="lead">A calm blue sky</p>#}
-{#                </div>#}
-{#                <div class="col-lg-4 col-md-5 col-sm-6">#}
-{#                    <div class="sponsor">#}
-{#                        #}{#  could put ads here. #}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-sm-6">
+                    {{ block('PAGE_MENU') }}
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-6">
+                    <div class="sponsor">
+{#                        right side page menu???#}
+                    </div>
+                </div>
+            </div>
         </div>
         {% endblock %}
 

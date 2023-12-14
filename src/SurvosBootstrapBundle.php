@@ -3,6 +3,7 @@
 namespace Survos\BootstrapBundle;
 
 use Survos\BootstrapBundle\Components\AccordionComponent;
+use Survos\BootstrapBundle\Components\TabsComponent;
 use Survos\BootstrapBundle\Components\AlertComponent;
 use Survos\BootstrapBundle\Components\BadgeComponent;
 use Survos\BootstrapBundle\Components\BrandComponent;
@@ -19,7 +20,6 @@ use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
-use Survos\BootstrapBundle\Translation\RoutesTranslationLoader;
 use Survos\BootstrapBundle\Twig\Components\MiniCard;
 use Survos\BootstrapBundle\Twig\Components\TablerHead;
 use Survos\BootstrapBundle\Twig\Components\TablerIcon;
@@ -39,6 +39,7 @@ use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Survos\BootstrapBundle\Translation\RoutesTranslationLoader;
 
 class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterface, HasAssetMapperInterface
 {
@@ -150,6 +151,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 DropdownComponent::class,
                 DividerComponent::class,
                 LinkComponent::class,
+                TabsComponent::class,
 
                 MiniCard::class,
                 TablerIcon::class,
@@ -163,11 +165,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $builder
             ->autowire('survos.bootstrap_translations', RoutesTranslationLoader::class)
             ->setAutowired(true)
+            ->setAutoconfigured(true)
             ->addTag(name: 'translation.loader', attributes: ['alias' => 'bin']);
-//        Survos\BootstrapBundle\Translation\RoutesTranslationLoader:
-//        tags:
-//            - { name: translation.loader, alias: bin }
-
 
         foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
             $builder->register($c)->setAutowired(true)->setAutoconfigured(true)
@@ -202,8 +201,6 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->setArgument('$routeRequirementsFilename', $this->getCachedDataFilename($builder))
             ->setArgument('$impersonateUrlGenerator',
                 new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
-            ->setArgument('$authService',
-                new Reference('survos_auth.base_service', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$authorizationChecker',
                 new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
             ->setArgument('$usersToImpersonate', $config['impersonate'])
