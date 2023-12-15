@@ -79,7 +79,7 @@ trait KnpMenuHelperTrait
         bool $if = true,
         bool $dividerPrepend = false,
         bool $dividerAppend = false,
-        string $translationDomain = 'routing', // from the method names
+        ?string $translationDomain = 'routing', // from the method names
 
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
@@ -146,7 +146,9 @@ trait KnpMenuHelperTrait
         // hack to align navigation if no link
 
         if (!$child->getExtra('translation_domain')) {
-            $child->setExtra('translation_domain', $translationDomain);
+            if ($translationDomain) {
+                $child->setExtra('translation_domain', $translationDomain);
+            }
         }
 //        if ($child->getName() == 'login') dd($child->getExtras());
 
