@@ -30,7 +30,7 @@
         <div class="{{ containerClass }}">
 
             {% block brand %}
-            <a href="#" class="navbar-brand">{{ config().app.abbr|raw }}</a>
+            <a href="{{ path('homepage'|route_alias) }}" class="navbar-brand">{{ config().app.abbr|raw }}</a>
             {% endblock %}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
