@@ -48,8 +48,6 @@
     {% if displayed %}
         {%- set attributes = item.attributes|merge(item.linkAttributes) %}
         {%- set extras = item.extras %}
-{#        {{ extras|length ? dump(extras) }}#}
-{#        {{ dump(item.linkAttributes) }}#}
 
         {%- set is_dropdown = attributes.dropdown|default(false) %}
         {%- set is_collapsable = item.hasChildren %} {# was attributes.collapsable|default(false) %} #}
@@ -326,8 +324,6 @@
     {% if item.labelAttribute('icon') %}<i class="nav-icon {{ item.labelAttribute('icon') }}"></i>{% endif %}
     #}
         {% if not item.labelAttribute('iconOnly') %}
-{#            {{ item.name == 'copyright' ? dump(item, options) }}#}
-{#            and item.getExtra('safe_label', false)#}
             {% set domain = item.extra('translation_domain','routing') %}
             {% set label = item.label|trans(domain=domain) %}
             {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
@@ -396,7 +392,6 @@
     {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
 
     {% for item in currentItem.children %}
-{#        {{ item.extras.is_submenu|default(false) ? dump(item) }}#}
         {%- if is_collapsable|default(true) %}
             {% set classes = [] %}
 {#            {%- set classes = item.attribute('class') is not empty ? [item.attribute('class'), 'nav-item'] : ['nav-item'] %}#}
