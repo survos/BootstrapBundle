@@ -37,7 +37,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Survos\BootstrapBundle\Translation\RoutesTranslationLoader;
 
@@ -60,7 +60,6 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
     {
         $kernelCacheDir = $container->getParameter('kernel.cache_dir');
         return $kernelCacheDir . '/route_requirements.json';
-
     }
 
     // The compiler pass
@@ -68,7 +67,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
     {
         $isGranted = [];
         $taggedServices = $container->findTaggedServiceIds('container.service_subscriber');
-//             $taggedServices = $container->findTaggedServiceIds('controller.service_arguments');
+
+        // set the route requirements.  Translations are different, but could perhaps someday be combined.
         foreach (array_keys($taggedServices) as $controllerClass) {
             if (!class_exists($controllerClass)) {
                 continue;
@@ -202,13 +202,20 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $builder->register(MenuService::class)
             ->setAutowired(true)
             ->setArgument('$routeRequirementsFilename', $this->getCachedDataFilename($builder))
-            ->setArgument('$impersonateUrlGenerator',
-                new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
-            ->setArgument('$authorizationChecker',
-                new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+            ->setArgument(
+                '$impersonateUrlGenerator',
+                new Reference('security.impersonate_url_generator', ContainerInterface::NULL_ON_INVALID_REFERENCE)
+            )
+            ->setArgument(
+                '$authorizationChecker',
+                new Reference('security.authorization_checker', ContainerInterface::NULL_ON_INVALID_REFERENCE)
+            )
             ->setArgument('$usersToImpersonate', $config['impersonate'])
-            ->setArgument('$security',
-                new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE));;
+            ->setArgument(
+                '$security',
+                new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE)
+            );
+        ;
     }
 
     public function configure(DefinitionConfigurator $definition): void
