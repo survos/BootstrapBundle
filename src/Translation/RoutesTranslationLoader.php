@@ -2,13 +2,13 @@
 
 namespace Survos\BootstrapBundle\Translation;
 
-use Survos\Providence\Services\ProfileService;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Annotation\Route as AnnotationRoute;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 use function Symfony\Component\String\u;
 
@@ -31,12 +31,9 @@ class RoutesTranslationLoader implements LoaderInterface
      * @throws NotFoundResourceException when the resource cannot be found
      * @throws InvalidResourceException  when the resource cannot be loaded
      */
-    public function load($resource, $symfonyLocale, $domain = 'messages'): MessageCatalogue
+    public function load(mixed $resource, string $locale, string $domain = 'messages'): MessageCatalogue
     {
-        $localMap = [];
-        $catalogue = null;
         $translations = [];
-
         $taggedServices = $this->taggedServices; // autowired 'container.service_subscriber'
         foreach ($taggedServices as $controllerClass) {
             $reflectionClass = new \ReflectionClass($controllerClass);
@@ -53,7 +50,7 @@ class RoutesTranslationLoader implements LoaderInterface
         }
 
         $catalogue = new MessageCatalogue(
-            $symfonyLocale,
+            $locale,
             [
                 $domain => $translations,
             ]
@@ -61,12 +58,4 @@ class RoutesTranslationLoader implements LoaderInterface
         return $catalogue;
     }
 
-    /**
-     * @return ObjectRepository
-     */
-    public function getRepository(): TranslationRepositoryInterface
-    {
-        assert(false, __METHOD__);
-        return $this->doctrine->getRepository($this->entityClass);
-    }
 }

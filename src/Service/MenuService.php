@@ -18,15 +18,12 @@ use function Symfony\Component\String\u;
 class MenuService implements KnpMenuHelperInterface
 {
     use KnpMenuHelperTrait;
-    private ?array $options;
-
-//    private $childOptions;
 
     public function __construct(
-        private ?AuthorizationCheckerInterface $authorizationChecker,
         private ?Security $security,
         private ?ImpersonateUrlGenerator $impersonateUrlGenerator,
         private string $routeRequirementsFilename,
+        private ?AuthorizationCheckerInterface $authorizationChecker=null,
         private ?AuthService $authService=null,
         private array $usersToImpersonate=[]
     )
@@ -62,12 +59,6 @@ class MenuService implements KnpMenuHelperInterface
     public function getAuthorizationChecker()
     {
         return $this->authorizationChecker;
-    }
-
-    public function setOptions(array $options = [], array $childOptions = [])
-    {
-        $this->options = $options;
-        $this->childOptions = $childOptions;
     }
 
     public function addAuthMenu(ItemInterface $menu, $childOptions = []): ItemInterface
@@ -125,42 +116,6 @@ class MenuService implements KnpMenuHelperInterface
 
         return $menu;
 
-        if ($this->isGranted('IS_IMPERSONATOR')) {
-            $this->add($subMenu, uri: $this->impersonateUrlGenerator->generateExitPath(), label:  'exit impersonation');
-        }
-        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            $menu->addChild(
-                'logout',
-                [
-                    'route' => 'app_logout',
-                    'label' => 'menu.logout',
-                    'childOptions' => $childOptions,
-                ]
-            )->setLabelAttribute('icon', 'fas fa-sign-out-alt');
-        } else {
-            $menu->addChild(
-                'login',
-                [
-                    'route' => 'app_login',
-                    'label' => 'menu.login',
-                    'childOptions' => $childOptions,
-                ]
-            )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
-
-            try {
-                $menu->addChild(
-                    'register',
-                    [
-                        'route' => 'app_register',
-                        'label' => 'menu.register',
-                        'childOptions' => $childOptions,
-                    ]
-                )->setLabelAttribute('icon', 'fas fa-sign-in-alt');
-            } catch (\Exception $exception) {
-                // route is likely missing
-            }
-        }
-        return $menu;
     }
 
     public function xxaddMenuItem(ItemInterface $menu, array $options, array $extra = []): ItemInterface
@@ -226,7 +181,6 @@ class MenuService implements KnpMenuHelperInterface
     {
         // idea: make the label a . version of the route, e.g. project_show could be project.show
         // we could also set a default icon for things like edit, show
-        try {
             $options = (new OptionsResolver())
                 ->setDefaults([
                     // deprecated, use 'id' instead
@@ -249,10 +203,11 @@ class MenuService implements KnpMenuHelperInterface
                     'description' => null,
                     'attributes' => [],
                 ])->resolve($options);
-        } catch (\Exception $exception) {
-            assert(false, $exception->getMessage());
-            //            dd($options, $exception);
-        }
+//        try {
+//        } catch (\Exception $exception) {
+//            assert(false, $exception->getMessage());
+//            //            dd($options, $exception);
+//        }
 
         // rename rp
         if (is_object($options['rp'])) {
@@ -325,9 +280,9 @@ class MenuService implements KnpMenuHelperInterface
     public function isGranted($attribute, $subject = null)
     {
         if (! $this->authorizationChecker) {
-            throw new \Exception("call setAuthorizationChecker() before making this call.");
+            throw new \Exception("try composer require symfony/security-bundle to use this feature");
         }
-        return $this->authorizationChecker ? $this->authorizationChecker->isGranted($attribute, $subject) : false;
+        return $this->authorizationChecker->isGranted($attribute, $subject);
     }
 
     public function generateImpersonationPath(string $identifier): string

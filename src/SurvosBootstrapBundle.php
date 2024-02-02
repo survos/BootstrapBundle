@@ -17,7 +17,6 @@ use Survos\BootstrapBundle\Components\MenuBreadcrumbComponent;
 use Survos\BootstrapBundle\Components\MenuComponent;
 use Survos\BootstrapBundle\DependencyInjection\Compiler\TwigPass;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
-use Survos\BootstrapBundle\Menu\MenuBuilder;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
 use Survos\BootstrapBundle\Twig\Components\MiniCard;
@@ -89,7 +88,6 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 //                    dd($args);
                 }
 
-                /** @var $attribute \ReflectionAttribute */
                 foreach ($method->getAttributes(Route::class) as $attribute) {
                     $args = $attribute->getArguments();
                     $name = $args['name'] ?? $method->getName();
@@ -324,7 +322,6 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         $contextOptions = (array)($config['options'] ?? []);
         $contextOptions['control_sidebar'] = $sidebar;
         $contextOptions['knp_menu'] = (array)$config['knp_menu'];
-        dd($config);
         $contextOptions = array_merge($contextOptions, $config['theme']);
 
         return $contextOptions;

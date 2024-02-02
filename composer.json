@@ -1,11 +1,11 @@
 {
     "name": "survos/bootstrap-bundle",
     "description": "Integrates a simple bootstrap theme in a Symfony application",
+    "license": "MIT",
     "type": "symfony-bundle",
     "keywords": [
         "symfony-ux"
     ],
-    "license": "MIT",
     "authors": [
         {
             "name": "Tac Tacelosky",
@@ -14,21 +14,57 @@
     ],
     "require": {
         "php": "^8.1",
+        "endroid/installer": "^1.4",
         "knplabs/knp-menu-bundle": "^3.2",
-        "symfony/config": "^6.4 | ^7.0",
-        "symfony/dependency-injection": "^6.4 | ^7.0",
-        "symfony/http-kernel": "^6.4 | ^7.0",
-        "symfony/options-resolver": "^6.4 | ^7.0",
+        "survos/core-bundle": "^1.5",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0",
+        "symfony/options-resolver": "^6.4 || ^7.0",
         "symfony/ux-twig-component": "^2.8",
         "twig/string-extra": "^3.4",
-        "twig/twig": "^3.4",
-        "survos/core-bundle": "^1.6",
-        "endroid/installer": "^1.4"
+        "twig/twig": "^3.4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "survos/auth-bundle": "^1.5",
+        "symfony/security-bundle": "^7.0",
+        "symfony/translation": "^7.0"
+    },
+    "conflict": {
+        "survos/api-grid-bundle": "<1.2.57",
+        "survos/auth-bundle": "<1.2.57",
+        "survos/barcode-bundle": "<1.2.57",
+        "survos/command-bundle": "<1.2.57",
+        "survos/crawler-bundle": "<1.2.57",
+        "survos/doc-bundle": "<1.2.57",
+        "survos/faker-bundle": "<1.2.57",
+        "survos/grid-bundle": "<1.2.57",
+        "survos/grid-group-bundle": "<1.2.57",
+        "survos/html-prettify-bundle": "<1.2.57",
+        "survos/import-bridge": "<1.2.57",
+        "survos/inspection-bundle": "<1.2.57",
+        "survos/location-bundle": "<1.2.57",
+        "survos/maker-bundle": "<1.2.57",
+        "survos/providence-bundle": "<1.2.57",
+        "survos/ruler-bundle": "<1.2.57",
+        "survos/stripe-product": "<1.2.57",
+        "survos/tree-bundle": "<1.2.57",
+        "survos/wiki-bundle": "<1.2.57",
+        "survos/workflow-helper-bundle": "<1.2.57"
+    },
+    "suggest": {
+        "symfony/security-bundle": "User authentication"
     },
     "autoload": {
         "psr-4": {
             "Survos\\BootstrapBundle\\": "src/",
             "Survos\\BootstrapBundle\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "endroid/installer": true
         }
     },
     "extra": {
@@ -37,40 +73,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "phpstan": "vendor/bin/phpstan analyse"
-    },
-    "suggest": {
-        "symfony/security-bundle": "User authentication"
-    },
-    "require-dev": {
-        "phpstan/phpstan": "^1.8"
-    },
-    "conflict": {
-        "survos/maker-bundle": "<1.2.57",
-        "survos/html-prettify-bundle": "<1.2.57",
-        "survos/barcode-bundle": "<1.2.57",
-        "survos/api-grid-bundle": "<1.2.57",
-        "survos/inspection-bundle": "<1.2.57",
-        "survos/faker-bundle": "<1.2.57",
-        "survos/doc-bundle": "<1.2.57",
-        "survos/grid-bundle": "<1.2.57",
-        "survos/tree-bundle": "<1.2.57",
-        "survos/auth-bundle": "<1.2.57",
-        "survos/workflow-helper-bundle": "<1.2.57",
-        "survos/crawler-bundle": "<1.2.57",
-        "survos/location-bundle": "<1.2.57",
-        "survos/command-bundle": "<1.2.57",
-        "survos/ruler-bundle": "<1.2.57",
-        "survos/providence-bundle": "<1.2.57",
-        "survos/stripe-product": "<1.2.57",
-        "survos/wiki-bundle": "<1.2.57",
-        "survos/import-bridge": "<1.2.57",
-        "survos/grid-group-bundle": "<1.2.57"
-    },
-    "config": {
-        "allow-plugins": {
-            "endroid/installer": true
-        }
+        "phpstan": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/phpunit"
     }
 }

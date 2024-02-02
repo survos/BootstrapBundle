@@ -37,7 +37,7 @@ class AccordionComponent
         $resolver->setAllowedTypes('header', 'string');
 
         $data = $resolver->resolve($data);
-        if (empty($id)) {
+        if (empty($data['id'])) {
             $slugger = new AsciiSlugger();
             $data['id'] = $slugger->slug($data['header']);
         }

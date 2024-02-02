@@ -53,7 +53,7 @@ trait KnpMenuHelperTrait
             'label' => $label,
             'style' => 'header',
             'icon' => $icon,
-            'id' => (new AsciiSlugger())->slug($label??'')->toString()
+            'id' => (new AsciiSlugger())->slug($label)->toString()
         ]);
 
     }
@@ -61,7 +61,7 @@ trait KnpMenuHelperTrait
     private function createId(ItemInterface $menu): string
     {
         $label = $menu->getLabel();
-        return (new AsciiSlugger())->slug($label??null)->toString() . '_' . uniqid();
+        return (new AsciiSlugger())->slug($label)->toString() . '_' . uniqid();
     }
 
     // add returns self, for chaining, by default.  Pass returnItem: true to get the item for adding options.
@@ -203,7 +203,7 @@ trait KnpMenuHelperTrait
 
     }
 
-    private function setChildOptions(ItemInterface $child, array $options)
+    private function setChildOptions(ItemInterface $child, array $options): ItemInterface
     {
 
         if ($options['external']) {
@@ -223,9 +223,6 @@ trait KnpMenuHelperTrait
             $child->setAttribute('feather', $icon);
         }
 
-        if (! empty($extra['safe_label'])) {
-            $child->setExtra('safe_label', true);
-        }
 
         // if this is a collapsible menu item, we need to set the data target to next element.  OR we can let knp_menu renderer handle it.
         if (! $options['route'] && ! $options['uri']) {
@@ -244,6 +241,10 @@ trait KnpMenuHelperTrait
                 'value' => $badge,
             ]);
         }
+        if (! empty($options['safe_label'])) {
+            $child->setExtra('safe_label', true);
+        }
+
 
         if ($routes = $options['routes']??false) {
             $child->setExtra('routes', $routes);

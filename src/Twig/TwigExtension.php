@@ -26,7 +26,6 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
     {
         $renderedContent = $this->componentRenderer->createAndRender($name, $props);
         return $renderedContent;
-        dd($renderedContent);
     }
 
     public function getFilters(): array
@@ -54,7 +53,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
             new TwigFunction('config', fn () => $this->config),
             new TwigFunction('tab', fn (string $label, ?string $content=null, ?string $translationDomain=null) => new Tab($label, $content, $translationDomain)),
             new TwigFunction('theme_options', fn () => $this->contextService->getOptions()),
-            new TwigFunction('hasOffcanvas', fn () => false && $this->contextService->getOption('offcanvas')),
+            new TwigFunction('hasOffcanvas', fn () => $this->contextService->getOption('offcanvas')),
             new TwigFunction('admin_context_is_enabled', [$this, 'isEnabled']),
             new TwigFunction('badge', [$this, 'badge']),
             new TwigFunction('img', fn (string $src) => sprintf('img src="%s"', $src)),

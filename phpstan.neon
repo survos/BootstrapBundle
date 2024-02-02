@@ -3,7 +3,6 @@ parameters:
     inferPrivatePropertyTypeFromConstructor: true
     paths:
         - ./src/
-        - ./vendor
 
     excludePaths:
 #      - 'src/Resources/skeleton'
@@ -28,6 +27,9 @@ parameters:
 #        -
 #            message: '#.*NodeParentInterface\|null.*#'
 #            path: ./src/DependencyInjection/Providers
-#        -
-#            message: '#.*NodeDefinition::children.*#'
-#            path: ./src/DependencyInjection
+        -
+            message: '#.*NodeDefinition::children.*#'
+            path: ./src/*Bundle.php
+        -
+            message: '#.*NodeParentInterface::(info|scalarNode).*#'
+            path: ./src/*Bundle.php
