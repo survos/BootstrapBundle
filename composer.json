@@ -16,18 +16,19 @@
         "php": "^8.1",
         "endroid/installer": "^1.4",
         "knplabs/knp-menu-bundle": "^3.2",
-        "survos/core-bundle": "^1.6",
+        "survos/core-bundle": "^1.5.143",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
         "symfony/options-resolver": "^6.4 || ^7.0",
         "symfony/ux-twig-component": "^2.8",
         "twig/string-extra": "^3.4",
-        "twig/twig": "^3.4"
+        "twig/twig": "^3.4",
+        "twig/intl-extra": "^3.8"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
-        "survos/auth-bundle": "^1.6",
+        "survos/auth-bundle": "^1.5.143",
         "symfony/security-bundle": "^7.0",
         "symfony/translation": "^7.0"
     },
