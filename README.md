@@ -2,6 +2,7 @@
 
 A common bootstrap layout, including menus and several components
 
+```bash
 symfony new my-app --webapp && cd my-app
 composer req symfony/asset-mapper
 composer req survos/bootstrap-bundle
@@ -11,6 +12,8 @@ echo "import 'bootstrap/dist/css/bootstrap.min.css'" >> assets/app.js
 
 bin/console importmap:require bootstrap-icons/font/bootstrap-icons.min.css
 bin/console importmap:require bootswatch/cerulean/bootstrap.min.css
+
+```
 
 hello@themeselection.com
 
