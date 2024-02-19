@@ -2,6 +2,7 @@
 
 namespace Survos\BootstrapBundle;
 
+use App\Controller\ProjectController;
 use Survos\BootstrapBundle\Components\AccordionComponent;
 use Survos\BootstrapBundle\Components\TabsComponent;
 use Survos\BootstrapBundle\Components\AlertComponent;
@@ -86,8 +87,12 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                     $methodRequirements = $args;
 //                    $requirements = array_merge($requirements, $args); // array of ROLE_...
 //                    dd($args);
+                    if ($method->getName() == 'configure_cores' && $method->getDeclaringClass()->getName() == ProjectController::class) {
+//                        dd($method, $method->getDeclaringClass(), $attribute, $args, $requirements);
+                    }
                 }
 
+                // now get the route name(s) and associated the requirements by name.
                 foreach ($method->getAttributes(Route::class) as $attribute) {
                     $args = $attribute->getArguments();
                     $name = $args['name'] ?? $method->getName();
@@ -98,6 +103,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 }
             }
         }
+//        dd($isGranted);
 
         file_put_contents($fn = $this->getCachedDataFilename($container), json_encode($isGranted));
 

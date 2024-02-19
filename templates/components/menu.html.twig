@@ -45,7 +45,7 @@
         {% endif %}
 
 
-    {% elseif type in ['top_auth', AUTH_MENU] %}
+    {% elseif type in ['top_auth', AUTH_MENU, PROFILE_MENU] %}
         {% set menuHtml = knp_menu_render(menuItem, {
             rootAttributes: {
                 class:"nav nav-justify-end list-group list-group-horizontal dropdown"

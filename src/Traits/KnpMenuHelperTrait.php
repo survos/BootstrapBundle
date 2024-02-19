@@ -106,17 +106,30 @@ trait KnpMenuHelperTrait
 
         if ($route) {
             if (isset($this->menuService)) {
-                if (array_key_exists($route, $this->menuService->getRouteRequirements())) {
-                    $x = $this->menuService->getRouteRequirements()[$route];
-                    foreach ($x as $y) {
-                        if (!$this->isGranted($y)) {
-                            $label .= " NOT AUTHORIZED?";
-
-//                            dd(sprintf('rejecting %s %s %s', $route, json_encode($x), $this->security->getUser()));
-                            return $this;
+                $routeRequirements = $this->menuService->getRouteRequirements()[$route]??[];
+                    foreach ($routeRequirements as $y) {
+                        // in order to check security, $rp must be an entity
+                        if (is_a($rp, RouteParametersInterface::class)) {
+                            if (!$this->isGranted($routeRequirements[0], $rp)) {
+                                return $this;
+                            }
+                        } else {
+                            // probably a ROLE_ or an expression
+                            if (!$this->isGranted($routeRequirements[0])) {
+                                return $this;
+                            }
                         }
+//                        dump( $routeRequirements);
+//                            if (!$this->isGranted(...array_values($routeRequirements))) {
+//                                $label .= " NOT AUTHORIZED?";
+//                            dd(sprintf('rejecting %s %s %s', $route, json_encode($routeRequirements), $this->security->getUser()));
+//                                return $this;
+//                            }
+//                        try {
+//                        } catch (\Exception $exception) {
+//                            dd($y, $exception->getMessage());
+//                        }
                     }
-                }
             }
         }
 
@@ -421,4 +434,19 @@ trait KnpMenuHelperTrait
             }
         }
     }
+
+    public function addWorkflowMenu(ItemInterface $menu)
+    {
+        assert(isset($this->workflowHelperService), 'add protected WorkflowHelperService $workflowHelperService to the __constructor of ' . static::class);
+        $workflowMenu = $this->addSubmenu($menu, 'Workflows', icon: 'fas fa-diagram-project');
+        $this->add($workflowMenu, route: 'survos_workflows', label: "All");
+        foreach ($this->workflowHelperService->getWorkflowsIndexedByName() as $workflowCode => $workflow) {
+            $this->add($workflowMenu, 'survos_workflow', [
+                'flowCode' => $workflowCode,
+            ], $workflowCode);
+        }
+
+
+    }
+
 }
