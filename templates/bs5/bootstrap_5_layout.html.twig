@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block meta %}
         <meta name="description" content="{% block description %}Description!{% endblock %}" />
+
         {#    <meta name="description" content="{% block description %}{{ 'head_meta_description'|trans({'%app_name%': app_name})|seo_description|raw }}{% endblock %}" />#}
     {% endblock %}
 
