@@ -48,7 +48,7 @@
     {% elseif type in ['top_auth', AUTH_MENU, PROFILE_MENU] %}
         {% set menuHtml = knp_menu_render(menuItem, {
             rootAttributes: {
-                class:"nav nav-justify-end list-group list-group-horizontal dropdown"
+                class:"nav nav-justify-end list-group list-group-horizontal dropdown d-print-none"
             },
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             style: 'auth'}) %}
@@ -57,7 +57,7 @@
     {% elseif type in [PAGE_MENU] %}
         {% set menuHtml = knp_menu_render(menuItem, {
             rootAttributes: {
-                class:"nav nav-justify-end list-group list-group-horizontal dropdown"
+                class:"nav nav-justify-end list-group list-group-horizontal dropdown d-print-none"
             },
             currentClass  : "active selected current ",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
@@ -71,7 +71,7 @@
             {{ knp_menu_render(menuItem, {
                 allow_safe_labels: true,
                 rootAttributes: {
-                    class:"navbar-nav me-auto mb-2 mb-lg-0 list-group-horizontal"
+                    class:"navbar-nav me-auto mb-2 mb-lg-0 list-group-horizontal d-print-none"
                 },
                 currentClass  : "active",
                 template: '@SurvosBootstrap/knp_top_menu.html.twig',
