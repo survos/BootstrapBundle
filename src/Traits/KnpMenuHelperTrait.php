@@ -5,6 +5,7 @@ namespace Survos\BootstrapBundle\Traits;
 
 use Google\Auth\Cache\Item;
 use Knp\Menu\ItemInterface;
+use Knp\Menu\MenuItem;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\CoreBundle\Entity\RouteParametersInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -386,7 +387,7 @@ trait KnpMenuHelperTrait
     public function authMenu(AuthorizationCheckerInterface $authorizationChecker,
                              Security $security,
                              ItemInterface                 $menu,
-                             $childOptions = [])
+                             $childOptions = []): MenuItem
     {
 
 
@@ -433,6 +434,7 @@ trait KnpMenuHelperTrait
                 // route is likely missing
             }
         }
+        return $menu;
     }
 
     public function addWorkflowMenu(ItemInterface $menu)

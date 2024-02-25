@@ -24,6 +24,7 @@
 {% endblock %}
 
 {% block body_content %}
+
     {#  optional fixed-width in config? #}
     {% set containerClass = 'container-fluid' %}
     <div class="navbar navbar-expand-lg sticky-top xxfixed-top bg-primary" data-bs-theme="dark">
@@ -93,7 +94,9 @@
         </div>
         {% endblock %}
 
+
         <main role="main" class="container mt-4">
+            {{ block('flash_messages') }}
 {#            <h1 class="mt-5">Sticky footer</h1>#}
 {#            <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS.</p>#}
 {#            <p>Use <a href="../sticky-footer-navbar/">the sticky footer with a fixed navbar</a> if need be, too.</p>#}
@@ -103,4 +106,26 @@
     </div>
 
 
+{% endblock %}
+
+{% block flash_messages %}
+{# read and display several types of flash messages #}
+{% for type, messages in app.flashes(['success', 'warning']) %}
+
+    {% for message in messages %}
+        <twig:alert :message="message" :type="type" dismissible="true" />
+        <div class="flash-{{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{# read and display all flash messages #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
 {% endblock %}
