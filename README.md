@@ -12,6 +12,9 @@ echo "import 'bootstrap/dist/css/bootstrap.min.css'" >> assets/app.js
 
 bin/console importmap:require bootstrap-icons/font/bootstrap-icons.min.css
 bin/console importmap:require bootswatch/cerulean/bootstrap.min.css
+bin/console importmap:require bootswatch/cerulean/bootstrap.min.css
+
+req bootswatch/dist/flatly/bootstrap.min.css
 
 ```
 

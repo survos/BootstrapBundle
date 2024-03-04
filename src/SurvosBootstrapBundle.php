@@ -85,25 +85,16 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 foreach ($method->getAttributes(IsGranted::class) as $attribute) {
                     $args = $attribute->getArguments();
                     $methodRequirements = $args;
-//                    $requirements = array_merge($requirements, $args); // array of ROLE_...
-//                    dd($args);
-                    if ($method->getName() == 'configure_cores' && $method->getDeclaringClass()->getName() == ProjectController::class) {
-//                        dd($method, $method->getDeclaringClass(), $attribute, $args, $requirements);
-                    }
                 }
 
                 // now get the route name(s) and associated the requirements by name.
                 foreach ($method->getAttributes(Route::class) as $attribute) {
                     $args = $attribute->getArguments();
                     $name = $args['name'] ?? $method->getName();
-//                         assert(array_key_exists('name', $args), json_encode($args));
-//                         dd($attribute->getArguments());
                     $isGranted[$name] = array_merge($methodRequirements, $requirements);
-//                    if ($name == 'tag') { dd($requirements, $name); }
                 }
             }
         }
-//        dd($isGranted);
 
         file_put_contents($fn = $this->getCachedDataFilename($container), json_encode($isGranted));
 
