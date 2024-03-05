@@ -2,7 +2,6 @@
 
 namespace Survos\BootstrapBundle;
 
-use App\Controller\ProjectController;
 use Survos\BootstrapBundle\Components\AccordionComponent;
 use Survos\BootstrapBundle\Components\TabsComponent;
 use Survos\BootstrapBundle\Components\AlertComponent;
@@ -16,7 +15,6 @@ use Survos\BootstrapBundle\Components\DropdownComponent;
 use Survos\BootstrapBundle\Components\LinkComponent;
 use Survos\BootstrapBundle\Components\MenuBreadcrumbComponent;
 use Survos\BootstrapBundle\Components\MenuComponent;
-use Survos\BootstrapBundle\DependencyInjection\Compiler\TwigPass;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Survos\BootstrapBundle\Service\ContextService;
 use Survos\BootstrapBundle\Service\MenuService;
@@ -36,7 +34,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Survos\BootstrapBundle\Translation\RoutesTranslationLoader;
