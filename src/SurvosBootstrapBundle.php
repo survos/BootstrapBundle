@@ -59,7 +59,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         return $kernelCacheDir . '/route_requirements.json';
     }
 
-    // The compiler pass
+    // During the compiler pass, find the IsGranted routes so the menu can exclude them if not authorized.
     public function process(ContainerBuilder $container): void
     {
         $isGranted = [];
@@ -104,6 +104,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         foreach ($eventClass->getConstants() as $name => $value) {
             $def->addMethodCall('addGlobal', [$name, $value]);
         }
+        //
 //        dd($def);
 
         $theme = $container->getParameter('my.theme');
@@ -296,7 +297,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 //                ->defaultValue('')
 //                ->info("Offcanvas position (top,bottom,start,end")
 //            ->end()
-            ->booleanNode('allow_login')->defaultValue(false)->info("Login route exists")->end();
+            ->booleanNode('allow_login')->defaultValue(false)->info("Login route exists")->end()
+            ->booleanNode('show_locale_dropdown')->defaultValue(false)->info("Add a locale dropdown to the navbar")->end();
         return $rootNode;
     }
 
