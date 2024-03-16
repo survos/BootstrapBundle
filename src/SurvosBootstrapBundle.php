@@ -93,6 +93,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             }
         }
 
+//        dd($isGranted);
+
         file_put_contents($fn = $this->getCachedDataFilename($container), json_encode($isGranted));
 
         if (false === $container->hasDefinition('twig')) {
