@@ -384,6 +384,11 @@ trait KnpMenuHelperTrait
         return $this->authorizationChecker ? $this->authorizationChecker->isGranted($attribute, $subject) : false;
     }
 
+    public function isEnv(string $envName): bool
+    {
+        return $this->env === $envName;
+    }
+
     public function authMenu(AuthorizationCheckerInterface $authorizationChecker,
                              Security $security,
                              ItemInterface                 $menu,
