@@ -1,9 +1,11 @@
-{# _topnav_language_dropdown_selector #}
+{# _navbar_language_dropdown.html.twig #}
 
+{# app.locale is undefined if translation.enabled is false #}
+{% set appLocale = app.request.locale|default(false) %}
 <div class="dropdown ms-1 topbar-head-dropdown header-item d-print-none">
 
     {% set flagMap = {'en':'us','es':'mx', 'uk': 'ua', 'hi': 'in'} %}
-    {% set lang = app.locale %}
+    {% set lang = app.request.locale|default(false) %}
     {% set flag = flagMap[lang]|default(lang) %}
 
     <button type="button" class="btn border-info rounded" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -30,14 +32,14 @@
                 {#                    <span>{{ lang }}</span>#}
 
                 <div class="align-middle bold">
-                    {% set isCurrentLocale = app.locale == supportedLocale %}
+                    {% set isCurrentLocale = app.request.locale == supportedLocale %}
                     <span class="{{ isCurrentLocale ? 'text-success' : '' }}">
                         {{ supportedLocale|language_name(supportedLocale) }}
                         </span>
 
-                    {% if app.locale != supportedLocale %}
+                    {% if appLocale and (appLocale != supportedLocale) %}
                         <span class="text-muted">
-                        {{ supportedLocale|language_name(app.locale) }}
+                        {{ supportedLocale|language_name(appLocale) }}
                     </span>
                     {% endif %}
                 </div>
