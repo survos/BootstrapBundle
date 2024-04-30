@@ -33,7 +33,7 @@ trait KnpMenuHelperTrait
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null, ?string $id = null): ItemInterface
+    public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null, ?string $id = null, ?string $translationDomain=null): ItemInterface
     {
         // how internal,
         $subMenu = $this->addMenuItem($menu, [
@@ -42,18 +42,22 @@ trait KnpMenuHelperTrait
             'id' => $id,
             'is_submenu' => true
         ]);
+        if ($translationDomain) {
+            $subMenu->setExtra('translation_domain', $translationDomain);
+        }
         $subMenu->setExtra('is_submenu', true);
 //        $subMenu->setAttribute('is_submenu', true);
 //        if ($subMenu->getLabel() == 'tt@survos.com') dd($subMenu, $subMenu->getAttributes());
         return $subMenu;
     }
 
-    public function addHeading(ItemInterface $menu, string $label, string $icon = null): void
+    public function addHeading(ItemInterface $menu, string $label, string $icon = null, ?string $translationDomain=null): void
     {
         $item = $this->addMenuItem($menu, [
             'label' => $label,
             'style' => 'header',
             'icon' => $icon,
+            'translation_domain' => $translationDomain,
             'id' => (new AsciiSlugger())->slug($label)->toString()
         ]);
 
