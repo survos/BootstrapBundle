@@ -302,6 +302,7 @@ trait KnpMenuHelperTrait
                 'childOptions' => $this->childOptions,
                 'description' => null,
                 'attributes' => [],
+                'translation_domain' => 'routing'
             ])->resolve($options);
 
         // rename rp
