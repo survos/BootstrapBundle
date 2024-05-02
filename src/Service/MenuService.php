@@ -202,6 +202,7 @@ class MenuService implements KnpMenuHelperInterface
                     'childOptions' => $this->childOptions,
                     'description' => null,
                     'attributes' => [],
+                    'translation_domain' => null
                 ])->resolve($options);
 //        try {
 //        } catch (\Exception $exception) {
