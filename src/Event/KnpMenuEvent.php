@@ -2,6 +2,7 @@
 
 namespace Survos\BootstrapBundle\Event;
 
+use JetBrains\PhpStorm\Deprecated;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -16,6 +17,10 @@ class KnpMenuEvent extends Event
     public const NAVBAR_MENU3 = 'NAVBAR_MENU3';
     public const PAGE_MENU = 'PAGE_MENU';
     public const SIDEBAR_MENU = 'SIDEBAR_MENU';
+
+    #[Deprecated()]
+    public const SIDEBAR_MENU_EVENT = 'SIDEBAR_MENU';
+
     public const FOOTER_MENU = 'FOOTER_MENU';
     public const AUTH_MENU = 'AUTH_MENU';
     public const PROFILE_MENU = 'PROFILE_MENU';
