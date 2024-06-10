@@ -12,6 +12,7 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
+
 use function Symfony\Component\String\u;
 
 #[AsTwigComponent('menu', template: '@SurvosBootstrap/components/menu.html.twig')]
@@ -26,13 +27,13 @@ class MenuComponent
         //    public function __construct(private Helper $helper) {
     }
 
-    public ?string $title;
-    public ?string $caller;
+    public ?string $title = null;
+    public ?string $caller = null;
 
     #[ExposeInTemplate]
     public string $type; // shortcut
 
-    public string $eventName; // this is the real event name, but shortcuts are easier.
+    public string $eventName = ''; // this is the real event name, but shortcuts are easier.
 
     public string $menuAlias = KnpMenuEvent::class;
 
@@ -46,9 +47,9 @@ class MenuComponent
 
     public string|bool|null $translationDomain  = false;
 
-    public string $wrapperClass;
+    public string $wrapperClass = '';
 
-    public function mount(string $type,  string $caller = null, array $path = [], array $options = [])
+    public function mount(string $type, string $caller = null, array $path = [], array $options = [])
     {
         assert($caller);
         $this->type = $type;
