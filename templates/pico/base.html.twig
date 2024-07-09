@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark"/>
+    {% block stylesheets %}
+        {#        <link rel="stylesheet" href="css/pico.min.css"> #}
+    {% endblock %}
+
+    {% block javascripts %}
+    {% endblock %}
+    <title>
+        {% block title %}
+            Hello world!
+        {% endblock %}
+    </title>
+</head>
+<body>
+<header>
+{#    https://picocss.com/docs/dropdown#}
+    <nav>
+        <ul>
+            <li><strong>Acme Corp</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#" class="secondary">Services</a></li>
+            <li>
+                <details class="dropdown">
+                    <summary>
+                        Account
+                    </summary>
+                    <ul dir="rtl">
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </details>
+            </li>
+            <li>
+                <details class="dropdown">
+                    <summary>
+                        Login
+                    </summary>
+                    <ul dir="rtl">
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </details>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+
+    <main class="container">
+
+    {% block body %}
+        <h1>Hello world!</h1>
+    {% endblock %}
+</main>
+<footer>
+    Footer here.
+</footer>
+</body>
+</html>
+
