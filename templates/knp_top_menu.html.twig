@@ -163,7 +163,7 @@
     {%- set attributes = item.attributes|merge({'dropdown': null, 'divider_prepend': null, 'divider_append': null }) %}
 
     {% if use_multilevel %}
-        <li >
+        <li class="{{ options.leaf_class|default('') }}" >
     {% endif %}
 
     {%- if divider_prepend %}

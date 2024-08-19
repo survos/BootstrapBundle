@@ -166,6 +166,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 //            ->setArgument('$taggedServices', $tComposerJsonManipulatorConfig)
             ->addTag(name: 'translation.loader', attributes: ['alias' => 'bin']);
 
+        // register the components
         foreach ([MenuComponent::class, MenuBreadcrumbComponent::class] as $c) {
             $builder->register($c)->setAutowired(true)->setAutoconfigured(true)
                 ->setArgument('$menuOptions', $config['menu_options'])

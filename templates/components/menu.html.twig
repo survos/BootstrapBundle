@@ -56,13 +56,19 @@
 
     {% elseif type in [PAGE_MENU] %}
         {% set menuHtml = knp_menu_render(menuItem, {
+            allow_safe_labels: true,
             rootAttributes: {
-                class:"nav nav-justify-end list-group list-group-horizontal dropdown d-print-none"
+                class:"nav nav-justify-end list-group list-group-horizontal dropdown d-print-none bg-success"
             },
-            currentClass  : "active selected current ",
+            leaf_class: 'bg-success',
+            currentClass  : "current ",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             style: 'navbar'}) %}
-        {{ menuHtml|raw }}
+        {# ugh, the classes here are pure hacks until rk can make sense of menu rendering #}
+        <div>
+            {{ menuHtml|raw }}
+
+        </div>
 
     {% elseif type in ['top_navbar', 'top_page', NAVBAR_MENU, NAVBAR_MENU2, NAVBAR_MENU3] %}
         {% set menu = knp_menu_get(menuItem) %}
