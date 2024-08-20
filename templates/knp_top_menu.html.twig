@@ -263,7 +263,7 @@
     {% import _self as ownmacro %}
     {{ matcher.isCurrent(item) ? 'current Span is ' ~ item.label }}
 
-    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'navbar-text nav-linkxx') }}
+    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'navbar-text px-0') }}
     <span {{ macros.attributes(item.labelAttributes) }}>
         {% if item.attribute('icon') is not empty  %}
             <i class="{{ item.attribute('icon') }}"></i>

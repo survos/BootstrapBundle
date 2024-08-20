@@ -58,9 +58,9 @@
         {% set menuHtml = knp_menu_render(menuItem, {
             allow_safe_labels: true,
             rootAttributes: {
-                class:"nav nav-justify-end list-group list-group-horizontal dropdown d-print-none bg-success"
+                class:"nav nav-justify-end list-group list-group-horizontal d-print-none sub-navbar"
             },
-            leaf_class: 'bg-success',
+            leaf_class: 'dropdown-item',
             currentClass  : "current ",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             style: 'navbar'}) %}
