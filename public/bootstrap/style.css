@@ -1,0 +1,19 @@
+/* footer css */
+.footer-main {
+    /* height: 50px; */
+    background-color: red; #  #fff;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.footer-main .nav-link {
+    color: #717d83;
+}
+
+.footer-main .nav-link:hover {
+    color: #60c1f9;
+}
