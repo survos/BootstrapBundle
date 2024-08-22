@@ -30,6 +30,7 @@
     <div class="d-print-none navbar navbar-expand-lg sticky-top xxfixed-top bg-primary d-print-none " data-bs-theme="dark">
         <div class="{{ containerClass }}">
 
+            <div class="d-flex justify-content-between w-100">
             {% block brand %}
             <a href="{{ path('homepage'|route_alias) }}" class="navbar-brand">{{ config().app.abbr|raw }}</a>
             {% endblock %}
@@ -38,7 +39,7 @@
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="collapse custom-collapse navbar-collapse" id="navbarResponsive">
                 {% block NAVBAR_MENU %}{{ component('menu', {type: NAVBAR_MENU, caller: _self}) }}{% endblock %}
                 {{ component('menu', {type: NAVBAR_MENU2, caller: _self}) }}
                 {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
@@ -51,7 +52,7 @@
                 {% endif %}
 
             </div>
-
+            </div>
             <div>
                 {{ component('menu', {type: PROFILE_MENU, caller: _self}) }}
 
