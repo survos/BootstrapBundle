@@ -2,6 +2,7 @@
 
 {# app.locale is undefined if translation.enabled is false #}
 {% set appLocale = app.request.locale|default(false) %}
+
 <div class="dropdown ms-1 topbar-head-dropdown header-item d-print-none">
 
     {% set flagMap = {'en':'us','es':'mx', 'uk': 'ua', 'hi': 'in'} %}
@@ -12,7 +13,10 @@
         <span class="bi bi-globe"></span>
         {#        <img id="header-lang-img-XX" src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="{{ app.request.locale|language_name }}" height="20" class="rounded">#}
         {#        {{ app.request.locale|upper }}#}
-        &nbsp; {{ lang }}
+        {# only when the screen is large enough #}
+        &nbsp; {{ lang|language_name(appLocale)  }}
+        {# when mobile, like the museado logo #}
+        &nbsp; {{ lang  }}
     </button>
     <div class="dropdown-menu dropdown-menu-end">
 
