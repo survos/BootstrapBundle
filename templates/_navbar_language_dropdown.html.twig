@@ -14,9 +14,9 @@
         {#        <img id="header-lang-img-XX" src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="{{ app.request.locale|language_name }}" height="20" class="rounded">#}
         {#        {{ app.request.locale|upper }}#}
         {# only when the screen is large enough #}
-        &nbsp; {{ lang|language_name(appLocale)  }}
+        <span class="d-lg-inline-block d-none">&nbsp; {{ lang|language_name(appLocale)  }}</span>
         {# when mobile, like the museado logo #}
-        &nbsp; {{ lang  }}
+        <span class="d-inline-block d-lg-none">&nbsp; {{ lang  }}</span>
     </button>
     <div class="dropdown-menu dropdown-menu-end">
 
@@ -43,7 +43,7 @@
 
                     {% if appLocale and (appLocale != supportedLocale) %}
                         <span class="text-muted">
-                        {{ supportedLocale|language_name(appLocale) }}
+                        ({{ supportedLocale|language_name(appLocale) }})
                     </span>
                     {% endif %}
                 </div>
