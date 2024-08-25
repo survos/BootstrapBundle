@@ -16,7 +16,7 @@
         "php": "^8.1",
         "endroid/installer": "^1.4",
         "knplabs/knp-menu-bundle": "^3.2",
-        "survos/core-bundle": "^1.5.288",
+        "survos/core-bundle": "^1.5.289",
         "symfony/config": "^6.4 || ^7.0",
         "symfony/dependency-injection": "^6.4 || ^7.0",
         "symfony/http-kernel": "^6.4 || ^7.0",
@@ -28,7 +28,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
-        "survos/auth-bundle": "^1.5.288",
+        "survos/auth-bundle": "^1.5.289",
         "symfony/security-bundle": "^7.0",
         "symfony/translation": "^7.0"
     },
