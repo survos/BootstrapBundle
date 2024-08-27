@@ -1,0 +1,71 @@
+<!-- start faqs -->
+
+{#{{ dump(faq) }}#}
+
+<section class="section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h3 class="mb-3 fw-semibold">{{ 'faq'|trans|title }}</h3>
+                    <p class="text-muted mb-4 ff-secondary">If you can not find answer to your question in our FAQ, you
+                        can
+                        always contact us or email us. We will answer you shortly!</p>
+
+                    <div class="">
+                        <button type="button" class="btn btn-primary btn-label rounded-pill"><i
+                                    class="ri-mail-line label-icon align-middle rounded-pill fs-16 me-2"></i> Email Us
+                        </button>
+                        <button type="button" class="btn btn-info btn-label rounded-pill"><i
+                                    class="ri-twitter-line label-icon align-middle rounded-pill fs-16 me-2"></i> Send Us
+                            Tweet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+
+        <div class="row g-lg-5 g-4">
+            {% for sectionCode, section in faq.sections %}
+
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="flex-shrink-0 me-1">
+                            <i class="ri-question-line fs-24 align-middle text-success me-1"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-0 fw-semibold">{{ section.section }}</h5>
+                        </div>
+                    </div>
+                    {% set sectionId = section.section ~ "-accordion" %}
+                    <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box" id="">
+                        {% for q in section.questions %}
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="genques-headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#genques-collapseOne" aria-expanded="true"
+                                            aria-controls="genques-collapseOne">
+                                        {{ q.q|trans }}
+                                    </button>
+                                </h2>
+                                <div id="genques-collapseOne" class="accordion-collapse collapse show"
+                                     aria-labelledby="genques-headingOne" data-bs-parent="#genques-accordion">
+                                    <div class="accordion-body ff-secondary">
+                                        {{ q.a|trans }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    <!-- end row -->
+    </div>
+    <!-- end container -->
+</section>
+<!-- end faqs -->

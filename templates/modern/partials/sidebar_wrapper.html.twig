@@ -1,0 +1,29 @@
+<!-- ========== App Menu {{ _self }}========== -->
+<div class="navbar-menu">
+
+    <div id="scrollbar">
+        <div class="container-fluid">
+
+            <div id="two-column-menu">
+            </div>
+
+            {#            {% block sidebar_wrapper %} #}
+            {#            {% embed '@SurvosVelzon/modern/partials/sidebar_wrapper.html.twig' %} #}
+
+            {% block sidebar %}
+                {{ component('menu', {type: 'sidebar'}) }}
+                {#                {{ include('@SurvosVelzon/modern/partials/sidebar.html.twig') }} #}
+            {% endblock %}
+            {#            {% endembed %} #}
+            {#            {% endblock %} #}
+
+
+        </div>
+        <!-- Sidebar -->
+    </div>
+
+    <div class="sidebar-background"></div>
+</div>
+
+<!-- Left Sidebar End -->
+

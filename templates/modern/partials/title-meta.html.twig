@@ -1,0 +1,10 @@
+<meta charset="utf-8" />
+{#{% block title %}#}
+{#<title>{{ block('title') }}</title>#}
+{#{% endblock %}#}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="{{ description|default('missing description')}}" name="description" />
+<meta content="{{ author|default('Survos') }}" name="author" />
+<!-- App favicon -->
+<link rel="shortcut icon" src="{{ asset('/bundles/survosvelzon/images/favicon.ico') }}">

@@ -1,0 +1,55 @@
+{# this might be better as a component #}
+<header id="page-topbar">
+    <div class="layout-width">
+        <div class="navbar-header">
+            {% block brand %}
+                {% embed('@SurvosVelzon/partials/_topnav_brand.html.twig') %}
+                    {% block logo_short '' %}
+                {% endembed %}
+            {% endblock %}
+
+            <div class="d-flex align-items-center">
+
+                {% block searchbox %}
+{#                    {{ include('@SurvosVelzon/partials/_topnav_searchbar.html.twig') }}#}
+                {% endblock %}
+
+                {% block language_selector %}
+{#                    {{ include('@SurvosVelzon/partials/_topnav_language_selector.html.twig') }}#}
+                    {{ _self }}
+{#                    {{ include('@SurvosVelzon/partials/_topnav_language_dropdown_selector.html.twig') }}#}
+                {% endblock %}
+
+                {% block apps %}
+                    {{ include('@SurvosVelzon/partials/_topnav_apps.html.twig') }}
+                {% endblock %}
+
+                {% block cart %}
+<!-- cart in {{ _self }} -->
+                    {{ include('@SurvosVelzon/partials/_topnav_cart.html.twig') }}
+                {% endblock %}
+
+                {% block fullscreen_widget %}
+                    {{ include('@SurvosVelzon/partials/_topnav_fullscreen_widget.html.twig') }}
+                {% endblock %}
+
+                {% block toggle_dark_light %}
+                    {{ include('@SurvosVelzon/partials/_topnav_fullscreen_toggle_dark_light.html.twig') }}
+                {% endblock %}
+
+                {% block messages %}
+                    {{ include('@SurvosVelzon/partials/_topnav_messages.html.twig') }}
+                {% endblock %}
+
+{#                {% block top_navbar_menu %}#}
+{#                {% endblock %}#}
+
+                {% block user_auth %}
+                    {% if app.user %}
+                        {{ include('@SurvosVelzon/modern/partials/_user_auth.html.twig', {user: app.user}) }}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</header>
