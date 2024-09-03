@@ -3,12 +3,13 @@
 {% set theme = theme_option('theme') %}
     {% if type in [SIDEBAR_MENU] %}
         {#        "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig", #}
+            {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
         {{ knp_menu_render(menuItem, {
-            "template"      : "@SurvosBootstrap/sneat/knp_menu.html.twig",
+            "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig",
             "debug": debug|default(false),
             currentAsLink: true,
             firstClass: 'first',
-            currentClass  : "active",
+            currentClass  : "active bg-danger",
             "listAttributes": {
                 "class": "menu-inner py-1",
             } ,
@@ -20,11 +21,12 @@
 
             'comment': "This is an custom option passed in knp_menu_render. Only used by our custom renderer.",
             rootAttributes: {
-                class: 'menu-inner py-1',
+                class: 'menu-inner py-1 bg-danger',
                 role: 'menu'
             },
 
         }) }}
+        {% if wrapperClass|default(false) %}</div>{% endif %}
 
     {% elseif type in [FOOTER_MENU] %}
         {% set menu = knp_menu_get(menuItem) %}
