@@ -17,7 +17,7 @@
     <!-- {{ _self }} (to be overwritten.) -->
         {{ component('menu', {
             caller: _self,
-            wrapperClass: 'fw-bold py-3 mb-4 d-print-none',
+            wrapperClass: 'fw-bold py-3 mb-4 d-print-none bg-primary',
             type: PAGE_MENU,
         }) }}
 
@@ -35,10 +35,17 @@
             <a href="{{ path('homepage'|route_alias) }}" class="navbar-brand">{{ config().app.abbr|raw }}</a>
             {% endblock %}
 {#            <a href="#menu">      MM          <span class="navbar-toggler-icon"></span></a>#}
-            <button id="navbar-toggle-bundle" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-flex align-items-center gap-3">
+                {% if config().options.show_locale_dropdown %}
+                <div class="d-inline-block d-lg-none">
+                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                </div>
+                {% endif %}
+                <button id="navbar-toggle-bundle" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
             <div class="collapse custom-collapse navbar-collapse" id="navbarResponsive">
                 {% block NAVBAR_MENU %}{{ component('menu', {type: NAVBAR_MENU, caller: _self}) }}{% endblock %}
                 {{ component('menu', {type: NAVBAR_MENU2, caller: _self}) }}
@@ -48,14 +55,15 @@
 
 {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
                 {% if config().options.show_locale_dropdown %}
-                {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                    <div class="d-none d-lg-inline-block">
+                        {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                    </div>
                 {% endif %}
 
             </div>
             </div>
             <div>
                 {{ component('menu', {type: PROFILE_MENU, caller: _self}) }}
-
             </div>
 
 

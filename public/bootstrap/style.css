@@ -2,7 +2,7 @@
 .navbar {
     height: 70px;
     padding: 16px 0;
-    background-color: #323835 !important;
+    background-color: #182433 !important;
     background-image: none !important;
 }
 
@@ -13,19 +13,23 @@
 .navbar .navbar-nav li .nav-link {
     font-size: 15.5px;
     padding: 2px 10px;
-    color: #a4b0bf;
+    color: #dce1e7;
+}
+
+.navbar .navbar-nav .dropdown-menu {
+    --bs-dropdown-bg: #182433;
 }
 .navbar .navbar-nav li .nav-link:hover {
     color: #60c1f9;
 }
 
 .navbar .navbar-nav li.active .nav-link {
-    color: #fdfdfd;
+    color: #dce1e7;
     background-color: transparent;
 }
 
 .nav .nav-link {
-    color: #fdfdfd;
+    color: #dce1e7;
 }
 
 .nav .nav-link:hover {
@@ -33,13 +37,43 @@
 }
 
 .topbar-head-dropdown .btn {
-    border-color: #454d49 !important;
+    border-color: #25384f !important;
     color: #fff;
 }
 
 .topbar-head-dropdown .btn:hover {
     color: #60c1f9;
 }
+
+@media (max-width: 991px) {
+    .custom-collapse {
+        padding-bottom: 18px;
+        background-color: #182433;
+        max-height: 90vh;
+    }
+    .dropdown .dropdown-menu .nav-link {
+        padding: 4px 10px !important;
+    }
+    .custom-collapse .dropdown-menu.show {
+        padding: 0 10px;
+    }
+    .navbar-nav .nav-link.active, .navbar-nav .nav-link.show { 
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    .navbar .navbar-nav li .nav-link {
+        font-size: 15.5px;
+        padding: 6px 10px;
+    }
+}
+
+.custom-collapse .topbar-head-dropdown .dropdown-menu.show {
+    background-color: #182433;
+    padding: 10px 12px;
+}
+.custom-collapse .topbar-head-dropdown .dropdown-menu.show .dropdown-item:hover {
+    background-color: #222f40;
+}
+
 
 /* footer css */
 .footer-main {
@@ -82,3 +116,41 @@
         margin-bottom: 144px;
     }
 }
+
+.sub-navbar {
+    background-color: #182433 !important;   
+}
+.pageMenu {
+    display: none;
+}
+@media (max-width: 991px){
+    .pageMenu {
+        display: block;
+        position: absolute;
+        right: 30px;
+        margin-top: 12px;
+    }
+    .pageNavMenu {
+        background-color: #182433 !important;
+        min-height: 50px;
+    }
+    .pageNavMenu > ul {
+    display: flex;
+        flex-direction: column;
+    }
+    .pageNavMenu > ul > li {
+        width: 100%;
+    }
+    .collapseExamplePageNav {
+        max-height: 0; /* Start with the height collapsed */
+        overflow: hidden; /* Hide the overflow content */
+        opacity: 0; /* Start with invisible */
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out; /* Transition for height and opacity */
+    }
+      
+    .collapseExamplePageNav.show {
+    max-height: 200px; /* Adjust based on the content size */
+    opacity: 1; /* Fully visible */
+    }
+}
+
