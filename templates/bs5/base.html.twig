@@ -42,6 +42,7 @@
                 <div class="menu-inner-shadow"></div>
 
                 {% block sidebar %}
+                    <h1>{{ _self }}</h1>
 {#                    {{ include('@SurvosBootstrap/bs5/_sidebar.html.twig') }}#}
                     {{ component('menu', {type: SIDEBAR_MENU}) }}
                 {% endblock %}
