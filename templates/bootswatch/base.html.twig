@@ -89,6 +89,8 @@
         {% block SIDEBAR_MENU %}
             {% set options = {
                 pixieCode: pixieCode|default(false),
+                tableName: tableName|default(false),
+                itemKey: item|default(false) ? item.key : null,
             } %}
             <twig:menu :type="SIDEBAR_MENU"
                        wrapperClass=""
