@@ -244,8 +244,13 @@
     color: #dce1e7;
 }
 
-.navbar .dropdown-item:focus, .navbar .dropdown-item:hover {
+.navbar .navbar-nav .dropdown-menu .nav-item:focus, 
+.navbar .navbar-nav .dropdown-menu .nav-item:hover {
     background-color: rgba(108,122,145, 0.08);
+}
+.navbar .navbar-nav .nav-link.active .nav-link-icon,
+.navbar .navbar-nav .nav-link.active {
+    color: #0d8ff8 !important;
 }
 .navbar .bg-success-subtle {
     background-color: rgba(26,50,53, 1) !important;
@@ -269,7 +274,33 @@
     width: 20px;
     fill: #878a99;
 }
+.navbar-vertical.navbar-expand-lg .navbar-brand a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.navbar-vertical.navbar-expand-lg .navbar-brand img{
+    height: 35px;
+}
+.navbar-brand-box .logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.sidebar-open .main-wrapper,
+.sidebar-open .footer-main,
+.sidebar-open #topbarMenu{
+    margin: 0;
+    transition: margin .1s ease-in-out;
+}
 @media (max-width: 991.98px){
+    .navbar-brand {
+        display: none;
+    }
+    .header-item {
+        display: none;
+    }
     .navbar-expand-lg .navbar-collapse .dropdown-toggle:after {
         margin-left: auto;
     }
@@ -279,12 +310,15 @@
         display: flex;
         align-items: center;
     }
-    .navbar-expand-lg .navbar-collapse .dropdown-menu .dropdown-item {
+    .custom-collapse .navbar-nav .dropdown .dropdown-menu.show .nav-link.depth-2 {
+        padding-left: 25px !important;
+    }
+    .navbar-vertical.navbar-expand-lg .navbar-collapse .dropdown .dropdown-menu .nav-link {
         min-width: 0;
         display: flex;
         align-items: center;
         width: auto;
-        padding-left: calc(calc(calc(0.5rem* 2) / 2) + 1.75rem);
+        padding-left: calc(calc(calc(0.5rem* 2) / 2) + 1.75rem) !important;
         color: inherit;
     }
     .navbar .dropdown-menu-columns,
@@ -295,8 +329,31 @@
         padding: 0;
         border: none;
     }
+
+    .custom-sidebar {
+        padding: 0;
+    }
+
+    .custom-sidebar .navbar-nav {
+        padding-bottom: 16px;
+    } 
+
+    .custom-sidebar .navbar-toggler{
+        /* border: 1px solid red; */
+        position: absolute;
+        top: -54px;
+        left: 70px;
+        z-index: 1030;
+    }
 }
 @media (min-width: 992px) {
+    .custom-collapse.navbar-collapse .navbar-nav li .nav-link.dropdown-toggle ,
+    .custom-collapse.navbar-collapse .navbar-nav li .nav-link.depth-1 {
+        line-height: 60px;
+    }
+    .sidebar-open .navbar-brand-box {
+        display: none;
+    }
     .navbar {
         height: 70px;
     }
@@ -309,7 +366,7 @@
     }
     .navbar-vertical.navbar-expand-lg {
         width: 0;
-        display: none;
+        opacity: 1; 
         height: 100%;
         position: fixed;
         top: 0;
@@ -317,22 +374,28 @@
         bottom: 0;
         z-index: 1030;
         align-items: flex-start;
-        transition: transform .3s;
+        transition: width .1s ease-in-out, transform .1s ease-in-out;
         padding: 0;
+        overflow: hidden;
     }
     .sidebar-open .navbar-vertical.navbar-expand-lg {
         width: 15rem;
-        display: block;
+        opacity: 1;
+        transition: width .1s ease-in-out, transform .1s ease-in-out;
     }
+    .sidebar-open .main-wrapper,
+    .sidebar-open .footer-main,
     .sidebar-open #topbarMenu{
         margin-left: 15rem;
+        transition: margin .1s ease-in-out;
     }
     .navbar-vertical.navbar-expand-lg .navbar-brand {
         padding: .75rem 1rem;
-        justify-content: space-between;
+        border-right: 1px solid #64646445;
         border-bottom: 1px solid #64646445;
         height: 70px;
     }
+    
     .navbar-expand-lg .navbar-collapse {
         width: auto;
         flex: 1 1 auto;
@@ -378,7 +441,7 @@
     .navbar-vertical.navbar-expand-lg .navbar-collapse .dropdown-menu-columns {
         flex-direction: column;
     }
-    .navbar-vertical.navbar-expand-lg .navbar-collapse .dropdown-menu .dropdown-item {
+    .navbar-vertical.navbar-expand-lg .navbar-collapse .dropdown .dropdown-menu .nav-link {
         min-width: 0;
         display: flex;
         width: auto;
@@ -390,10 +453,10 @@
     }
 }
 
-.dropdown-menu li {
+/* .dropdown-menu li {
     margin-left: 30px;
 }
 
 .dropdown-menu li .dropdown-menu li {
     margin-left: 60px;
-}
+} */

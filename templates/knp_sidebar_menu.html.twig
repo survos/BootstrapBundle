@@ -30,7 +30,7 @@
                 |trim -%}
         {% endif %}
         {% if depth > 0 %}
-            {%- set listAttributes = listAttributes|merge({class: ' dropdown-menu menu-sub'}) %}
+            {%- set listAttributes = listAttributes|merge({class: matcher.isAncestor(item, options.matchingDepth) ? ' dropdown-menu menu-sub show' : ' dropdown-menu menu-sub' }) %}
         {% endif %}
         <ul {{ macros.attributes(listAttributes) }}>
                     {{ block('children') }}
