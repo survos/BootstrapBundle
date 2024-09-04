@@ -30,10 +30,10 @@
                 |trim -%}
         {% endif %}
         {% if depth > 0 %}
-            {%- set listAttributes = listAttributes|merge({class: ' menu-sub'}) %}
+            {%- set listAttributes = listAttributes|merge({class: ' dropdown-menu menu-sub'}) %}
         {% endif %}
-        <ul{{ macros.attributes(listAttributes) }}>
-            {{ block('children') }}
+        <ul {{ macros.attributes(listAttributes) }}>
+                    {{ block('children') }}
         </ul>
         {% set depth = depth - 1 %}
     {% endif %}
@@ -55,11 +55,17 @@
 
     <a href="{{ item.uri }}" {{ macros.attributes(attributes) }}>
         {{ block('icon') }}
+        {# below icon svg is coming for all menu items. We can put condition if its children then no need to add below span else add it. #}
+        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+        </span>
 {#        {% if item.attribute('data-icon') is not empty  %}#}
 {#            <i class="menu-icon tf-icons bx bx-copy"></i>#}
 {#            <i class="{{ item.attribute('data-icon') }}"></i>#}
 {#        {% endif %}#}
-        {{ block('label') }}
+        <span class="nav-link-title">
+            {{ block('label') }}
+        </span>
     </a>
 {% endblock %}
 
@@ -102,7 +108,7 @@
             {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
         {%- endif %}
         {% if matcher.isAncestor(item, options.matchingDepth) %}
-            {%- set attributes = attributes|merge({'class': classes|join(' menu.item.open open active ')}) %}
+            {%- set attributes = attributes|merge({'class': classes|join(' active ')}) %}
             {% endif %}
 {#        {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}#}
         {# displaying the item #}
@@ -124,7 +130,9 @@
 {#                            data-bs-target="#{{ ulId }}"#}
 {#                       data-bs-toggle="collapse"#}
                        aria-expanded="false"
-                       class="menu-link menu-toggle {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}">
+                       {# added below attributes to manage drodown working with bootstrap. Also added calss too. #}
+                       href="#navbar-base" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button"
+                       class="nav-link dropdown-toggle {{ matcher.isAncestor(item, options.matchingDepth)? ' active' }}">
                         {{ block('icon') }}
                         {{ block('spanElement') }}
                         {{ block('badge') }}
@@ -150,19 +158,27 @@
 {% block spanElement %}
     {% import _self as knp_menu %}
     <!-- spanElement, includes label -->
-    <span{{ knp_menu.attributes(item.labelAttributes) }}>{{ block('label') }}</span>
+    {# <span{{ knp_menu.attributes(item.labelAttributes) }}> #}
+    {{ block('label') }}
+    {# </span> #}
 {% endblock %}
 
 {% block label %}
     {% set badge = item.extras.badge|default(false) %}
 
-    <div data-i18n="{{ item.label }}" class="position-relative">
+    {# if item has childrens then it will add svg icon before the item label. As children menu doesnt require icons. #}
+    {% if item.hasChildren %}
+        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+        </span>
+    {% endif %} 
+    <span data-i18n="{{ item.label }}" class="position-relative">
         {% if options.allow_safe_labels and item.getExtra('safe_label', false) %}{{ item.label|raw }}{% else %}{{ item.label }}{% endif %}
     {% if badge %}
         <span class="xxposition-absolute top-30 xxstart-120 translate-middle p-1 bg-success border border-light rounded-circle">{{ badge.value }}</span>
     {% endif %}
 
-    </div>
+    </span>
 
     {% endblock %}
 

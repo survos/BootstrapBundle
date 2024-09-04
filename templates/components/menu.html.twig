@@ -9,22 +9,21 @@
             "debug": debug|default(false),
             currentAsLink: true,
             firstClass: 'first',
-            currentClass  : "active bg-danger",
+            currentClass  : "active",
             "listAttributes": {
                 "class": "menu-inner py-1",
             } ,
-            "ancestorClass" : "menu-item nav-item menu-open open",
+            "ancestorClass" : "nav-item dropdown",
             "branch_class"  : "menu-item nav-item ",
-            'leaf_class'    : 'menu-item leaf nav-item',
-            'link_class'    : 'menu-link nav-link',
+            'leaf_class'    : 'nav-item',
+            'link_class'    : 'nav-link',
             "allow_safe_labels": true,
 
             'comment': "This is an custom option passed in knp_menu_render. Only used by our custom renderer.",
             rootAttributes: {
-                class: 'menu-inner py-1 bg-danger',
+                class: 'navbar-nav pt-lg-3',
                 role: 'menu'
             },
-
         }) }}
         {% if wrapperClass|default(false) %}</div>{% endif %}
 

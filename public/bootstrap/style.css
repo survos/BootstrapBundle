@@ -16,9 +16,12 @@
 .navbar .navbar-nav li .nav-link {
     font-size: 15.5px;
     padding: 2px 10px;
-    color: rgba(255, 255, 255, 0.7);
+    color: #dce1e7;
 }
-
+.navbar .navbar-nav li.menu-title.nav-item {
+    padding-left: 10px;
+    color: #697685;
+}
 .navbar .navbar-nav .dropdown-menu {
     --bs-dropdown-bg: #182433;
 }
@@ -26,7 +29,7 @@
     color: #60c1f9;
 }
 
-.navbar .navbar-nav li.active .nav-link {
+.navbar .navbar-nav li.active .nav-link, .navbar-nav .nav-item {
     color: #dce1e7;
     background-color: transparent;
 }
@@ -190,7 +193,7 @@
     width: 1.25rem;
     height: 1.25rem;
     margin-right: .5rem;
-    color: #8a97ab;
+    color: #dce1e7;
 }
 .navbar .icon {
     width: 1.25rem;
@@ -238,11 +241,9 @@
     background-color: transparent;
     border: 0;
     line-height: 1.4285714286;
-    color: rgba(255, 255, 255, 0.7);
+    color: #dce1e7;
 }
-.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
-    color: #fff !important;
-}
+
 .navbar .dropdown-item:focus, .navbar .dropdown-item:hover {
     background-color: rgba(108,122,145, 0.08);
 }
@@ -299,9 +300,6 @@
     .navbar {
         height: 70px;
     }
-    .main-wrapper.sidebar-open {
-        margin-left: 15rem;
-    }    
     .navbar-vertical.navbar-expand-lg>[class^=container] {
         flex-direction: column;
         align-items: stretch;
@@ -322,13 +320,18 @@
         transition: transform .3s;
         padding: 0;
     }
-    .navbar-vertical.navbar-expand-lg.sidebar-open {
+    .sidebar-open .navbar-vertical.navbar-expand-lg {
         width: 15rem;
         display: block;
+    }
+    .sidebar-open #topbarMenu{
+        margin-left: 15rem;
     }
     .navbar-vertical.navbar-expand-lg .navbar-brand {
         padding: .75rem 1rem;
         justify-content: space-between;
+        border-bottom: 1px solid #64646445;
+        height: 70px;
     }
     .navbar-expand-lg .navbar-collapse {
         width: auto;
@@ -385,4 +388,12 @@
     .navbar-vertical.navbar-expand-lg .navbar-collapse .dropdown-menu .dropdown-menu .dropdown-item {
         padding-left: calc(calc(calc(1rem* 2) / 2) + 3.25rem);
     }
+}
+
+.dropdown-menu li {
+    margin-left: 30px;
+}
+
+.dropdown-menu li .dropdown-menu li {
+    margin-left: 60px;
 }
