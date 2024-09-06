@@ -276,10 +276,8 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->defaultValue('app_settings')
             ->info('name of the offcanvas route (e.g. a settings sidebar)')
             ->end()
-            ->scalarNode('register')
-            ->defaultValue('app_register')
-            ->info('name of the register route')
-            ->end()
+            ->scalarNode('register')->defaultValue('app_register')->info('name of the register route')->end()
+            ->scalarNode('search')->defaultValue('app_search')->info('multi-entity search route')->end()
             ->end();
         return $rootNode;
     }

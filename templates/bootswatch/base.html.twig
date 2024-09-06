@@ -25,14 +25,56 @@
 
 {% block body_content %}
 
+    <div class="search-bar d-none" id="searchBox">
+        <div class="search-bar-inner">
+            <div class="d-flex justify-content-between w-100 align-items-center">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                <input type="text" id="searchInput" placeholder="Search..." />
+            </div>
+        </div>
+        <div class="card">
+            <div class="list-group list-group-flush overflow-auto">
+              <div class="list-group-item">
+                  {# @todo: make configurable via the bundle #}
+                  {% for entity in ['pixie','museum','collection'] %}
+                      {% set searchRoute = path('search'|route_alias, {entity: entity}) %}
+                      <a href="{{ searchRoute }}">
+                          <img class="search-user img-fluid" src="https://plus.unsplash.com/premium_photo-1673028716408-51942fd0b117" />
+                      </a>
+                      <a href="{{ searchRoute }}" class="text-body text-truncate d-block">Search {{ entity }}</a>
+
+                  {% endfor %}
+              </div>
+              <div class="list-group-item">
+                <a href="#">
+                  <img class="search-user img-fluid" src="https://plus.unsplash.com/premium_photo-1673028716408-51942fd0b117" />
+                </a>
+                <a href="#" class="text-body text-truncate d-block">Search Pixies</a>
+              </div>
+            </div>
+        </div>
+    </div>
+
     {#  optional fixed-width in config? #}
     {% set containerClass = 'container-fluid' %}
     <div class="d-print-none navbar navbar-expand-lg sticky-top xxfixed-top bg-primary d-print-none " id="topbarMenu" data-bs-theme="dark">
+
         <div class="{{ containerClass }}">
+
+        {# <div class="search-bar">
+            <div class="search-bar-inner">
+                <input type="text" placeholder="Search...">
+                <button class="btn btn-primary">Search</div>
+            </div>
+        </div> #}
 
             <div class="d-flex justify-content-between w-100">
             <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover me-3" id="vertical-hover" onClick="toogleSidebar()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15Z"></path>
+                </svg>
+            </button>
+            <button class="search-btn" onClick="showSearchBox()">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
             </button>
             {% block brand %}
                 {{ 'homepage'|route_alias }}
@@ -143,6 +185,21 @@
         // Toggle the 'active' class on the sidebarWrapper
         body.classList.toggle('sidebar-open');
     }
+    const searchBox = document.getElementById("searchBox");
+    const searchInput = document.getElementById("searchInput");
+    function showSearchBox() {
+        setTimeout(() => {
+            searchBox.classList.remove('d-none');
+        },100);
+    }
+
+    document.addEventListener('click', function(e) {
+        setTimeout(() => {
+            if (!searchBox.contains(document.activeElement)) {
+                searchBox.classList.add('d-none');
+            }
+        }, 50); // Small delay to allow for focus changes
+    });
 
 </script>
 {# script end for sidebar toglle button click #}

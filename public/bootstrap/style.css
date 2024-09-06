@@ -294,6 +294,73 @@
     margin: 0;
     transition: margin .1s ease-in-out;
 }
+
+.search-btn {
+    width: 25px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #878a99;
+}
+.search-bar-inner svg,
+.search-btn svg {
+    width: 35px;
+    height: 35px;
+    padding: 8px;
+    border-radius: 100px;
+}
+.search-btn svg:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+.search-bar {
+    position: fixed;
+    top: 55px;
+    right: 0;
+    left: 0;
+    z-index: 1031;
+    width: 100%;
+    height: 57px;
+    padding: 0px 1rem;
+    max-width: 600px;
+}
+.search-bar-inner {
+    padding: 0px 1rem;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.search-bar-inner input {
+    border: 0px;
+    background: none;
+    width: 100%;
+    line-height: 2.5em;
+    color: rgb(17, 24, 39);
+    margin-right: 15px;
+}
+.search-bar-inner input:focus {
+    border: none;
+    outline: none;
+}
+.search-bar .list-group {
+    max-height: 400px;
+}
+.search-bar .list-group-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.search-bar .list-group-item:hover {
+    background-color: rgba(108,122,145, 0.08);
+}
+.search-user {
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+    object-fit: cover;
+}
 @media (max-width: 991.98px){
     .navbar-brand {
         display: none;
@@ -383,6 +450,7 @@
         opacity: 1;
         transition: width .1s ease-in-out, transform .1s ease-in-out;
     }
+    .sidebar-open .search-bar ,
     .sidebar-open .main-wrapper,
     .sidebar-open .footer-main,
     .sidebar-open #topbarMenu{
@@ -413,7 +481,7 @@
         margin-left: 0;
         margin-right: 0;
         overflow-y: auto;
-        max-height: calc(100vh - 55px);
+        max-height: calc(100vh - 70px);
     }
     .navbar-vertical.navbar-expand-lg .navbar-nav .nav-link {
         padding-top: .5rem;
@@ -452,11 +520,3 @@
         padding-left: calc(calc(calc(1rem* 2) / 2) + 3.25rem);
     }
 }
-
-/* .dropdown-menu li {
-    margin-left: 30px;
-}
-
-.dropdown-menu li .dropdown-menu li {
-    margin-left: 60px;
-} */
