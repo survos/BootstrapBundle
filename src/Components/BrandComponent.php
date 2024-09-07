@@ -2,7 +2,6 @@
 
 namespace Survos\BootstrapBundle\Components;
 
-use Survos\VelzonBundle\Service\ContextService;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
