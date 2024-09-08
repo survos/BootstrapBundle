@@ -90,6 +90,13 @@ trait KnpMenuHelperTrait
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
         assert(! ($route && $uri));
+
+        // if the condition is false, don't bother to addit
+        if (!$if) {
+            return $returnItem ? $child : $this;
+        }
+
+
         $options = [];
         if ($route) {
             $options['route'] = $route;
@@ -144,6 +151,7 @@ trait KnpMenuHelperTrait
         if (! $id) {
             $id = $this->createId($menu);
         }
+
         $child = $menu->addChild($id, $options);
         if (!$label) {
             $child->setLabel(' '); // ideally so id isn't used.

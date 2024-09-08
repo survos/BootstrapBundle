@@ -63,7 +63,6 @@
         {{ menuHtml|raw }}
 
     {% elseif type in [PAGE_MENU] %}
-        @@{{ type }}
         {% set menuHtml = knp_menu_render(menuItem, {
             allow_safe_labels: true,
             rootAttributes: {
