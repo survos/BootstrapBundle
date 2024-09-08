@@ -51,7 +51,7 @@ based on '@Tabler/layout-vertical.html.twig' %}
                 <div id="navbar-menu" class="collapse navbar-collapse">
                     {% block navbar_menu_start %}{% endblock %}
                     {# bootstrap bundle uses knp menu only #}
-                    {{ component('menu', {type: 'sidebar'}) }}
+                    {{ component('menu', {type: SIDEBAR_MENU, caller: _self}) }}
 
 {#                    {% include '@Tabler/includes/menu.html.twig' with {layout_type: 'vertical', navbar_class : 'pt-lg-3'} %}#}
                     {% block navbar_menu_end %}{% endblock %}

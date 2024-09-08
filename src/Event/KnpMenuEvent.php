@@ -18,7 +18,7 @@ class KnpMenuEvent extends Event
     public const PAGE_MENU = 'PAGE_MENU';
     public const SIDEBAR_MENU = 'SIDEBAR_MENU';
 
-    #[Deprecated()]
+//    #[Deprecate()]
     public const SIDEBAR_MENU_EVENT = 'SIDEBAR_MENU';
 
     public const FOOTER_MENU = 'FOOTER_MENU';

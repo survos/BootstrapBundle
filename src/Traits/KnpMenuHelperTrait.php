@@ -22,6 +22,7 @@ trait KnpMenuHelperTrait
 
     //    private ?array $options;
     private array $childOptions=[];
+    protected string $env;
 
     public function supports(KnpMenuEvent $event): bool
     {
@@ -397,7 +398,7 @@ trait KnpMenuHelperTrait
     public function authMenu(AuthorizationCheckerInterface $authorizationChecker,
                              Security $security,
                              ItemInterface                 $menu,
-                             $childOptions = []): MenuItem
+                             $childOptions = []): ItemInterface
     {
 
 

@@ -6,11 +6,20 @@ by adding this code to your own base template:
 
 Enjoy your theme!
 #}
+
+        {% set isOverlapping = tabler_bundle.isNavbarOverlapping|default(false) %}
+        {% set isDarkHeader = tabler_bundle.isHeaderDark()|default(false) %}
+        {% set isCondensedNavbar = tabler_bundle.isCondensedNavbar|default(false) %}
+        {% set isNavbarDark = tabler_bundle.isNavbarDark|default(false) %}
+
 <!doctype html{% block html_start %}{% endblock %}>
-<html lang="{{ app.request.locale }}"{% if tabler_bundle.isRightToLeft() %} dir="rtl"{% endif %}>
+<html lang="{{ app.request.locale }}"{% if tabler_bundle.isRightToLeft|default(false) %} dir="rtl"{% endif %}>
 <head>
     {% block head %}
-        {% include '@Tabler/includes/html_head.html.twig' %}
+        {# @rk: is this right? #}
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <meta name="robots" content="noindex,nofollow">
     {% endblock %}
     <title>{% block title %}{{ block('page_title') }}{% endblock %}</title>
     {% block stylesheets %}
@@ -29,31 +38,49 @@ Enjoy your theme!
 
     {# *** Layout type changes *** #}
     {% block header %}
-        <header id="{% block header_id %}{% endblock %}" class="navbar navbar-expand-md{% block header_class %} {% if tabler_bundle.isNavbarOverlapping() %}navbar-overlap{% endif %}{% endblock %} d-print-none" data-bs-theme="{{ tabler_bundle.isNavbarOverlapping() or tabler_bundle.isHeaderDark() ? 'dark' : 'light' }}">
+        <header id="{% block header_id %}{% endblock %}" class="navbar navbar-expand-md{% block header_class %}
+{% if isOverlapping %}navbar-overlap{% endif %}{% endblock %} d-print-none" data-bs-theme="{{ isOverlapping or isDarkHeader ? 'dark' : 'light' }}">
             <div class="{{ ''|tabler_container }}">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 {% block app_logo %}
                     <h1 class="{% block navbar_brand_classes %}navbar-brand d-none-navbar-horizontal pe-0 pe-md-3 {% block navbar_brand_class %}navbar-brand-autodark{% endblock %}{% endblock %}">
-                        {% include '@Tabler/includes/logo.html.twig' %}
+{#                        {% include '@Tabler/includes/logo.html.twig' %}#}
+                        {# @todo: refactor as component #}
+                        <a href="{{ path('homepage'|route_alias) }}">
+                            {% if tabler_bundle.getLogoUrl|default(null) is not empty %}
+                                <img
+                                        class="navbar-brand-image"
+                                        src="{% if '://' in tabler_bundle.getLogoUrl() %}{{ tabler_bundle.getLogoUrl() }}{% else %}{{ asset(tabler_bundle.getLogoUrl()) }}{% endif %}"
+                                        width="110" height="32"
+                                        alt=""
+                                >
+                            {% else %}
+                                <i class="far fa-smile" style="font-size: 32px"></i>
+                            {% endif %}
+                        </a>
+
                     </h1>
                 {% endblock %}
                 <div class="navbar-nav flex-row order-md-last">
                     {% block navbar_start %}{% endblock %}
                     {% block navbar_notifications %}
-                        {% include '@Tabler/includes/navbar_notifications.html.twig' %}
+                        {# @todo: refactor #}
+{#                        {% include '@Tabler/includes/navbar_notifications.html.twig' %}#}
                     {% endblock %}
                     {% block navbar_user %}
-                        {% include '@Tabler/includes/navbar_user.html.twig' %}
+                        {# @todo: refactor #}
+{#                        {% include '@Tabler/includes/navbar_user.html.twig' %}#}
                     {% endblock %}
                     {% block navbar_end %}{% endblock %}
                 </div>
-                {% if tabler_bundle.isCondensedNavbar() %}
+                {% if isCondensedNavbar %}
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                             {% block navbar_menu_condensed %}
-                                {% include '@Tabler/includes/menu.html.twig' %}
+
+{#                                {% include '@Tabler/includes/menu.html.twig' %}#}
                             {% endblock %}
                         </div>
                     </div>
@@ -63,22 +90,48 @@ Enjoy your theme!
     {% endblock %}
 
     {% block navbar %}
-        {% if not tabler_bundle.isCondensedNavbar() %}
-            <div id="{% block navbar_id %}{% endblock %}" class="navbar-expand-md">
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    <div class="navbar" data-bs-theme="{{ tabler_bundle.isNavbarDark() ? 'dark' : 'light' }}">
-                        <div class="{{ ''|tabler_container }}">
-                            {% block navbar_menu %}
-                                {% include '@Tabler/includes/menu.html.twig' %}
-                            {% endblock %}
-                            {% block navbar_search %}
-                                {% include '@Tabler/includes/navbar_search.html.twig' %}
-                            {% endblock %}
-                        </div>
-                    </div>
+{#        <div class="collapse custom-collapse navbar-collapse" id="navbarResponsive">#}
+    {# div? <nav? #}
+        <div class="navbar navbar-nav navbar-expand-md">
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <div class="navbar" data-bs-theme="{{ isNavbarDark ? 'dark' : 'light' }}">
+
+            {{ component('menu', {
+
+                type: NAVBAR_MENU, caller: _self
+            }) }}
+            {{ component('menu', {type: NAVBAR_MENU2, caller: _self}) }}
+            {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
+            {{ component('menu', {type: AUTH_MENU, caller: _self}) }}
+            {# force this right? #}
+
+            {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
+            {% if config().options.show_locale_dropdown %}
+                <div class="d-none d-lg-inline-block">
+                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+
+        </div>
+        </div>
+        </div>
+
+{#        {% if not tabler_bundle.isCondensedNavbar() %}#}
+{#            <div id="{% block navbar_id %}{% endblock %}" class="navbar-expand-md">#}
+{#                <div class="collapse navbar-collapse" id="navbar-menu">#}
+{#                    <div class="navbar" data-bs-theme="{{ tabler_bundle.isNavbarDark() ? 'dark' : 'light' }}">#}
+{#                        <div class="{{ ''|tabler_container }}">#}
+{#                            {% block navbar_menu %}#}
+{#                                {% include '@Tabler/includes/menu.html.twig' %}#}
+{#                            {% endblock %}#}
+{#                            {% block navbar_search %}#}
+{#                                {% include '@Tabler/includes/navbar_search.html.twig' %}#}
+{#                            {% endblock %}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endif %}#}
     {% endblock %}
     {# *************************** #}
 
@@ -128,7 +181,10 @@ Enjoy your theme!
                     {% block page_content_before %}{% endblock %}
 
                     <section id="{% block page_content_id %}{% endblock %}" class="{% block page_content_class %}content{% endblock %}">
-                        {% block page_content_start %}{{ include('@Tabler/includes/flash_messages.html.twig') }}{% endblock %}
+                        {% block page_content_start %}
+                            @todo: flash messages
+{#                            {{ include('@Tabler/includes/flash_messages.html.twig') }}#}
+                        {% endblock %}
                         {% block page_content %}{% endblock %}
                         {% block page_content_end %}{% endblock %}
                     </section>
@@ -141,15 +197,16 @@ Enjoy your theme!
         {% block footer %}
             <footer id="{% block footer_id %}{% endblock %}" class="footer footer-transparent d-print-none">
                 <div class="{{ ''|tabler_container }}">
-                    {% include '@Tabler/includes/footer.html.twig' %}
+                    @todo: footer
+{#                    {% include '@Tabler/includes/footer.html.twig' %}#}
                 </div>
             </footer>
         {% endblock %}
     </div>
 </div>
 
-{% block javascripts %}
-    <script src="{{ asset('bundles/tabler/tabler.js') }}?{{ tabler_asset_version() }}"></script>
-{% endblock %}
+{#{% block javascripts %}#}
+{#    <script src="{{ asset('bundles/tabler/tabler.js') }}?{{ tabler_asset_version() }}"></script>#}
+{#{% endblock %}#}
 </body>
 </html>

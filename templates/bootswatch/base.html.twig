@@ -25,6 +25,18 @@
 
 {% block body_content %}
 
+{#{% set searchRoute =  'search'|route_alias %}#}
+{#            {{ dump(searchRoute) }}#}
+
+{#{% endblock %}#}
+{#{% block xbody_content %}#}
+
+        {# @todo: make configurable via the bundle #}
+    {
+        {% set searchRoute =  'search'|route_alias %}
+        {% if searchRoute %}
+
+            {% set searchPath = path(searchRoute) %}
     <div class="search-bar d-none" id="searchBox">
         <div class="search-bar-inner">
             <div class="d-flex justify-content-between w-100 align-items-center">
@@ -35,13 +47,11 @@
         <div class="card">
             <div class="list-group list-group-flush overflow-auto">
               <div class="list-group-item">
-                  {# @todo: make configurable via the bundle #}
                   {% for entity in ['pixie','museum','collection'] %}
-                      {% set searchRoute = path('search'|route_alias, {entity: entity}) %}
-                      <a href="{{ searchRoute }}">
+                      <a href="{{ searchPath }}">
                           <img class="search-user img-fluid" src="https://plus.unsplash.com/premium_photo-1673028716408-51942fd0b117" />
                       </a>
-                      <a href="{{ searchRoute }}" class="text-body text-truncate d-block">Search {{ entity }}</a>
+                      <a href="{{ searchPath }}" class="text-body text-truncate d-block">Search {{ entity }}</a>
 
                   {% endfor %}
               </div>
@@ -54,6 +64,7 @@
             </div>
         </div>
     </div>
+{% endif %}
 
     {#  optional fixed-width in config? #}
     {% set containerClass = 'container-fluid' %}
@@ -117,24 +128,32 @@
     </div>
 
 {# sidebar content start #}
-    <aside class="navbar navbar-vertical navbar-expand-lg custom-sidebar" data-bs-theme="dark" id="asideSidebar">
+    {# this doesn't feel right #}
+        {% block xxsidebar %}
+            @sidebar {{ _self }}
+
+        <aside class="navbar navbar-vertical navbar-expand-lg custom-sidebar" data-bs-theme="dark" id="asideSidebar">
         <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-brand navbar-brand-autodark">
-            <a href="{{ path('homepage'|route_alias) }}">
-                {# Add Brand Logo Here #}
-                <img src="{{ asset('/images/museado-sidebar-logo.png') }} ">
-            </a>
-        </div>
+            <h1>sidebar!</h1>
+            {#  this is really only true if there's no navbar #}
+{#        <div class="navbar-brand navbar-brand-autodark">#}
+{#            <a href="{{ path('homepage'|route_alias) }}">#}
+{#                #}{# Add Brand Logo Here #}
+{#                <img src="{{ asset('/images/museado-sidebar-logo.png') }} ">#}
+{#            </a>#}
+{#        </div>#}
         <div class="collapse navbar-collapse" id="sidebar-menu">
         {% block SIDEBAR_MENU %}
-            {% set options = {
-                pixieCode: pixieCode|default(false),
-                tableName: tableName|default(false),
-                itemKey: item|default(false) ? item.key : null,
-            } %}
+            {# this can't be in bootswatch base, because it's pixie-specific! #}
+            {% set options = {} %}
+{#            {% set options = {#}
+{#                pixieCode: pixieCode|default(false),#}
+{#                tableName: tableName|default(false),#}
+{#                itemKey: item|default(false) ? item.key : null,#}
+{#            } %}#}
             <twig:menu :type="SIDEBAR_MENU"
                        wrapperClass=""
                      :caller="_self" :options="options">
@@ -144,6 +163,7 @@
             </div>
         </div>
     </aside>
+    {% endblock %}
 {# sidebar content end #}
 
     {# When  #}

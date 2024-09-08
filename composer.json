@@ -1,6 +1,6 @@
 {
     "name": "survos/bootstrap-bundle",
-    "description": "Integrates a simple bootstrap theme in a Symfony application",
+    "description": "Integrates a bootstrap theme with many extras in a Symfony application",
     "license": "MIT",
     "type": "symfony-bundle",
     "keywords": [
@@ -13,15 +13,16 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "endroid/installer": "^1.4",
         "knplabs/knp-menu-bundle": "^3.2",
         "survos/core-bundle": "^1.5.312",
-        "symfony/config": "^6.4 || ^7.0",
-        "symfony/dependency-injection": "^6.4 || ^7.0",
-        "symfony/http-kernel": "^6.4 || ^7.0",
-        "symfony/options-resolver": "^6.4 || ^7.0",
+        "symfony/config": "^7.0",
+        "symfony/dependency-injection": "^7.0",
+        "symfony/http-kernel": "^7.0",
+        "symfony/options-resolver": "^7.0",
         "symfony/ux-twig-component": "^2.8",
+        "symfony/ux-icons": "^2.1",
         "twig/string-extra": "^3.4",
         "twig/twig": "^3.4",
         "twig/intl-extra": "^3.8"

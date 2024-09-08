@@ -1,10 +1,5 @@
 <?php
 
-/*
- * This file was part of the AdminLTE bundle.
- *
- */
-
 namespace Survos\BootstrapBundle\Helper;
 
 class ContextHelper extends \ArrayObject

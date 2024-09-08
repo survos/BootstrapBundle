@@ -22,6 +22,8 @@ use Survos\BootstrapBundle\Twig\Components\MiniCard;
 use Survos\BootstrapBundle\Twig\Components\TablerHead;
 use Survos\BootstrapBundle\Twig\Components\TablerIcon;
 use Survos\BootstrapBundle\Twig\Components\TablerPageHeader;
+use Survos\BootstrapBundle\Twig\TablerExtension;
+use Survos\BootstrapBundle\Twig\TablerRuntimeExtension;
 use Survos\BootstrapBundle\Twig\TwigExtension;
 use Survos\CoreBundle\HasAssetMapperInterface;
 use Survos\CoreBundle\Traits\HasAssetMapperTrait;
@@ -176,6 +178,25 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
         }
 
         $builder
+            ->autowire('survos.tabler_twig', TablerExtension::class)
+            ->addTag('twig.extension');
+
+//        class: KevinPapst\TablerBundle\Twig\RuntimeExtension
+//        arguments:
+//            - '@event_dispatcher'
+//            - '@tabler_bundle.context_helper'
+//            - '%tabler_bundle.routes%'
+//            - '%tabler_bundle.icons%'
+
+        $builder
+            ->autowire('survos.tabler_runtime', TablerRuntimeExtension::class)
+            ->setArgument('$routes', $config['routes'])
+            ->setArgument('$icons', $config['icons']??[])
+            ->setAutoconfigured(true)
+            ->addTag('twig.runtime')
+        ;
+
+        $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)
             ->addTag('twig.extension')
             ->setArgument('$config', $config)
@@ -277,7 +298,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->info('name of the offcanvas route (e.g. a settings sidebar)')
             ->end()
             ->scalarNode('register')->defaultValue('app_register')->info('name of the register route')->end()
-            ->scalarNode('search')->defaultValue('app_search')->info('multi-entity search route')->end()
+            ->scalarNode('search')->defaultValue(false)->info('multi-entity search route')->end()
             ->end();
         return $rootNode;
     }
