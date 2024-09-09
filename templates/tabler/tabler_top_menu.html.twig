@@ -39,7 +39,11 @@
 
 {% block navbarButtons %}
 
-    <a href="{{item.uri}}" class="btn" target="_blank" rel="noreferrer">
+    {# @todo: check external, check active.  We could have dropdown buttons, too. #}
+    <a href="{{item.uri}}" class="btn"
+        {{  attributes(item.linkAttributes) }}
+       rel="noreferrer"
+    >
         {{ item.attributes.icon|default(false)
             ? ux_icon(item.attributes.icon, {style: 'width:20px'})
         }}
@@ -162,6 +166,7 @@
 {% block dropdownlinks %}
     <ul>
 
+        {{ dump(item) }}
     <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu">
     {% for item in item.children %}
         {# this renders the label #}
@@ -175,6 +180,7 @@
 {% endblock %}
 
 {% block collapselinks %}
+{#    <code>cols: {{ item.extras.columns|default(1) }}</code>#}
     {# the collapseELement block references this id, we might need data-parent #}
     {# isAncestor checks if the item is an ancestor of the currentItem #}
 {#    <div id="collapse_{{itemSlug}}" class="{{ matcher.isAncestor(item) ? 'show' : 'collapse' }}">#}
@@ -348,8 +354,8 @@
     <a {{ macros.attributes(attributes) }}
             href="#" id="collapse_{{itemSlug}}"
     >
-        {% if item.attribute('icon') is not empty  %}
-            <i class="{{ item.attribute('icon') }}"></i>
+        {% if item.attribute('icon') ?? false %}
+            {{ ux_icon(item.attribute('icon'), {width: '20px'}) }}
         {% endif %}
         {{ block('label') }}
 {#        <b class="caret"></b>#}

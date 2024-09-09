@@ -34,21 +34,26 @@ trait KnpMenuHelperTrait
         $this->authorizationChecker = $authorizationChecker;
     }
 
-    public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null, ?string $id = null, ?string $translationDomain=null): ItemInterface
+    public function addSubmenu(ItemInterface $menu, ?string $label = null,
+                               ?string $icon = null,
+                               ?string $id = null,
+                               ?string $translationDomain=null,
+    array $extras = []
+    ): ItemInterface
     {
-        // how internal,
-        $subMenu = $this->addMenuItem($menu, [
-            'label' => $label,
-            'icon' => $icon,
-            'id' => $id,
-            'is_submenu' => true
-        ]);
+        $subMenu = $this->add($menu,
+            label: $label,
+            icon: $icon,
+            id: $id,
+            returnItem: true // get the child, not the menu
+        );
         if ($translationDomain) {
             $subMenu->setExtra('translation_domain', $translationDomain);
         }
         $subMenu->setExtra('is_submenu', true);
-//        $subMenu->setAttribute('is_submenu', true);
-//        if ($subMenu->getLabel() == 'tt@survos.com') dd($subMenu, $subMenu->getAttributes());
+        foreach ($extras as $extra=>$extraVal) {
+            $subMenu->setExtra($extra, $extraVal);
+        }
         return $subMenu;
     }
 
@@ -92,11 +97,6 @@ trait KnpMenuHelperTrait
         assert(! ($route && $uri));
 
         // if the condition is false, don't bother to addit
-        if (!$if) {
-            return $returnItem ? $child : $this;
-        }
-
-
         $options = [];
         if ($route) {
             $options['route'] = $route;
@@ -169,6 +169,12 @@ trait KnpMenuHelperTrait
                 $options['icon'] = 'fas fa-external-alt';
             }
         }
+
+        if (!$if) {
+            return $returnItem ? $child : $this;
+        }
+
+
 
         // hack to align navigation if no link
 
