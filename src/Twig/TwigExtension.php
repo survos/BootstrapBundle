@@ -32,6 +32,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
     {
         // consider something like https://github.com/a-r-m-i-n/font-awesome-bundle
         return [
+            new TwigFilter('attributes', [$this, 'attributes'], ['is_safe' => ['html']]),
             new TwigFilter('icon', [$this, 'icon'], ['is_safe' => ['html']]),
             new TwigFilter('fas_icon',
                 // candidate for component
@@ -60,6 +61,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
             new TwigFunction('hasOffcanvas', fn () => $this->contextService->getOption('offcanvas')),
             new TwigFunction('admin_context_is_enabled', [$this, 'isEnabled']),
             new TwigFunction('badge', [$this, 'badge']),
+            new TwigFunction('attributes', [$this, 'attributes'], ['is_safe' => ['html']]),
             new TwigFunction('img', fn (string $src) => sprintf('img src="%s"', $src)),
         ];
     }
@@ -79,4 +81,18 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
     {
         return sprintf('<span class="%s %s" title="%s" ></span>', $value, $extra, $title);
     }
+
+    public function attributes(array $value): string
+    {
+        $attrs = [];
+        foreach ($value as $k => $v) {
+            if (is_string($v) && $v) {
+                $attrs[] = sprintf(' %s="%s"', $k, $v); // @todo: escape quotes
+            }
+        }
+        $string = join("\n", $attrs);
+        return $string;
+    }
+
+
 }

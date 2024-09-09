@@ -22,7 +22,7 @@
     </ul>
     <div class="card-body">
         {% block body %}
-            {{ body }}
+            {{ body|default(block('body')) }}
         {% endblock %}
     </div>
     <div class="card-footer">

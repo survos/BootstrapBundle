@@ -13,7 +13,7 @@ class AccordionComponent
 {
     public ?string $header; // if null, look for the header in the block
 
-    public ?string $accordion_body;
+    public ?string $body;
 
     public ?string $bsParent;
 
@@ -29,7 +29,7 @@ class AccordionComponent
         $resolver->setDefaults([
             'header' => null,
             'id' => null,
-            'accordion_body' => null,
+            'body' => null,
             'bsParent' => null,
             'open' => false,
         ]);

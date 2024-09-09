@@ -12,6 +12,8 @@
 
 {% block root %}
 
+{#    {{ dump(options) }}#}
+
     {% set listAttributes = item.childrenAttributes %}
 
     {% if options.rootAttributes.class == 'self' %}
@@ -36,10 +38,16 @@
 {% endblock %}
 
 {% block navbarButtons %}
-    <a href="{{item.uri}}" class="btn" target="_blank" rel="noreferrer">
-        {{ ux_icon(item.attributes.icon, {style: 'width:20px'}) }}
 
-        <span class="d-none d-lg-block">{{item.label}} </span>
+    <a href="{{item.uri}}" class="btn" target="_blank" rel="noreferrer">
+        {{ item.attributes.icon|default(false)
+            ? ux_icon(item.attributes.icon, {style: 'width:20px'})
+        }}
+        <span class="d-none d-lg-block">
+        {% set domain = item.extra('translation_domain','routing') %}
+        {% set label = item.label|trans(domain=domain) %}
+        {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
+        </span>
     </a>
 {% endblock %}
 {% block item %}
@@ -121,7 +129,10 @@
 {#        </li>#}
 
 {#        {{ attributes|length ? /attributes) }}#}
-        <li{{ macros.attributes(attributes) }} class="nav-item">
+{#        {{ dump(attributes(attributes)) }}#}
+{#        <code>macro: {{ _self.attributes(attributes) }}</code>#}
+{#        <br /><code>twig: {{ attributes(attributes) }}</code>#}
+        <li{{ attributes(attributes) }}>
             {# displaying the item #}
             {%- if is_dropdown %}
                 {{ block('dropdownElement') }}
