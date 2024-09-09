@@ -87,7 +87,16 @@
         {% set menu = knp_menu_get(menuItem) %}
         {% if menu.children|length %}
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-            {% if theme == 'tabler' %}
+            {% if type == 'NAVBAR_MENU2' %}
+                {{ knp_menu_render(menuItem, {
+                    allow_safe_labels: true,
+                    rootAttributes: {
+                        class:"self"
+                    },
+                    currentClass  : "nav-item active",
+                    template: '@SurvosBootstrap/tabler/tabler_top_menu.html.twig',
+                    style: 'navbar'}) }}
+            {% elseif theme == 'tabler' %}
                 {{ knp_menu_render(menuItem, {
                     allow_safe_labels: true,
                     rootAttributes: {

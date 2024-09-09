@@ -13,6 +13,14 @@
 {% block root %}
 
     {% set listAttributes = item.childrenAttributes %}
+
+    {% if options.rootAttributes.class == 'self' %}
+        <div class="btn-list">
+            {% for item in item.children %}
+                {{ block('navbarButtons') }}
+            {% endfor %}
+        </div>
+    {% else %}
     <ul class="{{ item.attributes.class|default(options.rootAttributes.class|default()) }}">
         {{ block('children') -}}
 {#        <li class="nav-item">#}
@@ -24,8 +32,16 @@
 
 {#        {{ block('list') -}}#}
     </ul>
+    {% endif %}
 {% endblock %}
 
+{% block navbarButtons %}
+    <a href="{{item.uri}}" class="btn" target="_blank" rel="noreferrer">
+        {{ ux_icon(item.attributes.icon, {style: 'width:20px'}) }}
+
+        <span class="d-none d-lg-block">{{item.label}} </span>
+    </a>
+{% endblock %}
 {% block item %}
     {% import "knp_menu.html.twig" as macros %}
 
