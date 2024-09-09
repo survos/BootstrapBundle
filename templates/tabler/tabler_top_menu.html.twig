@@ -251,7 +251,7 @@
     {%- set attributes = item.linkAttributes %}
     {% if matcher.isCurrent(item) %}
         {%- set classes = classes|merge([options.currentClass]) %}
-        {% set attributes = attributes|merge({ 'class': attributes.class|join(' ') ~ ' ' ~ options.currentClass} ) %}
+        {% set attributes = attributes|merge({ 'class': attributes.class|join(' ') } ) %}
     {% endif %}
 
 
