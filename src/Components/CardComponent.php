@@ -26,6 +26,7 @@ class CardComponent
     public ?string $text;
 
     public ?array $links;
+    public ?array $wrappers;
 
     #[PreMount]
     public function preMount(array $data): array
@@ -41,6 +42,7 @@ class CardComponent
             'footer' => null,
             'text' => null,
             'links' => null,
+            'wrappers' => [],
             'h' => null,
         ]);
 

@@ -133,15 +133,18 @@
 {% endblock %}
 
 {% block dropdownlinks %}
-    <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu">
+    <ul>
 
+    <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu">
     {% for item in item.children %}
+        {# this renders the label #}
         {{ block('renderDropdownlink') }}
-        {% if use_multilevel and item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {# this renders the child links if there are any AND it's currently begin displayed #}
+        {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
             {{ block('dropdownlinks') }}
         {% endif %}
     {% endfor %}
-    <{{ use_multilevel ? '/ul' : '/div'}}>
+    </ul>
 {% endblock %}
 
 {% block collapselinks %}
@@ -251,8 +254,9 @@
 
 
     <a href="{{ item.uri }}"{{ macros.attributes(attributes) }}>
-        {% if item.attribute('icon') is not empty  %}
-            <i class="{{ item.attribute('icon') }}"></i>
+        {% set icon = item.attribute('icon') %}
+        {% if icon is not empty  %}
+            {{ ux_icon(icon) }}
         {% endif %}
             {{ block('label') }}
     </a>
