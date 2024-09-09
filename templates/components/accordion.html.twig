@@ -1,13 +1,15 @@
 <h2 class="accordion-header" id="heading{{ id }}">
-    <button type="button" class="accordion-button" data-bs-toggle="collapse" data-bs-target="#accordion{{ id }}" aria-expanded="true" aria-controls="accordion{{ id }}">
-        {{ header }}
+    <button type="button" class="accordion-button"
+            data-bs-toggle="collapse"
+            data-bs-target="#accordion{{ id }}" aria-expanded="true" aria-controls="accordion{{ id }}">
+        {{ header|default(block('header') is defined ? block('header') : '!!') }}
     </button>
 </h2>
 
 <div id="accordion{{ id }}" class="accordion-collapse collapse {{ open ? 'show' }}" {{ bsParent ? 'data-bs-parent="%s"'|format(bsParent) }}>
     <div class="accordion-body">
         {% block accordion_body %}
-        {{ accordion_body }}
+        {{ accordion_body|default(block('body') is defined ? block('body') : '!!')  }}
         {% endblock %}
     </div>
 </div>

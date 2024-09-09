@@ -11,7 +11,7 @@ use function Symfony\Component\String\u;
 #[AsTwigComponent('accordion', template: '@SurvosBootstrap/components/accordion.html.twig')]
 class AccordionComponent
 {
-    public string $header;
+    public ?string $header; // if null, look for the header in the block
 
     public ?string $accordion_body;
 
@@ -34,11 +34,12 @@ class AccordionComponent
             'open' => false,
         ]);
         //        $resolver->setRequired('body');
-        $resolver->setAllowedTypes('header', 'string');
+//        $resolver->setAllowedTypes('header', 'string');
 
         $data = $resolver->resolve($data);
         if (empty($data['id'])) {
             $slugger = new AsciiSlugger();
+
             $data['id'] = $slugger->slug($data['header']);
         }
         return $data;
