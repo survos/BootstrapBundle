@@ -520,3 +520,8 @@
         padding-left: calc(calc(calc(1rem* 2) / 2) + 3.25rem);
     }
 }
+
+.header-icons svg {
+    height: 20px;
+    width: 20px;
+}

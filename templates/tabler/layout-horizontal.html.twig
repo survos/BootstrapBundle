@@ -46,9 +46,11 @@ Enjoy your theme!
 
 {#        <div class="collapse custom-collapse navbar-collapse" id="navbarResponsive">#}
     {# div? <nav? #}
-        <div class="navbar navbar-nav navbar-expand-md">
+        <div class="navbar-expand-md">
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="navbar" data-bs-theme="{{ isNavbarDark ? 'dark' : 'light' }}">
+
+                    <div class="container-xl">
 
             {{ component('menu', {
 
@@ -65,6 +67,7 @@ Enjoy your theme!
                 </div>
             {% endif %}
 
+        </div>
         </div>
         </div>
         </div>

@@ -89,7 +89,7 @@
 {#        {%- endif %}#}
 
         {%- if is_collapsable %}
-            {%- set classes = classes|merge(['dropdown']) %}
+            {%- set classes = classes|merge(['nav-item dropdown']) %}
             {%- set childrenClasses = childrenClasses|merge(['collapse-item']) %}
         {%- endif %}
 
@@ -105,7 +105,7 @@
 {#        </li>#}
 
 {#        {{ attributes|length ? /attributes) }}#}
-        <li{{ macros.attributes(attributes) }}>
+        <li{{ macros.attributes(attributes) }} class="nav-item">
             {# displaying the item #}
             {%- if is_dropdown %}
                 {{ block('dropdownElement') }}
@@ -243,7 +243,9 @@
 {% block linkElement %}
     {% import "knp_menu.html.twig" as macros %}
     {% import _self as ownmacro %}
-    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'nav-link depth-' ~ item.level ) }}
+
+    {%- set depthLevel = (item.level > 1) ? 'dropdown-item depth-' ~ item.level: 'nav-link depth-' ~ item.level %}
+    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', depthLevel ) }}
 {#    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'dropdown-item', ' depth-' ~ item.level ) }}#}
 
     {%- set attributes = item.linkAttributes %}
@@ -256,9 +258,13 @@
     <a href="{{ item.uri }}"{{ macros.attributes(attributes) }}>
         {% set icon = item.attribute('icon') %}
         {% if icon is not empty  %}
-            {{ ux_icon(icon) }}
+            <span class="nav-link-icon d-md-none header-icons d-lg-inline-block">
+                {{ ux_icon(icon) }}
+            </span>
         {% endif %}
-            {{ block('label') }}
+            <span class="nav-link-title">
+                {{ block('label') }}
+            </span>
     </a>
 {% endblock %}
 
