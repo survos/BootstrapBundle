@@ -141,7 +141,17 @@ Enjoy your theme!
 
                     <section id="{% block page_content_id %}{% endblock %}" class="{% block page_content_class %}content{% endblock %}">
                         {% block page_content_start %}
-                            @todo: flash messages
+                            {% set map = {
+                                'success': 'success',
+                                'error': 'danger',
+                                'warning': 'warning'
+                            } %}
+                            {% for flashType, messages in app.flashes %}
+                                {% for message in messages %}
+                                    <twig:alert :message="message" :type="map[flashType]" dismissible="true" />
+
+                                {% endfor %}
+                            {% endfor %}
 {#                            {{ include('@Tabler/includes/flash_messages.html.twig') }}#}
                         {% endblock %}
                         {% block page_content %}{% endblock %}

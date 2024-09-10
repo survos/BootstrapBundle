@@ -8,8 +8,7 @@
 
 
 {% block page_header %}
-    page_header in {{ _self }}
-    {{ app.request.get('_route') }}
+{#    {{ app.request.get('_route') }}#}
     {#            :preTitle="app.request.get('_route')"#}
     {#            :title="app.request._route|trans(domain=routes)"#}
     <twig:tabler:page-header

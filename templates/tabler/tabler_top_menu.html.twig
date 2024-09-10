@@ -168,7 +168,6 @@
 
 {% block dropdownlinks %}
     <ul>
-
         {{ dump(item) }}
     <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu">
     {% for item in item.children %}
@@ -186,7 +185,9 @@
    {# <code>cols: {{ item.extras.maxItemsPerColumn|default(1) }}</code> #}
 
     {% set counter = 0 %}
-    {% set maxItemsPerColumn = item.extras.maxItemsPerColumn|default(0) %}
+    {% set itemsPerColumnDefault =  item.children|length > 10 ? 8 : 0 %}
+
+    {% set maxItemsPerColumn = item.extras.maxItemsPerColumn|default(itemsPerColumnDefault) %}
     {% if maxItemsPerColumn > 0 %}
         <div class="dropdown-menu">
             <div class="dropdown-menu-columns">
@@ -197,8 +198,15 @@
                         {% endif %}
                         <div class="dropdown-menu-column"> <!-- Start a new <li> for the new set of items -->
                     {% endif %}
+                    {% with {item: child, class: 'dropdown-item',
+                        use_multilevel: true,
+                        matcher: matcher,
+                        options: options
+                    } only %}
+                            {{ block('linkElement') }}
+{#                            <a class="dropdown-item" href="#">{{ child.label }}</a>#}
 
-                    <a class="dropdown-item" href="#">{{ child.label }}</a>
+                            {% endwith %}
 
                     {% set counter = counter + 1 %}
                 {% endfor %}
