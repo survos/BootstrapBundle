@@ -49,29 +49,28 @@ Enjoy your theme!
         <div class="navbar-expand-md">
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="navbar" data-bs-theme="{{ isNavbarDark ? 'dark' : 'light' }}">
-
                     <div class="container-xl">
+                        <div class="row flex-fill align-items-center">
+                            <div class="col">
+                            {{ component('menu', {
 
-            {{ component('menu', {
+                                type: NAVBAR_MENU, caller: _self
+                            }) }}
+                            {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
+                            </div>
 
-                type: NAVBAR_MENU, caller: _self
-            }) }}
-            {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
-            {{ component('menu', {type: AUTH_MENU, caller: _self}) }}
-            {# force this right? #}
-
-            {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
-            {% if config().options.show_locale_dropdown %}
-                <div class="d-none d-lg-inline-block">
-                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                            {# force this right? #}
+                            {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
+                            {% if config().options.show_locale_dropdown %}
+                                <div class="col-3 d-none d-lg-flex gap-3">
+                                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                                    {{ component('menu', {type: SEARCH_MENU, caller: _self}) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-
-        </div>
-                    {{ component('menu', {type: SEARCH_MENU, caller: _self}) }}
-
-                </div>
-        </div>
+            </div>
         </div>
 
 {#        {% if not tabler_bundle.isCondensedNavbar() %}#}
