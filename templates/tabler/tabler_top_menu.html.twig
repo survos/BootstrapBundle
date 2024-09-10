@@ -183,16 +183,42 @@
 {% endblock %}
 
 {% block collapselinks %}
-{#    <code>cols: {{ item.extras.columns|default(1) }}</code>#}
-    {# the collapseELement block references this id, we might need data-parent #}
-    {# isAncestor checks if the item is an ancestor of the currentItem #}
-{#    <div id="collapse_{{itemSlug}}" class="{{ matcher.isAncestor(item) ? 'show' : 'collapse' }}">#}
-        <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu" aria-labelledby="collapse_{{itemSlug}}">
-    {% for item in item.children %}
-            {{ block('renderDropdownlink') }}
-    {% endfor %}
-        <{{ use_multilevel ? '/ul' : '/div'}}>
-{#    </div>#}
+   {# <code>cols: {{ item.extras.maxItemsPerColumn|default(1) }}</code> #}
+
+    {% set counter = 0 %}
+    {% set maxItemsPerColumn = item.extras.maxItemsPerColumn %}
+    {% if maxItemsPerColumn > 0 %}
+        <div class="dropdown-menu">
+            <div class="dropdown-menu-columns">
+                {% for child in item.children %}
+                    {% if counter % maxItemsPerColumn == 0 %}
+                        {% if counter > 0 %}
+                            </div> <!-- Close previous <li> if it's not the first one -->
+                        {% endif %}
+                        <div class="dropdown-menu-column"> <!-- Start a new <li> for the new set of items -->
+                    {% endif %}
+
+                    <a class="dropdown-item" href="#">{{ child.label }}</a>
+
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+
+                {% if counter % maxItemsPerColumn != 0 %}
+                    </div> <!-- Close the last <li> if it's not already closed -->
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        {# the collapseELement block references this id, we might need data-parent #}
+        {# isAncestor checks if the item is an ancestor of the currentItem #}
+    {#    <div id="collapse_{{itemSlug}}" class="{{ matcher.isAncestor(item) ? 'show' : 'collapse' }}">#}
+            <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu" aria-labelledby="collapse_{{itemSlug}}">
+        {% for item in item.children %}
+                {{ block('renderDropdownlink') }}
+        {% endfor %}
+            <{{ use_multilevel ? '/ul' : '/div'}}>
+    {#    </div>#}
+    {% endif %}
 {% endblock %}
 
 {% block renderDropdownlink %}
