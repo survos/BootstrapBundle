@@ -63,6 +63,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
             new TwigFunction('badge', [$this, 'badge']),
             new TwigFunction('attributes', [$this, 'attributes'], ['is_safe' => ['html']]),
             new TwigFunction('img', fn (string $src) => sprintf('img src="%s"', $src)),
+//            new TwigFunction('config', fn (string $el) => $this->config[$el]),
         ];
     }
 

@@ -2,6 +2,8 @@
 {#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
 {% set theme = theme_option('theme') %}
     {% if type in [SEARCH_MENU] %}
+        {# really just one child for searching, the root.   #}
+        {% if menuItem.children %}
         {% set menuHtml = knp_menu_render(menuItem, {
             rootAttributes: {
                 class:"search-class"
@@ -9,6 +11,7 @@
             template: '@SurvosBootstrap/knp_search.html.twig',
             style: 'search'}) %}
         {{ menuHtml|raw }}
+            {% endif %}
 
     {% elseif type in [SIDEBAR_MENU] %}
         {#        "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig", #}

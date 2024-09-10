@@ -201,6 +201,7 @@
                     {% with {item: child, class: 'dropdown-item',
                         use_multilevel: true,
                         matcher: matcher,
+                        classes: classes,
                         options: options
                     } only %}
                             {{ block('linkElement') }}

@@ -268,6 +268,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->arrayNode('social')->useAttributeAsKey('name')->prototype('scalar')->end()->info('links to facebook, etc.')->end()
             ->scalarNode('code')->defaultValue('my-project')->info('project code, default for repo, dokku deployment, etc.')->end()
             ->scalarNode('abbr')->defaultValue('my<b>Project</b>')->info('text abbreviation')->end()
+            ->scalarNode('logo')->defaultNull()->end() // arrayNode
             ->end();
         return $rootNode;
     }
