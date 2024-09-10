@@ -4,14 +4,14 @@
     {% if type in [SEARCH_MENU] %}
         {# really just one child for searching, the root.   #}
         {% if menuItem.children %}
-        {% set menuHtml = knp_menu_render(menuItem, {
-            rootAttributes: {
-                class:"search-class"
-            },
-            template: '@SurvosBootstrap/knp_search.html.twig',
-            style: 'search'}) %}
-        {{ menuHtml|raw }}
-            {% endif %}
+            {% set menuHtml = knp_menu_render(menuItem, {
+                rootAttributes: {
+                    class:"search-class"
+                },
+                template: '@SurvosBootstrap/knp_search.html.twig',
+                style: 'search'}) %}
+            {{ menuHtml|raw }}
+        {% endif %}
 
     {% elseif type in [SIDEBAR_MENU] %}
         {#        "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig", #}
@@ -83,17 +83,21 @@
             leaf_class: 'dropdown-item',
             currentClass  : "current ",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
-            style: 'navbar'}) %}
-        {# ugh, the classes here are pure hacks until rk can make sense of menu rendering #}
-        {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-        <div class="pageNavMenu mt-4">
-            <button class="navbar-toggler pageMenu" id="pageMenu" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExamplePageNav" aria-expanded="false" aria-controls="collapseExamplePageNav">
-                {{ ux_icon('bi:list-ul') }}
-            </button>
-            {{ menuHtml|raw }}
+            style: 'navbar'})|trim %}
 
-        </div>
-        {% if wrapperClass|default(false) %}</div>{% endif %}
+        {# if no menuHtml, don't display the wrapper #}
+        {% if menuHtml %}
+            {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
+            <div class="pageNavMenu mt-4">
+                <button class="navbar-toggler pageMenu" id="pageMenu" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseExamplePageNav" aria-expanded="false"
+                        aria-controls="collapseExamplePageNav">
+                    {{ ux_icon('bi:list-ul') }}
+                </button>
+                {{ menuHtml|raw }}
+            </div>
+            {% if wrapperClass|default(false) %}</div>{% endif %}
+        {% endif %}
 
     {% elseif type in ['top_navbar', 'top_page', NAVBAR_MENU, NAVBAR_MENU2, NAVBAR_MENU3] %}
         {% set menu = knp_menu_get(menuItem) %}
@@ -118,16 +122,16 @@
                     template: '@SurvosBootstrap/tabler/tabler_top_menu.html.twig',
                     style: 'navbar'}) }}
 
-                {% else %}
-            {{ knp_menu_render(menuItem, {
-                allow_safe_labels: true,
-                rootAttributes: {
-                    class:"navbar-nav me-auto mb-lg-0 list-group-horizontal d-print-none"
-                },
-                currentClass  : "active",
-                template: '@SurvosBootstrap/knp_top_menu.html.twig',
-                style: 'navbar'}) }}
-                    {% endif %}
+            {% else %}
+                {{ knp_menu_render(menuItem, {
+                    allow_safe_labels: true,
+                    rootAttributes: {
+                        class:"navbar-nav me-auto mb-lg-0 list-group-horizontal d-print-none"
+                    },
+                    currentClass  : "active",
+                    template: '@SurvosBootstrap/knp_top_menu.html.twig',
+                    style: 'navbar'}) }}
+            {% endif %}
 
             {% if wrapperClass|default(false) %}</div>{% endif %}
         {% endif %}
@@ -140,18 +144,18 @@
 {#    project: project, #}
 {#    title: project.code #}
 {#    } #}
-{#<script>#}
+{# <script> #}
 
-{#document.addEventListener('DOMContentLoaded', function() {#}
-{#  // Get references to the elements#}
-{#  var pageMenu = document.getElementById('pageMenu');#}
-{#  var collapseExamplePageNav = document.querySelector('.collapseExamplePageNav');#}
+{# document.addEventListener('DOMContentLoaded', function() { #}
+{#  // Get references to the elements #}
+{#  var pageMenu = document.getElementById('pageMenu'); #}
+{#  var collapseExamplePageNav = document.querySelector('.collapseExamplePageNav'); #}
 
-{#  // Add click event listener to the pageMenu#}
-{#  pageMenu.addEventListener('click', function() {#}
-{#    // Toggle the 'show' class on the collapseExamplePageNav element#}
-{#    collapseExamplePageNav.classList.toggle('show');#}
-{#  });#}
-{#});#}
+{#  // Add click event listener to the pageMenu #}
+{#  pageMenu.addEventListener('click', function() { #}
+{#    // Toggle the 'show' class on the collapseExamplePageNav element #}
+{#    collapseExamplePageNav.classList.toggle('show'); #}
+{#  }); #}
+{# }); #}
 
-{#</script>#}
+{# </script> #}

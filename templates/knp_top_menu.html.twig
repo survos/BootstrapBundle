@@ -11,19 +11,12 @@
 {% endmacro %}
 
 {% block root %}
-
+    {% if item.children|length %}
     {% set listAttributes = item.childrenAttributes %}
     <ul class="{{ item.attributes.class|default(options.rootAttributes.class|default()) }}">
         {{ block('children') -}}
-{#        <li class="nav-item">#}
-{#            <a class="nav-link active" aria-current="page" href="#">Home</a>#}
-{#        </li>#}
-{#        <li class="nav-item">#}
-{#            <a class="nav-link" href="#">Link</a>#}
-{#        </li>#}
-
-{#        {{ block('list') -}}#}
     </ul>
+    {% endif %}
 {% endblock %}
 
 {% block item %}
