@@ -47,7 +47,7 @@
         {{ item.attributes.icon|default(false)
             ? ux_icon(item.attributes.icon, {style: 'width:20px'})
         }}
-        <span class="d-none d-lg-block">
+        <span class="ms-2 d-none d-lg-block">
         {% set domain = item.extra('translation_domain','routing') %}
         {% set label = item.label|trans(domain=domain) %}
         {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
@@ -98,6 +98,9 @@
             {%- set classes = classes|merge([options.currentClass]) %}
         {%- elseif matcher.isAncestor(item, options.depth) %}
             {%- set classes = classes|merge([options.ancestorClass]) %}
+        {%- endif %}
+        {%- if matcher.isCurrent(item) == false and item.children is empty  %}
+            {%- set classes = classes|merge(['nav-item']) %}
         {%- endif %}
         {%- if item.actsLikeFirst %}
 {#            {%- set classes = classes|merge([options.firstClass]) %}#}
