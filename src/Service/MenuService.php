@@ -133,7 +133,7 @@ class MenuService implements KnpMenuHelperInterface
 
         if ($options['external']) {
             $child->setLinkAttribute('target', '_blank');
-            $options['icon'] = 'fas fa-external-alt';
+            $options['icon'] = 'tabler:external-link';
         }
 
         //        if ($icon = $options['icon']) {

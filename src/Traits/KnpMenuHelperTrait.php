@@ -166,7 +166,7 @@ trait KnpMenuHelperTrait
         if ($external) {
             $child->setLinkAttribute('target', '_blank');
             if (!$icon) {
-                $options['icon'] = 'fas fa-external-alt';
+                $options['icon'] = 'tabler:external-link';
             }
         }
 
@@ -241,7 +241,7 @@ trait KnpMenuHelperTrait
 
         if ($options['external']) {
             $child->setLinkAttribute('target', '_blank');
-            $options['icon'] = 'fas fa-external-alt';
+            $options['icon'] = 'tabler:external-link';
         }
 
         //        if ($icon = $options['icon']) {
