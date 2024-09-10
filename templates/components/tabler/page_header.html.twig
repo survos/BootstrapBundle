@@ -1,3 +1,5 @@
+{% set translationDomain = 'routing' %}{# configurable? #}
+
 <div class="{{ ''|tabler_container }}">
     {# Page title #}
     <div id="{% block page_header_id %}{% endblock %}" class="page-header d-print-none">
@@ -6,29 +8,30 @@
                 {% block page_intro %}
                     {% block breadcrumb %}
                         <div class="page-pretitle">
-                            {% block page_pretitle %}Overview{% endblock %}
+                            {% block page_pretitle %}{{ preTitle }}{% endblock %}
                         </div>
                     {% endblock %}
                     <h2 class="page-title">
-                        {% block page_title %}Dashboard{% endblock %}
+                        {% block page_title %}{{ title|default(app.request.get('_route')|trans(domain=translationDomain)) }}{% endblock %}
                     </h2>
                     {% block page_subtitle %}
                         <div class="text-body-secondary mt-1">
-                            1-10 of 100
+                            {{ subTitle }}
                         </div>
                     {% endblock %}
                 {% endblock %}
             </div>
             <div class="{% block page_actions_class %}col-12 col-md-auto ms-auto d-print-none{% endblock %}">
                 {% block page_actions %}
-                    <div class="btn-list">
-                        <a href="#" class="btn btn-white">
-                            New view
-                        </a>
-                        <a href="#" class="btn btn-primary d-none d-sm-inline-block">
-                            Create new report
-                        </a>
-                    </div>
+                    @page actions menu?
+{#                    <div class="btn-list">#}
+{#                        <a href="#" class="btn btn-white">#}
+{#                            New view#}
+{#                        </a>#}
+{#                        <a href="#" class="btn btn-primary d-none d-sm-inline-block">#}
+{#                            Create new report#}
+{#                        </a>#}
+{#                    </div>#}
                 {% endblock %}
             </div>
         </div>

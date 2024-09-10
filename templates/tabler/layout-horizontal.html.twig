@@ -68,7 +68,9 @@ Enjoy your theme!
             {% endif %}
 
         </div>
-        </div>
+                    {{ component('menu', {type: SEARCH_MENU, caller: _self}) }}
+
+                </div>
         </div>
         </div>
 
@@ -93,6 +95,7 @@ Enjoy your theme!
 
     <div id="{% block page_wrapper_id %}{% endblock %}" class="page-wrapper">
         {% block page_header %}
+            @page_header
             <div class="{{ ''|tabler_container }}">
                 {# Page title #}
                 <div id="{% block page_header_id %}{% endblock %}" class="page-header d-print-none">
@@ -108,6 +111,7 @@ Enjoy your theme!
                                     {% block page_title %}Dashboard{% endblock %}
                                 </h2>
                                 {% block page_subtitle %}
+                                    @page_header
                                     <div class="text-body-secondary mt-1">
                                         1-10 of 100
                                     </div>

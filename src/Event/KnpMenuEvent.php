@@ -12,6 +12,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class KnpMenuEvent extends Event
 {
+    public const SEARCH_MENU = 'SEARCH_MENU';
     public const NAVBAR_MENU = 'NAVBAR_MENU';
     public const NAVBAR_MENU2 = 'NAVBAR_MENU2';
     public const NAVBAR_MENU3 = 'NAVBAR_MENU3';

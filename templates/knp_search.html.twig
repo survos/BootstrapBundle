@@ -1,0 +1,28 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block root %}
+    <div>
+        {% set searchItem = item.children|first %}
+        <input type="search" placeholder="{{ searchItem.label }}" />
+        {% with {children: searchItem.children} %}
+            {{ block('children') }}
+        {% endwith %}
+
+    </div>
+{% endblock %}
+
+{% block children %}
+    <ol>
+    {% for child in children %}
+        <li>
+            {% if child.attribute('icon') is not empty  %}
+                <i class="{{ item.attribute('icon') }}">   </i>
+                {{ item.attribute('icon')  }}
+            {% endif %}
+{#            {{ block('label') }}#}
+            {{ child.label }}
+        </li>
+    {% endfor %}
+    </ol>
+
+{% endblock %}

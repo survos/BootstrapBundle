@@ -186,7 +186,7 @@
    {# <code>cols: {{ item.extras.maxItemsPerColumn|default(1) }}</code> #}
 
     {% set counter = 0 %}
-    {% set maxItemsPerColumn = item.extras.maxItemsPerColumn %}
+    {% set maxItemsPerColumn = item.extras.maxItemsPerColumn|default(0) %}
     {% if maxItemsPerColumn > 0 %}
         <div class="dropdown-menu">
             <div class="dropdown-menu-columns">

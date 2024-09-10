@@ -313,7 +313,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->addDefaultsIfNotSet()
             ->children()
             ->scalarNode('theme')->defaultValue('bootswatch')->info("theme name")->end()
-            ->scalarNode('layout_direction')->defaultValue('vertical')->end()
+            ->scalarNode('layout_direction')->defaultValue('horizontal')->end()
             ->scalarNode('offcanvas')->defaultValue('end')->info("Offcanvas position (top,bottom,start,end")->end()
 //            ->scalarNode('offcanvas')
 //                ->defaultValue('')

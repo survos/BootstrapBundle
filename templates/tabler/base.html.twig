@@ -1,5 +1,6 @@
-{#{% extends "@SurvosBootstrap/tabler/layout-%s.html.twig"|format(theme_option('layout_direction')) %}#}
-{% extends "@SurvosBootstrap/tabler/layout-horizontal.html.twig"|format(theme_option('layout_direction')) %}
+{% extends "@SurvosBootstrap/tabler/layout-%s.html.twig"|format(theme_option('layout_direction')) %}
+{#{% extends "@SurvosBootstrap/tabler/layout-horizontal.html.twig"|format(theme_option('layout_direction')) %}#}
+{#{% extends "@SurvosBootstrap/tabler/base.html.twig" %}#}
 
 {% block page_content %}
 {{ block('body') }}
@@ -7,7 +8,14 @@
 
 
 {% block page_header %}
-    <twig:tabler:page-header>
+    page_header in {{ _self }}
+    {{ app.request.get('_route') }}
+    {#            :preTitle="app.request.get('_route')"#}
+    {#            :title="app.request._route|trans(domain=routes)"#}
+    <twig:tabler:page-header
+            subTitle="A cool subtitle there."
+    >
+
 
     </twig:tabler:page-header>
 

@@ -1,7 +1,16 @@
 {#  this fires an event, all listeners/subscribers will respond.  use A #}
 {#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
 {% set theme = theme_option('theme') %}
-    {% if type in [SIDEBAR_MENU] %}
+    {% if type in [SEARCH_MENU] %}
+        {% set menuHtml = knp_menu_render(menuItem, {
+            rootAttributes: {
+                class:"search-class"
+            },
+            template: '@SurvosBootstrap/knp_search.html.twig',
+            style: 'search'}) %}
+        {{ menuHtml|raw }}
+
+    {% elseif type in [SIDEBAR_MENU] %}
         {#        "template"      : "@SurvosBootstrap/knp_sidebar_menu.html.twig", #}
         {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
         {{ knp_menu_render(menuItem, {
