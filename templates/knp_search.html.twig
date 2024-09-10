@@ -1,28 +1,40 @@
 {% extends 'knp_menu.html.twig' %}
 
 {% block root %}
-    <div>
+    <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+        <div class="input-icon">
+        <span class="input-icon-addon">
+        <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+        </span>
+
         {% set searchItem = item.children|first %}
-        <input type="search" placeholder="{{ searchItem.label }}" />
+        <input type="search" class="form-control pe-3" placeholder="{{ searchItem.label }}" />
         {% with {children: searchItem.children} %}
             {{ block('children') }}
         {% endwith %}
+        </div>
 
     </div>
 {% endblock %}
 
 {% block children %}
-    <ol>
+    {# remove .show class for the hide dropdown #}
+    <div class="dropdown-menu show p-0 shadow-sm w-full">
+    <ol class="list-group list-group-flush border">
     {% for child in children %}
-        <li>
+        <li class="list-group-item list-group-item-action d-flex align-items-center gap-2 px-2 py-2">
             {% if child.attribute('icon') is not empty  %}
                 <i class="{{ item.attribute('icon') }}">   </i>
                 {{ item.attribute('icon')  }}
             {% endif %}
 {#            {{ block('label') }}#}
-            {{ child.label }}
+            <img class="avatar avatar-sm img-fluid" src="https://plus.unsplash.com/premium_photo-1673028716408-51942fd0b117">
+            <div class="text-secondary text-truncate mt-n1">
+                {{ child.label }}
+            </div>
         </li>
     {% endfor %}
     </ol>
-
+    </div>
 {% endblock %}
