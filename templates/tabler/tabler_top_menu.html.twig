@@ -53,6 +53,13 @@
         {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
         </span>
     </a>
+
+    {% if item.children %}
+        {% for child in item.children %}
+            {% with {item: child, classes: []} %}{{ block('linkElement') }}{% endwith %}
+        {% endfor %}
+    {% endif %}
+
 {% endblock %}
 {% block item %}
     {% import "knp_menu.html.twig" as macros %}

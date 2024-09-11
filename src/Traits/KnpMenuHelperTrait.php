@@ -146,6 +146,10 @@ trait KnpMenuHelperTrait
             }
         }
 
+        // if not valid, return so other items can be chained.
+        if (!$if) {
+            return $this;
+        }
 
         $options['label'] = $label;
         if (! $id) {
@@ -170,9 +174,6 @@ trait KnpMenuHelperTrait
             }
         }
 
-        if (!$if) {
-            return $returnItem ? $child : $this;
-        }
 
 
 
