@@ -60,14 +60,9 @@ Enjoy your theme!
                             {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
                             </div>
 
+
                             {# force this right? #}
                             {#                {{ include('@SurvosBootstrap/bootswatch/_example_right_navbar.html.twig') }}#}
-                            {% if config().options.show_locale_dropdown %}
-                                <div class="col-3 d-none d-lg-flex gap-3">
-                                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
-                                    {{ component('menu', {type: SEARCH_MENU, caller: _self}) }}
-                                </div>
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -94,9 +89,7 @@ Enjoy your theme!
     {# *************************** #}
 
     <div id="{% block page_wrapper_id %}{% endblock %}" class="page-wrapper">
-        beofre page_header
         {% block page_header %}
-            @page_header
             <div class="{{ ''|tabler_container }}">
                 {# Page title #}
                 <div id="{% block page_header_id %}{% endblock %}" class="page-header d-print-none">
