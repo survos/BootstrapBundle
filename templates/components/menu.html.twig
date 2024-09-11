@@ -1,7 +1,7 @@
 {#  this fires an event, all listeners/subscribers will respond.  use A #}
 {#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
 {% set theme = theme_option('theme') %}
-<div title="{{ type }}" class="bg-success-subtle" style="outline-style: dotted; text-decoration: dotted">
+<div title="{{ type }}">
 
     {% if type in [SEARCH_MENU] %}
         {# really just one child for searching, the root.   #}
@@ -111,7 +111,7 @@
                     rootAttributes: {
                         class:"navbar-nav"
                     },
-                    currentClass  : "nav-item active",
+                    currentClass  : "nav-item testt active",
                     template: '@SurvosBootstrap/tabler/tabler_top_menu.html.twig',
                     style: 'navbar'}) }}
             {% elseif theme == 'tabler' %}

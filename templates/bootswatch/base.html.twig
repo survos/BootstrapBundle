@@ -197,29 +197,28 @@
 
 {# script start for sidebar toglle button click #}
 <script>
-    var menuButton = document.getElementById('vertical-hover');
-    var body = document.body;
-    body.classList.add('sidebar-open');
-    function toogleSidebar() {
-        // Toggle the 'active' class on the sidebarWrapper
-        body.classList.toggle('sidebar-open');
-    }
-    const searchBox = document.getElementById("searchBox");
-    const searchInput = document.getElementById("searchInput");
-    function showSearchBox() {
-        setTimeout(() => {
-            searchBox.classList.remove('d-none');
-        },100);
-    }
+//     var menuButton = document.getElementById('vertical-hover');
+//     var body = document.body;
+//     body.classList.add('sidebar-open');
+//     function toogleSidebar() {
+//         // Toggle the 'active' class on the sidebarWrapper
+//         body.classList.toggle('sidebar-open');
+//     }
+//     const searchBox = document.getElementById("searchBox");
+//     const searchInput = document.getElementById("searchInput");
+//     function showSearchBox() {
+//         setTimeout(() => {
+//             searchBox.classList.remove('d-none');
+//         },100);
+//     }
 
-    document.addEventListener('click', function(e) {
-        setTimeout(() => {
-            if (!searchBox.contains(document.activeElement)) {
-                searchBox.classList.add('d-none');
-            }
-        }, 50); // Small delay to allow for focus changes
-    });
-
+//     document.addEventListener('click', function(e) {
+//         setTimeout(() => {
+//             if (!searchBox.contains(document.activeElement)) {
+//                 searchBox.classList.add('d-none');
+//             }
+//         }, 50); // Small delay to allow for focus changes
+//     });
 </script>
 {# script end for sidebar toglle button click #}
 {% endblock %}
