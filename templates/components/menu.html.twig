@@ -1,6 +1,8 @@
 {#  this fires an event, all listeners/subscribers will respond.  use A #}
 {#    {% set menuItem = knp_menu_get(menuAlias, path, options) %} #}
 {% set theme = theme_option('theme') %}
+<div title="{{ type }}" class="bg-success-subtle" style="outline-style: dotted; text-decoration: dotted">
+
     {% if type in [SEARCH_MENU] %}
         {# really just one child for searching, the root.   #}
         {% if menuItem.children %}
@@ -138,6 +140,9 @@
     {% else %}
         <div class="text-danger">Invalid menu type: {{ type }}</div>
     {% endif %}
+
+</div>
+
 {#    { #}
 {#    debug: app.request.get('debug', false), #}
 {#    menuItem: menuItem, #}
