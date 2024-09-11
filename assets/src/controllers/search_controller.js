@@ -23,8 +23,15 @@ export default class extends Controller {
     }
 
     changed(el) {
-        console.warn(el);
-        this.categoriesTarget.innerHTML = "Show!  switch the class or whatever";
+        console.warn('changed called',el);
+        if(el.target.value) {
+            el.target.nextElementSibling.classList.add("show");
+            this.categoriesTarget.innerHTML = "Show!  switch the class or whatever";
+        } else
+            el.target.nextElementSibling.classList.remove("show");
     }
-        // ...
+
+    blur(el) {
+        console.warn('blur called',el);
+    }
 }
