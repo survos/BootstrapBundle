@@ -90,13 +90,19 @@
         {# if no menuHtml, don't display the wrapper #}
         {% if menuHtml %}
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
-            <div class="pageNavMenu mt-4">
-                <button class="navbar-toggler pageMenu" id="pageMenu" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseExamplePageNav" aria-expanded="false"
-                        aria-controls="collapseExamplePageNav">
-                    {{ ux_icon('bi:list-ul') }}
-                </button>
-                {{ menuHtml|raw }}
+            <div class="border-bottom">
+                <div class="container-xl">
+                    <div class="pageNavMenu d-flex align-items-center py-2">
+                        <div class="flex-grow-1">
+                            {{ menuHtml|raw }}
+                        </div>
+                        <button class="navbar-toggler pageMenu d-lg-none" id="pageMenu" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExamplePageNav" aria-expanded="false"
+                                aria-controls="collapseExamplePageNav">
+                            {{ ux_icon('bi:list-ul') }}
+                        </button>
+                    </div>
+                </div>
             </div>
             {% if wrapperClass|default(false) %}</div>{% endif %}
         {% endif %}
