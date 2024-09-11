@@ -52,10 +52,11 @@ Enjoy your theme!
                     <div class="container-xl">
                         <div class="row flex-fill align-items-center">
                             <div class="col">
+                                {% block NAVBAR_MENU %}
                             {{ component('menu', {
-
                                 type: NAVBAR_MENU, caller: _self
                             }) }}
+                                {% endblock %}
                             {{ component('menu', {type: NAVBAR_MENU3, caller: _self}) }}
                             </div>
 
