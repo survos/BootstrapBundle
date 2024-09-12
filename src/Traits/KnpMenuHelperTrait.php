@@ -57,7 +57,8 @@ trait KnpMenuHelperTrait
         return $subMenu;
     }
 
-    public function addHeading(ItemInterface $menu, string $label, string $icon = null, ?string $translationDomain=null): void
+    public function addHeading(ItemInterface $menu, string $label, string $icon = null,
+                               ?string $translationDomain=null): void
     {
         $item = $this->addMenuItem($menu, [
             'label' => $label,
@@ -66,6 +67,7 @@ trait KnpMenuHelperTrait
             'translation_domain' => $translationDomain,
             'id' => (new AsciiSlugger())->slug($label)->toString()
         ]);
+
 
     }
 
@@ -206,9 +208,9 @@ trait KnpMenuHelperTrait
         $options = $this->menuOptions($options);
         $this->setChildOptions($child, $options);
         $child->setExtra('safe_label', true);
-
-            $child->setExtra('is_submenu', $options['is_submenu']);
-            $child->setAttribute('is_submenu', $options['is_submenu']);
+        $child->setExtra('is_submenu', $options['is_submenu']);
+        $child->setExtra('is_heading', $options['heading']??false);
+//        $child->setAttribute('is_submenu', $options['is_submenu']);
         if ($options['is_submenu']) {
         }
 
@@ -225,6 +227,9 @@ trait KnpMenuHelperTrait
     {
         assert(count($extra) === 0, json_encode($extra));
         $options = $this->menuOptions($options);
+        if ($options['style']??false == 'header') {
+            $options['heading'] = 'h1';
+        }
         // must pass in either route, icon or menu_code
 
         // especially for collapsible menus.  Cannot start with a digit.
@@ -386,9 +391,8 @@ trait KnpMenuHelperTrait
         //        }
 
         if ($options['style'] === 'header') {
-            // @warning: will probably break sneat!
-//            $options['attributes']['class'] = 'menu-header menu-title';
-            $options['attributes']['class'] = 'menu-title';
+            $options['attributes']['class'] = 'menu-heading menu-title';
+//            $options['attributes']['class'] = 'menu-title';
         }
 
         if (! $options['id']) {

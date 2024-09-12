@@ -18,6 +18,8 @@
                         wrapperClass: 'btn-list'
                     }) }}
             </div>
+
+            {% if false %}
             <div class="d-none d-md-flex">
                 <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable dark mode" data-bs-original-title="Enable dark mode">
                     <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
@@ -112,6 +114,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
 
             <twig:menu
                     :type='AUTH_MENU'

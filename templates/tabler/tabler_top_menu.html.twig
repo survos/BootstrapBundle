@@ -11,30 +11,20 @@
 {% endmacro %}
 
 {% block root %}
-
-{#    {{ dump(options) }}#}
-
-    {% set listAttributes = item.childrenAttributes %}
-
-    {% if options.rootAttributes.class == 'selfxx' %}
-        <div class="btn-list">
-            {% for item in item.children %}
-                {{ block('navbarButtons') }}
-            {% endfor %}
-        </div>
-    {% else %}
+    {# @todo: pass it a style for buttons #}
+{#    {% set listAttributes = item.childrenAttributes %}#}
+{#    {% if options.rootAttributes.class == 'selfxx' %}#}
+{#        <div class="btn-list">#}
+{#            {% for item in item.children %}#}
+{#                {{ block('navbarButtons') }}#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    {% else %}#}
+{#    {% endif %}#}
     <ul class="{{ item.attributes.class|default(options.rootAttributes.class|default()) }}">
         {{ block('children') -}}
-{#        <li class="nav-item">#}
-{#            <a class="nav-link active" aria-current="page" href="#">Home</a>#}
-{#        </li>#}
-{#        <li class="nav-item">#}
-{#            <a class="nav-link" href="#">Link</a>#}
-{#        </li>#}
-
 {#        {{ block('list') -}}#}
     </ul>
-    {% endif %}
 {% endblock %}
 
 {% block navbarButtons %}
@@ -44,15 +34,17 @@
         {{  attributes(item.linkAttributes) }}
        rel="noreferrer"
     >
+        {# @todo: this doesn't seem right, needs better styling, maybe a class? #}
         {{ item.attributes.icon|default(false)
-            ? ux_icon(item.attributes.icon, {style: 'width:20px'})
+            ? ux_icon(item.attributes.icon, {style: 'width:30px'})
         }}
         <span class="ms-2 d-none d-lg-block">
-        {% set domain = item.extra('translation_domain','routing') %}
-        {% set translationParameters = item.extra('translation_params',{}) %}
+            {{ block('label') }}
+{#        {% set domain = item.extra('translation_domain','routing') %}#}
+{#        {% set translationParameters = item.extra('translation_params',{}) %}#}
 
-        {% set label = item.label|trans(translationParameters, domain=domain) %}
-        {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
+{#        {% set label = item.label|trans(translationParameters, domain=domain) %}#}
+{#        {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}#}
         </span>
     </a>
 
@@ -276,7 +268,9 @@
     {% import _self as ownmacro %}
     {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'dropdown-header') }}
     <div {{ macros.attributes(item.labelAttributes) }}>
-        {% if item.attribute('icon') is not empty  %}
+        {% set icon = item.attribute('icon') ?? false%}
+        {% if icon  %}
+            {{ dump(icon) }}
             <i class="{{ item.attribute('icon') }}">   </i>
             {{ item.attribute('icon')  }}
         {% endif %}
@@ -352,8 +346,8 @@
     {% import "knp_menu.html.twig" as macros %}
     {% import _self as ownmacro %}
     {{ matcher.isCurrent(item) ? 'current Span is ' ~ item.label }}
-
-    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'nav-link') }}
+    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', item.attributes.class??'nav-link') }}
+{#    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'nav-link') }}#}
     <span {{ macros.attributes(item.labelAttributes) }}>
         {% if item.attribute('icon') is not empty  %}
             <i class="{{ item.attribute('icon') }}"></i>
@@ -408,30 +402,26 @@
 {#        <b class="caret"></b>#}
     </a>
 {% endblock %}
-
 {% block label %}
     {# link and span call the icon...
     {% if item.labelAttribute('icon') %}<i class="nav-icon {{ item.labelAttribute('icon') }}"></i>{% endif %}
     #}
         {% if not item.labelAttribute('iconOnly') %}
             {% set domain = item.extra('translation_domain','routing') %}
-            {% set translation_params = item.extra('translation_params') %}
-
-            {% set label = item.label|trans(translation_params, domain=domain) %}
-{#            {% set label = item.label|trans(domain=domain) %}#}
+            {% set translation_params = item.extra('translation_params', {}) %}
+            {% set label = item.label %}
+            {% if domain %}
+                {% set label = label|trans(translation_params, domain=domain) %}
+            {% endif %}
             {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
-
         {% endif %}
         {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image') }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
-
         {% import _self as selfMacros %}
         {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
-{#            <span class="float-right">#}
-{#            {{ selfMacros.badges(item) }}#}
-{#            <i class="fas fa-angle-left float-right"></i>#}
-{#        </span>#}
+            {# @todo: badges in dropdown parent #}
         {% else %}
             {{ selfMacros.badges(item) }}
+{#            {{ dump(selfMacros.badges(item)) }}#}
         {% endif %}
 {% endblock %}
 
