@@ -29,7 +29,13 @@ interface KnpMenuHelperInterface
         ?string $id = null,
         ?string $icon = null,
         string|int|null $badge = null,
+        ?bool $external = null,
         bool $returnItem = false,
+        bool $if = true,
+        bool $dividerPrepend = false,
+        bool $dividerAppend = false,
+        ?string $translationDomain = 'routing', // from the method names
+        array $translationParams = [], // e.g. count
     ): self|ItemInterface;
 
     public function addMenuItem(ItemInterface $menu, array $options, array $extra = []): ItemInterface;

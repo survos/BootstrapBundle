@@ -49,7 +49,9 @@
         }}
         <span class="ms-2 d-none d-lg-block">
         {% set domain = item.extra('translation_domain','routing') %}
-        {% set label = item.label|trans(domain=domain) %}
+        {% set translationParameters = item.extra('translation_params',{}) %}
+
+        {% set label = item.label|trans(translationParameters, domain=domain) %}
         {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
         </span>
     </a>
@@ -413,7 +415,10 @@
     #}
         {% if not item.labelAttribute('iconOnly') %}
             {% set domain = item.extra('translation_domain','routing') %}
-            {% set label = item.label|trans(domain=domain) %}
+            {% set translation_params = item.extra('translation_params') %}
+
+            {% set label = item.label|trans(translation_params, domain=domain) %}
+{#            {% set label = item.label|trans(domain=domain) %}#}
             {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
 
         {% endif %}

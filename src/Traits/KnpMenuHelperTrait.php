@@ -91,6 +91,7 @@ trait KnpMenuHelperTrait
         bool $dividerPrepend = false,
         bool $dividerAppend = false,
         ?string $translationDomain = 'routing', // from the method names
+        array $translationParams = [], // e.g. count
 
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
@@ -182,6 +183,7 @@ trait KnpMenuHelperTrait
         if (!$child->getExtra('translation_domain')) {
             if ($translationDomain) {
                 $child->setExtra('translation_domain', $translationDomain);
+                $child->setExtra('translation_params', $translationParams);
             }
         }
 //        if ($child->getName() == 'login') dd($child->getExtras());
