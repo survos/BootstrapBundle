@@ -83,7 +83,7 @@
                 class:"nav nav-justify-end mt-0 list-group list-group-horizontal d-print-none sub-navbar collapse collapseExamplePageNav show",
             },
             leaf_class: 'dropdown-item',
-            currentClass  : "current active teal-lt bg-info",
+            currentClass  : "current active teal-lt",
             template: '@SurvosBootstrap/knp_top_menu.html.twig',
             style: 'navbar'})|trim %}
 
@@ -92,9 +92,14 @@
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
             <div class="border-bottom">
                 <div class="container-xl">
-                    <div class="pageNavMenu d-flex align-items-center py-2">
-                        <div class="flex-grow-1">
+                    <div class="pageNavMenu d-flex align-items-center">
+                        <div class="d-flex flex-wrap align-items-center gap-3 justify-content-between w-100">
                             {{ menuHtml|raw }}
+                            <ol class="breadcrumb breadcrumb-arrows" aria-label="breadcrumbs">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Walters</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="#">Browse per</a></li>
+                            </ol>
                         </div>
                         <button class="navbar-toggler pageMenu d-lg-none" id="pageMenu" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExamplePageNav" aria-expanded="false"
