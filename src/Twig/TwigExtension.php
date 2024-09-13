@@ -38,7 +38,6 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
                 // candidate for component
                 fn(string $value, string $extra=''): string => sprintf('<span class="fas fa-%s %s"></span>', $value, $extra),
                 ['is_safe' => ['html']]),
-            new TwigFilter('bx_icon', [$this, 'bx_icon'], ['is_safe' => ['html']]),
             // if you're calling route_alias and it doesn't exist, maybe it should be '#'?
             new TwigFilter('route_alias', fn (string $routeName): ?string =>
 //            dd($this->routes[$routeName]) &&

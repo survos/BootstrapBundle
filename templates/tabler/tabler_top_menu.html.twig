@@ -137,7 +137,6 @@
 {#        </li>#}
 
 {#        {{ attributes|length ? /attributes) }}#}
-{#        {{ dump(attributes(attributes)) }}#}
 {#        <code>macro: {{ _self.attributes(attributes) }}</code>#}
 {#        <br /><code>twig: {{ attributes(attributes) }}</code>#}
         <li{{ attributes(attributes) }}>
@@ -169,7 +168,6 @@
 
 {% block dropdownlinks %}
     <ul>
-        {{ dump(item) }}
     <{{ use_multilevel ? 'ul' : 'div'}} class="dropdown-menu">
     {% for item in item.children %}
         {# this renders the label #}
@@ -270,7 +268,6 @@
     <div {{ macros.attributes(item.labelAttributes) }}>
         {% set icon = item.attribute('icon') ?? false%}
         {% if icon  %}
-            {{ dump(icon) }}
             <i class="{{ item.attribute('icon') }}">   </i>
             {{ item.attribute('icon')  }}
         {% endif %}
@@ -424,7 +421,6 @@
             {# @todo: badges in dropdown parent #}
         {% else %}
             {{ selfMacros.badges(item) }}
-{#            {{ dump(selfMacros.badges(item)) }}#}
         {% endif %}
 {% endblock %}
 
