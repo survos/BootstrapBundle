@@ -383,6 +383,9 @@
 
     {%- set classes = classes|merge(['dropdown-toggle']) %}
     {%- set classes = classes|merge([item.extras['btn']|default('nav-link')]) %}
+    {% if item.getAttribute('style') == 'heading'  %}
+    {%- set classes = classes|merge(['menu-heading']) %}
+    {% endif %}
 
     {% if  matcher.isCurrent(item)%}
         {%- set classes = classes|merge(['selected-menu', 'nav-link ']) %}

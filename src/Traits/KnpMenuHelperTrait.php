@@ -17,6 +17,7 @@ use function Symfony\Component\String\u;
 
 trait KnpMenuHelperTrait
 {
+    const HEADING='heading';
 //    private ?AuthorizationCheckerInterface $authorizationChecker = null;
     //    private ?ParameterBagInterface $bag=null;
 
@@ -38,6 +39,7 @@ trait KnpMenuHelperTrait
                                ?string $icon = null,
                                ?string $id = null,
                                ?string $translationDomain=null,
+    ?string $style=null,
     array $extras = []
     ): ItemInterface
     {
@@ -45,6 +47,7 @@ trait KnpMenuHelperTrait
             label: $label,
             icon: $icon,
             id: $id,
+            style: $style,
             returnItem: true // get the child, not the menu
         );
         if ($translationDomain) {
@@ -60,13 +63,24 @@ trait KnpMenuHelperTrait
     public function addHeading(ItemInterface $menu, string $label, string $icon = null,
                                ?string $translationDomain=null): void
     {
-        $item = $this->addMenuItem($menu, [
-            'label' => $label,
-            'style' => 'header',
-            'icon' => $icon,
-            'translation_domain' => $translationDomain,
-            'id' => (new AsciiSlugger())->slug($label)->toString()
-        ]);
+
+               $item = $this->addMenuItem($menu, [
+                       'label' => $label,
+                       'style' => 'header',
+                       'icon' => $icon,
+                       'translation_domain' => $translationDomain,
+                       'id' => (new AsciiSlugger())->slug($label)->toString()
+                       ]);
+        return;
+
+        $item = $this->add($menu,
+            label: $label,
+            style: self::HEADING,
+//            is_: 'header',
+            icon:  $icon,
+            translationDomain: $translationDomain,
+            id:  (new AsciiSlugger())->slug($label)->toString()
+        );
 
 
     }
@@ -94,13 +108,18 @@ trait KnpMenuHelperTrait
         bool $dividerAppend = false,
         ?string $translationDomain = 'routing', // from the method names
         array $translationParams = [], // e.g. count
+        ?string $style=null,
 
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
         assert(! ($route && $uri));
-
         // if the condition is false, don't bother to addit
         $options = [];
+
+        if ($style) {
+            $options['style'] = $style;
+        }
+
         if ($route) {
             $options['route'] = $route;
         }
@@ -115,6 +134,8 @@ trait KnpMenuHelperTrait
         if ($icon) {
             $options['icon'] = $icon;
         }
+
+
 
         if (! $label) {
             $label = $route  ?? $uri; // @todo, be smarter.
@@ -209,7 +230,18 @@ trait KnpMenuHelperTrait
         $this->setChildOptions($child, $options);
         $child->setExtra('safe_label', true);
         $child->setExtra('is_submenu', $options['is_submenu']);
-        $child->setExtra('is_heading', $options['heading']??false);
+        $child->setExtra('is_heading', $options['style'] == self::HEADING);
+        if ($options['style'] === self::HEADING) {
+//            $this->setChildOptions($child, $options);
+        }
+        if ($style === self::HEADING) {
+            $child->setAttribute('class', 'menu-heading');
+            $child->setAttribute('style', $style);
+//            $options['attributes']['class'] = ;
+//            dd($child);
+        }
+
+//        if ($style == self::HEADING) dd($child->getExtras());
 //        $child->setAttribute('is_submenu', $options['is_submenu']);
         if ($options['is_submenu']) {
         }
@@ -390,6 +422,7 @@ trait KnpMenuHelperTrait
         //            dd($options);
         //        }
 
+        // need to rethink this!
         if ($options['style'] === 'header') {
             $options['attributes']['class'] = 'menu-heading menu-title';
 //            $options['attributes']['class'] = 'menu-title';
