@@ -18,6 +18,7 @@ class KnpMenuEvent extends Event
     public const NAVBAR_MENU3 = 'NAVBAR_MENU3';
     public const PAGE_MENU = 'PAGE_MENU';
     public const SIDEBAR_MENU = 'SIDEBAR_MENU';
+    public const BREADCRUMB_MENU = 'BREADCRUMB_MENU';
 
 //    #[Deprecate()]
     public const SIDEBAR_MENU_EVENT = 'SIDEBAR_MENU';
