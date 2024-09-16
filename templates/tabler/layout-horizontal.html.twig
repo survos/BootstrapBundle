@@ -139,11 +139,13 @@ Enjoy your theme!
                             {% set map = {
                                 'success': 'success',
                                 'error': 'danger',
+                                'info': 'info',
+                                'primary', 'info',
                                 'warning': 'warning'
                             } %}
                             {% for flashType, messages in app.flashes %}
                                 {% for message in messages %}
-                                    <twig:alert :message="message" :type="map[flashType]" dismissible="true" />
+                                    <twig:alert :message="message" :type="map[flashType]|default(flashType) " dismissible="true" />
 
                                 {% endfor %}
                             {% endfor %}
