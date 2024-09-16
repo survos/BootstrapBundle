@@ -333,10 +333,12 @@
                 {{ ux_icon(icon) }}
             </span>
         {% endif %}
-            <span class="nav-link-title">
-                {{ block('label') }}
-            </span>
+
+        <span class="nav-link-title">
+            {{ block('label') }}
+        </span>
     </a>
+
 {% endblock %}
 
 {% block spanElement %}
@@ -402,7 +404,9 @@
 {#        <b class="caret"></b>#}
     </a>
 {% endblock %}
+
 {% block label %}
+
     {# link and span call the icon...
     {% if item.labelAttribute('icon') %}<i class="nav-icon {{ item.labelAttribute('icon') }}"></i>{% endif %}
     #}
@@ -415,7 +419,15 @@
             {% endif %}
             {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
         {% endif %}
-        {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image') }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
+
+    {% if item.getExtra('badge') is not null %}
+        {% set value = item.getExtra('badge').value  %}
+        <twig:badge :message="value" color="bg-danger" />
+    {% endif %}
+
+
+
+    {% if item.labelAttribute('data-image') %}<img src="{{ item.labelAttribute('data-image') }}" alt="{{ item.name }}" class="menu-thumbnail"/>{% endif %}
         {% import _self as selfMacros %}
         {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
             {# @todo: badges in dropdown parent #}
@@ -436,7 +448,8 @@
 {% endmacro %}
 
 {% macro badge(badge) %}
-    <span class="right badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span>
+    <twig:badge :message="badge.value" :color="badge.color|default('success')"/>
+{#    <span class="right badge badge-{{ badge.color|default('success') }}">{{ badge.value }}</span>#}
 {% endmacro %}
 
 {% block list %}

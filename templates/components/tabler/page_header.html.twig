@@ -23,7 +23,7 @@
             </div>
             <div class="{% block page_actions_class %}col-12 col-md-auto ms-auto d-print-none{% endblock %}">
                 {% block page_actions %}
-                    @page actions menu?
+                {{ app.request.get('debug', false) ? '@page actions menu' }}
 {#                    <div class="btn-list">#}
 {#                        <a href="#" class="btn btn-white">#}
 {#                            New view#}

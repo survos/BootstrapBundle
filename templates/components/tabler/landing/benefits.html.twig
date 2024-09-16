@@ -1,0 +1,46 @@
+{% trans_default_domain 'landing' %}
+
+<div class="container">
+    <div class="section-header"><h2 class="section-title section-title-lg">
+            {{ "#{prefix}.title"|trans }}
+        </h2>
+        <p>
+            {{ "#{prefix}.tagline"|trans }}
+        </p>
+    </div>
+    <div class="row items-center">
+        <div class="lg:col-6 aos-init aos-animate" data-aos="fade-up">
+            {% if section.image|default(false) %}
+            <img alt="" loading="lazy" width="510"
+                 height="553" decoding="async" data-nimg="1"
+                 class="mx-auto img-light"
+                 style="color:transparent"
+                 srcset="/_next/image?url=%2Fimg%2Ftabler%2Ffeatures%2Fforms.png&amp;w=510&amp;q=85 1x, /_next/image?url=%2Fimg%2Ftabler%2Ffeatures%2Fforms.png&amp;w=1020&amp;q=85 2x"
+                 src="/_next/image?url=%2Fimg%2Ftabler%2Ffeatures%2Fforms.png&amp;w=1020&amp;q=85"><img
+                    alt="" loading="lazy" width="510" height="553" decoding="async" data-nimg="1"
+                    class="mx-auto img-dark" style="color:transparent"
+                    srcset="/_next/image?url=%2Fimg%2Ftabler%2Ffeatures%2Fforms-dark.png&amp;w=510&amp;q=85 1x, /_next/image?url=%2Fimg%2Ftabler%2Ffeatures%2Fforms-dark.png&amp;w=1020&amp;q=85 2x"
+                    src="/_next/image?url=%2Fimg%2Ftabler%2Ffeatures%2Fforms-dark.png&amp;w=1020&amp;q=85"></div>
+        {% endif %}
+        <div class="lg:col-6">
+            <div class="space-y-5">
+                {% for component in section.components %}
+                    <div data-aos="fade-up" data-aos-delay="0" class="aos-init aos-animate">
+                        <div class="row">
+
+                            <div class="col-auto">
+                                {{ ux_icon(component.icon) }}
+                            </div>
+                            <div class="col"><h3>
+                                    {{ "#{prefix}.components.#{component.code}.title"|trans }}
+                                </h3>
+                                <p class="text-secondary m-0">
+                                    {{ "#{prefix}.components.#{component.code}.description"|trans }}
+                                </p></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
