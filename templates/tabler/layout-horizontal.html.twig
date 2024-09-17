@@ -23,7 +23,6 @@ Enjoy your theme!
     {% endblock %}
     <title>{% block title %}{{ block('page_title') }}{% endblock %}</title>
     {% block stylesheets %}
-        {{ importmap('app') }}
 {#        {% if tabler_bundle.isRightToLeft() %}#}
 {#            <link rel="stylesheet" href="{{ asset('bundles/tabler/tabler-rtl.css') }}?{{ tabler_asset_version() }}">#}
 {#        {% else %}#}
@@ -140,7 +139,7 @@ Enjoy your theme!
                                 'success': 'success',
                                 'error': 'danger',
                                 'info': 'info',
-                                'primary', 'info',
+                                'primary': 'info',
                                 'warning': 'warning'
                             } %}
                             {% for flashType, messages in app.flashes %}
@@ -172,7 +171,7 @@ Enjoy your theme!
 </div>
 
 {% block javascripts %}
-
+{#            {{ importmap('app') }}#}
 {% endblock %}
 </body>
 </html>
