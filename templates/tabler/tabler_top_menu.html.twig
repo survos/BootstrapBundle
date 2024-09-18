@@ -138,7 +138,9 @@
 
 {#        {{ attributes|length ? /attributes) }}#}
 {#        <code>macro: {{ _self.attributes(attributes) }}</code>#}
+{#        <br /><code>twig: {{ dump(attributes) }}</code>#}
 {#        <br /><code>twig: {{ attributes(attributes) }}</code>#}
+{#        <br /><i>twig: {{ ...attributes }}</i>#}
         <li{{ attributes(attributes) }}>
             {# displaying the item #}
             {%- if is_dropdown %}
