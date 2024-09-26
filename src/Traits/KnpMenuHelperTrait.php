@@ -505,7 +505,7 @@ trait KnpMenuHelperTrait
     public function addWorkflowMenu(ItemInterface $menu)
     {
         assert(isset($this->workflowHelperService), 'add protected WorkflowHelperService $workflowHelperService to the __constructor of ' . static::class);
-        $workflowMenu = $this->addSubmenu($menu, 'Workflows', icon: 'fas fa-diagram-project');
+        $workflowMenu = $this->addSubmenu($menu, 'Workflows', icon: 'fa6-solid:diagram-project');
         $this->add($workflowMenu, route: 'survos_workflows', label: "All");
         foreach ($this->workflowHelperService->getWorkflowsIndexedByName() as $workflowCode => $workflow) {
             $this->add($workflowMenu, 'survos_workflow', [

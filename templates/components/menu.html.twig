@@ -46,8 +46,9 @@
         {% if menu.children|length %}
             {% if wrapperClass|default(false) %}<div class="{{ wrapperClass }}">{% endif %}
 
+
             {{ knp_menu_render(menuItem, {
-                template: '@SurvosBootstrap/knp_top_menu.html.twig',
+                template: '@SurvosBootstrap/tabler/tabler_top_menu.html.twig',
                 leaf_class: "list-group-item footer-link me-4",
                 rootAttributes: {
                     class:"nav navbar-nav nav-justify-end list-group list-group-horizontal dropup"

@@ -162,8 +162,12 @@ Enjoy your theme!
         {% block footer %}
             <footer id="{% block footer_id %}{% endblock %}" class="footer footer-transparent d-print-none">
                 <div class="{{ ''|tabler_container }}">
-                    @todo: footer
-{#                    {% include '@Tabler/includes/footer.html.twig' %}#}
+                    {% block FOOTER_MENU %}
+                        {{ component('menu', {
+                            type: FOOTER_MENU,
+                            caller: _self
+                        }) }}
+                    {% endblock %}
                 </div>
             </footer>
         {% endblock %}
