@@ -64,13 +64,13 @@ trait KnpMenuHelperTrait
                                ?string $translationDomain=null): void
     {
 
-               $item = $this->addMenuItem($menu, [
-                       'label' => $label,
-                       'style' => 'header',
-                       'icon' => $icon,
-                       'translation_domain' => $translationDomain,
-                       'id' => (new AsciiSlugger())->slug($label)->toString()
-                       ]);
+               $item = $this->add($menu,
+                       label: $label,
+                       style: self::HEADING,
+                       icon: $icon,
+                       translationDomain: $translationDomain,
+                       id: (new AsciiSlugger())->slug($label)->toString()
+               );
         return;
 
         $item = $this->add($menu,
