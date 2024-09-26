@@ -101,7 +101,7 @@
             {%- set classes = classes|merge([options.ancestorClass]) %}
         {%- endif %}
         {%- if matcher.isCurrent(item) == false and item.children is empty  %}
-            {%- set classes = classes|merge(['list-inline-item']) %}
+            {%- set classes = classes|merge(['nav-item']) %}
         {%- endif %}
         {%- if item.actsLikeFirst %}
 {#            {%- set classes = classes|merge([options.firstClass]) %}#}
@@ -317,7 +317,7 @@
     {% import "knp_menu.html.twig" as macros %}
     {% import _self as ownmacro %}
 
-    {%- set depthLevel = (item.level > 1) ? 'dropdown-item depth-' ~ item.level: 'link-secondary depth-' ~ item.level %}
+    {%- set depthLevel = (item.level > 1) ? 'dropdown-item depth-' ~ item.level: 'nav-link depth-' ~ item.level %}
     {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', depthLevel ) }}
 {#    {{ ownmacro.setCssClassAttribute(item, 'LinkAttribute', 'dropdown-item', ' depth-' ~ item.level ) }}#}
 
@@ -351,9 +351,8 @@
 {#    {{ ownmacro.setCssClassAttribute(item, 'LabelAttribute', 'nav-link') }}#}
     <span {{ macros.attributes(item.labelAttributes) }}>
         {% if item.attribute('icon') is not empty  %}
-            {{ ux_icon(item.attribute('icon')) }}
+            <i class="{{ item.attribute('icon') }}"></i>
         {% endif %}
-
         {{ block('label') }}
 	</span>
 {% endblock %}
@@ -383,7 +382,7 @@
 
     {# nav-link kills buttons, so we need to explicitly set it in the caller #}
 
-    {%- set classes = classes|merge(['dropdown-toggle gap-2']) %}
+    {%- set classes = classes|merge(['dropdown-toggle gap-1']) %}
     {%- set classes = classes|merge([item.extras['btn']|default('nav-link')]) %}
     {% if item.getAttribute('style') == 'heading'  %}
     {%- set classes = classes|merge(['menu-heading']) %}
@@ -401,7 +400,7 @@
             href="#" id="collapse_{{itemSlug}}"
     >
         {% if item.attribute('icon') ?? false %}
-            {{ ux_icon(item.attribute('icon'), {width: '14px'}) }}
+            {{ ux_icon(item.attribute('icon'), {width: '13px'}) }}
         {% endif %}
         {{ block('label') }}
 {#        <b class="caret"></b>#}
@@ -418,10 +417,8 @@
             {% set translation_params = item.extra('translation_params', {}) %}
             {% set label = item.label %}
             {% if domain %}
-                {% set label = label|trans(translation_params, domain=domain)|title %}
-
+                {% set label = label|trans(translation_params, domain=domain) %}
             {% endif %}
-
             {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
         {% endif %}
 
