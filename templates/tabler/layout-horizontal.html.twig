@@ -29,6 +29,11 @@ Enjoy your theme!
 {#            <link rel="stylesheet" href="{{ asset('bundles/tabler/tabler.css') }}?{{ tabler_asset_version() }}">#}
 {#        {% endif %}#}
     {% endblock %}
+    {# @todo: move to bottom, but need to get defer: true working #}
+    {% block javascripts %}
+        {#            {{ importmap('app') }}#}
+    {% endblock %}
+
     {% block pwa %}
         <!-- trigger pwa -->
     {% endblock %}
@@ -178,9 +183,6 @@ Enjoy your theme!
     </div>
 </div>
 
-{% block javascripts %}
-    {#            {{ importmap('app') }}#}
-{% endblock %}
 
 
 </body>
