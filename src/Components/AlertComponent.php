@@ -11,6 +11,8 @@ use Symfony\UX\TwigComponent\Attribute\PreMount;
 class AlertComponent
 {
     public string $type;
+    public string $color='green';
+    public string $size='md';
 
     public string $message;
 
