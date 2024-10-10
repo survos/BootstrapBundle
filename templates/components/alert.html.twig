@@ -1,28 +1,28 @@
 
-{% set alert = html_cva({
-    base: 'alert',
-    variants: {
-        color: {
-            blue: 'bg-blue',
-            red: 'bg-red',
-            green: 'bg-green',
-        },
-        size: {
-            sm: 'text-sm',
-            md: 'text-md',
-            lg: 'text-lg',
-        }
-    }
-}) %}
+{#{% set alert = html_cva({#}
+{#    base: 'alert',#}
+{#    variants: {#}
+{#        color: {#}
+{#            blue: 'bg-blue',#}
+{#            red: 'bg-red',#}
+{#            green: 'bg-green',#}
+{#        },#}
+{#        size: {#}
+{#            sm: 'text-sm',#}
+{#            md: 'text-md',#}
+{#            lg: 'text-lg',#}
+{#        }#}
+{#    }#}
+{#}) %}#}
 
 {#{% set color = color??'blue' %}#}
 {#{% set size = color??'md' %}#}
-<div class="{{ alert.apply({color,size}, attributes.render('class')) }}">
-    <twig:block name="alert_message">
-        {{ message }}
-    </twig:block>
-    {% block content %}{% endblock %}
-</div>
+{#<div class="{{ alert.apply({color,size}, attributes.render('class')) }}">#}
+{#    <twig:block name="alert_message">#}
+{#        {{ message }}#}
+{#    </twig:block>#}
+{#    {% block content %}{% endblock %}#}
+{#</div>#}
 
 <div class="alert alert-{{ type }} {{ dismissible ? 'alert-dismissible' }}" role="alert">
     <twig:block name="alert_message">
