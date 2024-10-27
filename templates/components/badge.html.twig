@@ -1,5 +1,3 @@
-{% apply spaceless %}
-<span class="badge bg-{{ color }}
-{# sneat has label-<color> classes #}
-bg-{{ label? 'label-' }}{{ color }} {{ text ? 'text-'~text }} {{ style }}">{{ message }}</span>
-{% endapply %}
+<span class="badge bg-{{ color }} bg-{{ label? 'label-' }}{{ color }} {{ text ? 'text-'~text }} {{ style }}">
+    {{ message }}
+</span>
