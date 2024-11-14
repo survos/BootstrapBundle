@@ -61,27 +61,16 @@ trait KnpMenuHelperTrait
     }
 
     public function addHeading(ItemInterface $menu, string $label, string $icon = null,
-                               ?string $translationDomain=null): void
+                               ?string       $translationDomain = null): void
     {
 
-               $item = $this->add($menu,
-                       label: $label,
-                       style: self::HEADING,
-                       icon: $icon,
-                       translationDomain: $translationDomain,
-                       id: (new AsciiSlugger())->slug($label)->toString()
-               );
-        return;
-
-        $item = $this->add($menu,
+        $this->add($menu,
             label: $label,
             style: self::HEADING,
-//            is_: 'header',
-            icon:  $icon,
+            icon: $icon,
             translationDomain: $translationDomain,
-            id:  (new AsciiSlugger())->slug($label)->toString()
+            id: (new AsciiSlugger())->slug($label)->toString()
         );
-
 
     }
 
@@ -434,14 +423,9 @@ trait KnpMenuHelperTrait
         return $options;
     }
 
-    public function isGranted($attribute, $subject = null)
+    public function isGranted($attribute, $subject = null): bool|null
     {
-        return $this->security->isGranted($attribute, $subject);
-
-        if (! $this->authorizationChecker) {
-            throw new \Exception("call setAuthorizationChecker() before making this call.");
-        }
-        return $this->authorizationChecker ? $this->authorizationChecker->isGranted($attribute, $subject) : false;
+        return $this->security?->isGranted($attribute, $subject);
     }
 
     public function isEnv(string $envName): bool

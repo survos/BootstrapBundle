@@ -34,6 +34,7 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
         return [
             new TwigFilter('attributes', [$this, 'attributes'], ['is_safe' => ['html']]),
             new TwigFilter('icon', [$this, 'icon'], ['is_safe' => ['html']]),
+            new TwigFilter('tabler_container', [$this, 'containerClass'], ['is_safe' => ['html']]),
             new TwigFilter('fas_icon',
                 // candidate for component
                 fn(string $value, string $extra=''): string => sprintf('<span class="fas fa-%s %s"></span>', $value, $extra),
@@ -65,6 +66,22 @@ class TwigExtension extends AbstractExtension // implements ServiceSubscriberInt
 //            new TwigFunction('config', fn (string $el) => $this->config[$el]),
         ];
     }
+
+    public function containerClass(string $class = ''): string
+    {
+        $classList = explode(' ', $class);
+
+//        if ($this->helper?->isBoxedLayout()) {
+//            $classList[] = 'container-xl';
+//        } else {
+//            $classList[] = 'container-fluid';
+//        }
+        $classList[] = 'container-fluid';
+
+        return trim(implode(' ', array_values($classList)));
+    }
+
+
 
     public function badge(array $props = []): string
     {

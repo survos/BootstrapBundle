@@ -24,7 +24,7 @@
         "symfony/ux-twig-component": "^2.8",
         "symfony/ux-icons": "^2.20",
         "twig/string-extra": "^3.4",
-        "twig/twig": "^3.4",
+        "twig/twig": "^3.14",
         "twig/intl-extra": "^3.8"
     },
     "require-dev": {

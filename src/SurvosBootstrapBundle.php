@@ -177,9 +177,9 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 ->setArgument('$eventDispatcher', new Reference('event_dispatcher'));
         }
 
-        $builder
-            ->autowire('survos.tabler_twig', TablerExtension::class)
-            ->addTag('twig.extension');
+//        $builder
+//            ->autowire('survos.tabler_twig', TablerExtension::class)
+//            ->addTag('twig.extension');
 
 //        class: KevinPapst\TablerBundle\Twig\RuntimeExtension
 //        arguments:
@@ -188,13 +188,12 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
 //            - '%tabler_bundle.routes%'
 //            - '%tabler_bundle.icons%'
 
-        $builder
-            ->autowire('survos.tabler_runtime', TablerRuntimeExtension::class)
-            ->setArgument('$routes', $config['routes'])
-            ->setArgument('$icons', $config['icons']??[])
-            ->setAutoconfigured(true)
-            ->addTag('twig.runtime')
-        ;
+//        $builder
+//            ->autowire('survos.tabler_runtime', TablerRuntimeExtension::class)
+//            ->setArgument('$routes', $config['routes'])
+//            ->setArgument('$icons', $config['icons'] ?? [])
+//            ->setAutoconfigured(true)
+//            ->addTag('twig.runtime');
 
         $builder
             ->autowire('survos.bootstrap_twig', TwigExtension::class)
@@ -231,8 +230,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
             ->setArgument(
                 '$security',
                 new Reference('security.helper', ContainerInterface::NULL_ON_INVALID_REFERENCE)
-            );
-        ;
+            );;
     }
 
     public function configure(DefinitionConfigurator $definition): void

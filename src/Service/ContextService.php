@@ -36,7 +36,7 @@ class ContextService
         return $this;
     }
 
-    public function getOption(string $option, string $default=null): mixed
+    public function getOption(string $option, string|null $default=null): mixed
     {
         return $this->options[$option]??$default;
     }
