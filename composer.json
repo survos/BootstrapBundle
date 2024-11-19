@@ -14,9 +14,9 @@
     ],
     "require": {
         "php": "^8.2",
-        "endroid/installer": "^1.4",
+        "survos/installer": "^1.5",
         "knplabs/knp-menu-bundle": "^3.2",
-        "survos/core-bundle": "^1.5.384",
+        "survos/core-bundle": "^1.5",
         "symfony/config": "^7.0",
         "symfony/dependency-injection": "^7.0",
         "symfony/http-kernel": "^7.0",
@@ -29,7 +29,7 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^1.10",
-        "survos/auth-bundle": "^1.5.384",
+        "survos/auth-bundle": "^1.5",
         "symfony/security-bundle": "^7.0",
         "symfony/translation": "^7.0"
     },
@@ -66,7 +66,7 @@
     },
     "config": {
         "allow-plugins": {
-            "endroid/installer": true
+            "survos/installer": true
         }
     },
     "extra": {
