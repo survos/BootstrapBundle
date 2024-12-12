@@ -248,7 +248,7 @@ trait KnpMenuHelperTrait
     {
         assert(count($extra) === 0, json_encode($extra));
         $options = $this->menuOptions($options);
-        if ($options['style']??false == 'header') {
+        if ($options['style'] === 'header') {
             $options['heading'] = 'h1';
         }
         // must pass in either route, icon or menu_code

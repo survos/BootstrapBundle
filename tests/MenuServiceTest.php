@@ -4,8 +4,11 @@ namespace Survos\BootstrapBundle\Tests;
 
 use Knp\Menu\ItemInterface;
 use PHPUnit\Framework\TestCase;
+use Survos\AuthBundle\Services\AuthService;
 use Survos\BootstrapBundle\Service\MenuService;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Http\Impersonate\ImpersonateUrlGenerator;
 
 class MenuServiceTest extends TestCase
 {
@@ -57,6 +60,15 @@ class MenuServiceTest extends TestCase
 
     protected function mockMenuService(): MenuService
     {
-        return new MenuService($this->createMock(AuthorizationCheckerInterface::class));
+        $usersToImpersonate=[];
+        return new MenuService(
+            $this->createMock(Security::class),
+            $this->createMock(ImpersonateUrlGenerator::class),
+            '',
+
+            $this->createMock(AuthorizationCheckerInterface::class),
+            $this->createMock(AuthService::class),
+            $usersToImpersonate
+        );
     }
 }

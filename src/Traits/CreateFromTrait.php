@@ -8,7 +8,7 @@ trait CreateFromTrait
 {
     public static function createFrom(\Traversable $data, $constructor_params = [])
     {
-        $obj = new static(); // ...$constructor_params); //
+        $obj = new self(); // ...$constructor_params); //
         $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
             ->enableExceptionOnInvalidIndex()
             ->getPropertyAccessor();
@@ -19,6 +19,9 @@ trait CreateFromTrait
 
         return $obj;
 
+    }
+
+    private function expermental(array $data) {
         // https://www.thinktocode.com/2019/09/12/hydrating-query-objects-with-dtos/
         # Construct a reflection method from the constructor and then get all its parameters
         $reflectionMethod = new \ReflectionMethod(static::class, '__construct');
@@ -43,6 +46,6 @@ trait CreateFromTrait
             $parameters[] = $parameter;
         }
         # Create new class with the parameters from the array
-        return new static(...$parameters);
+        return new self(...$parameters);
     }
 }

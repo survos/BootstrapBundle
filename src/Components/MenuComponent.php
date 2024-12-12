@@ -8,12 +8,9 @@ use Knp\Menu\Twig\Helper;
 use Survos\BootstrapBundle\Event\KnpMenuEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\ExposeInTemplate;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
-
-use function Symfony\Component\String\u;
 
 #[AsTwigComponent('menu', template: '@SurvosBootstrap/components/menu.html.twig')]
 class MenuComponent
@@ -22,7 +19,7 @@ class MenuComponent
         private array $menuOptions,
         protected Helper $helper,
         protected FactoryInterface $factory,
-        protected EventDispatcherInterface $eventDispatcher
+        protected EventDispatcherInterface $eventDispatcher,
     ) {
         //    public function __construct(private Helper $helper) {
     }
@@ -45,19 +42,19 @@ class MenuComponent
 
     public ItemInterface $menuItem;
 
-    public string|bool|null $translationDomain  = false;
+    public string|bool|null $translationDomain = false;
 
     public string $wrapperClass = '';
 
-    public function mount(string $type, string|null $caller = null, array $path = [], array $options = [])
+    public function mount(string $type, ?string $caller = null, array $path = [], array $options = [])
     {
         assert($caller);
         $this->type = $type;
         $this->path = $path; // use this to get a specific branch or node from the menu, e.g. in breadcrumbs.
         $this->options = $options;
-//        dd(constant(KnpMenuEvent::NAVBAR_MENU), $type, $eventName);
-        $eventName = constant(KnpMenuEvent::class . '::' .  $type);
-//        dd(func_get_args(), $eventName, $caller);
+        //        dd(constant(KnpMenuEvent::NAVBAR_MENU), $type, $eventName);
+        $eventName = constant(KnpMenuEvent::class.'::'.$type);
+        //        dd(func_get_args(), $eventName, $caller);
 
         $menu = $this->factory->createItem($options['name'] ?? KnpMenuEvent::class);
 
@@ -70,7 +67,7 @@ class MenuComponent
         $this->menuItem = $this->helper->get($menu, $path, $options);
     }
 
-//    #[PreMount]
+    //    #[PreMount]
     public function xpreMount(array $data): array
     {
         // validate data
@@ -89,6 +86,7 @@ class MenuComponent
         $type = $data['type'];
         $data['options']['type'] = $type; // so it's passed into the MenuBuilder, mostly for debugging
         $data['menuCode'] = KnpMenuEvent::class;
+
         //        $data['menuAlias'] = KnpMenuEvent::class;
         //        $menuItem = $this->helper->get($shortcuts[$data['type']], $this->path, $data['options']);
         //        $data['menuItem'] = $menuItem;

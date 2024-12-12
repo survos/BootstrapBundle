@@ -2,7 +2,6 @@
 
 namespace Survos\BootstrapBundle\Components;
 
-use Survos\BootstrapBundle\Service\ContextService;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -16,13 +15,12 @@ class LinkComponent
     public ?string $path;
     public ?string $route;
     public array $rp = [];
-    public ?string $body=null;
+    public ?string $body = null;
     public ?string $class;
     public mixed $if = true;
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
-
     }
 
     #[PreMount]
@@ -49,12 +47,10 @@ class LinkComponent
             }
         }
 
-        //
         if (empty($data['body'])) {
             // could also say "add body or a body block
             $data['body'] = json_encode($data);
         }
-
 
         // if the path doesn't exist, e.g. no homepage, use # (or don't generate the href?)
         if (empty($data['href'])) {
@@ -65,6 +61,7 @@ class LinkComponent
             }
             $data['href'] = $href;
         }
+
         return $resolver->resolve($data);
     }
 }

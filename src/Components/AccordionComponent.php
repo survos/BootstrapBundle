@@ -6,7 +6,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
-use function Symfony\Component\String\u;
 
 #[AsTwigComponent('accordion', template: '@SurvosBootstrap/components/accordion.html.twig')]
 class AccordionComponent
@@ -34,7 +33,7 @@ class AccordionComponent
             'open' => false,
         ]);
         //        $resolver->setRequired('body');
-//        $resolver->setAllowedTypes('header', 'string');
+        //        $resolver->setAllowedTypes('header', 'string');
 
         $data = $resolver->resolve($data);
         if (empty($data['id'])) {
@@ -42,6 +41,7 @@ class AccordionComponent
 
             $data['id'] = $slugger->slug($data['header']);
         }
+
         return $data;
     }
 }

@@ -6,7 +6,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
-use function Symfony\Component\String\u;
 
 #[AsTwigComponent('bs:dropdown', template: '@SurvosBootstrap/components/dropdown.html.twig')]
 class DropdownComponent
@@ -17,7 +16,7 @@ class DropdownComponent
     public array $components = [];
     public string $widgetIcon = 'bx bx-category-alt fs-22';
 
-//    #[PreMount]
+    //    #[PreMount]
     public function xxpreMount(array $data): array
     {
         // validate data
@@ -37,6 +36,7 @@ class DropdownComponent
             $slugger = new AsciiSlugger();
             $data['id'] = $slugger->slug($data['header']);
         }
+
         return $data;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Survos\BootstrapBundle\Components;
 
-use Survos\BootstrapBundle\Service\ContextService;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 use Symfony\UX\TwigComponent\Attribute\PreMount;
@@ -40,6 +39,7 @@ class BadgeComponent
         if (empty($data['message'])) {
             $data['message'] = json_encode($data);
         }
+
         return $data;
     }
 }

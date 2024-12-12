@@ -49,6 +49,7 @@ class ButtonComponent
                     'target' => '_blank',
                 ])->resolve($a);
         }
+
         return $data;
     }
 }
