@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait JsonResponseTrait
 {
-    public function jsonResponse($data, Request $request = null, $format = 'html')
+    public function jsonResponse($data, ?Request $request = null, $format = 'html')
     {
         if ($request && $request->isXmlHttpRequest()) {
             $format = 'json';

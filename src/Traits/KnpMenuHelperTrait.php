@@ -60,7 +60,7 @@ trait KnpMenuHelperTrait
         return $subMenu;
     }
 
-    public function addHeading(ItemInterface $menu, string $label, string $icon = null,
+    public function addHeading(ItemInterface $menu, string $label, ?string $icon = null,
                                ?string       $translationDomain = null): void
     {
 

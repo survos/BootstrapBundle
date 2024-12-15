@@ -18,7 +18,7 @@ interface KnpMenuHelperInterface
 
     public function addSubmenu(ItemInterface $menu, ?string $label = null, ?string $icon = null): ItemInterface;
 
-    public function addHeading(ItemInterface $menu, string $label, string $icon = null): void;
+    public function addHeading(ItemInterface $menu, string $label, ?string $icon = null): void;
 
     public function add(
         ItemInterface $menu,
