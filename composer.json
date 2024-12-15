@@ -14,7 +14,7 @@
     "type": "symfony-bundle",
     "require": {
         "php": "^8.3",
-        "survos/installer": "^2.0",
+        "survos/installer": "^1.4||^2.0",
         "knplabs/knp-menu-bundle": "^3.2",
         "survos/core-bundle": "^1.5",
         "symfony/config": "^6.4 || ^7.1",
