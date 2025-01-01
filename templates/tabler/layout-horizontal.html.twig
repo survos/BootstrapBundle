@@ -39,8 +39,7 @@ Enjoy your theme!
     {% endblock %}
 </head>
 
-{#<body{% block body_start %}{% endblock %} class="{{ 'antialiased'|tabler_body }} {% block body_class %}{% endblock %}" data-bs-theme="{{ tabler_theme() }}">#}
-<body>
+<body{% block body_start %}{% endblock %} class="{% block body_class %}{% endblock %}">
 {% block after_body_start %}{% endblock %}
 <div class="page">
 
@@ -97,6 +96,23 @@ Enjoy your theme!
     {# *************************** #}
 
     <div id="{% block page_wrapper_id %}{% endblock %}" class="page-wrapper">
+        {% block flashes %}
+            {% set map = {
+                'success': 'success',
+                'error': 'danger',
+                'info': 'info',
+                'notice': 'info',
+                'primary': 'info',
+                'warning': 'warning'
+            } %}
+            {% for flashType, messages in app.flashes %}
+                {% for message in messages %}
+                    <twig:alert :message="message" :type="map[flashType]|default(flashType) " dismissible="true" />
+
+                {% endfor %}
+            {% endfor %}
+
+        {% endblock %}
         {% block page_header %}
             <div class="{{ ''|tabler_container }}">
                 {# Page title #}
@@ -144,21 +160,6 @@ Enjoy your theme!
 
                     <section id="{% block page_content_id %}{% endblock %}" class="{% block page_content_class %}content{% endblock %}">
                         {% block page_content_start %}
-                            {% set map = {
-                                'success': 'success',
-                                'error': 'danger',
-                                'info': 'info',
-                                'notice': 'info',
-                                'primary': 'info',
-                                'warning': 'warning'
-                            } %}
-                            {% for flashType, messages in app.flashes %}
-                                {% for message in messages %}
-                                    <twig:alert :message="message" :type="map[flashType]|default(flashType) " dismissible="true" />
-
-                                {% endfor %}
-                            {% endfor %}
-{#                            {{ include('@Tabler/includes/flash_messages.html.twig') }}#}
                         {% endblock %}
                         {% block page_content %}{% endblock %}
                         {% block page_content_end %}{% endblock %}
