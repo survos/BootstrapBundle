@@ -98,6 +98,7 @@ trait KnpMenuHelperTrait
         ?string $translationDomain = 'routing', // from the method names
         array $translationParams = [], // e.g. count
         ?string $style=null,
+        ?string $baseUrl = null, // if set, prepend to route, to switch between subdomains and main domain
 
     ): self|ItemInterface { // for nesting.  Leaves only, requires route or uri.
 
@@ -174,6 +175,11 @@ trait KnpMenuHelperTrait
             $child->setLabel(' '); // ideally so id isn't used.
         }
 //        if (!$label) dd($id, $options, $child->getName());
+        // a baseUrl means we're switching from museado to subdomain or back
+        if ($baseUrl) {
+            $uri = $baseUrl . $this->urlGenerator->generate($route, $routeRequirements);
+        }
+ 
         if ($uri) {
             $child->setUri($uri);
             if ($external !== false) {
