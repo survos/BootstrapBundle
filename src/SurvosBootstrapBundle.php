@@ -3,6 +3,7 @@
 namespace Survos\BootstrapBundle;
 
 use Survos\BootstrapBundle\Components\AccordionComponent;
+use Survos\BootstrapBundle\Components\LocaleSwitcherDropdown;
 use Survos\BootstrapBundle\Components\TabsComponent;
 use Survos\BootstrapBundle\Components\AlertComponent;
 use Survos\BootstrapBundle\Components\BadgeComponent;
@@ -149,6 +150,7 @@ class SurvosBootstrapBundle extends AbstractBundle implements CompilerPassInterf
                 DividerComponent::class,
                 LinkComponent::class,
                 TabsComponent::class,
+                LocaleSwitcherDropdown::class,
 
                 MiniCard::class,
                 TablerIcon::class,

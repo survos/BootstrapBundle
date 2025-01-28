@@ -125,7 +125,9 @@
 
             {% if config().options.show_locale_dropdown %}
                 <div class="d-none d-lg-flex gap-3">
-                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}
+                    <twig:LocaleSwitcherDropdown />
+
+{#                    {{ include('@SurvosBootstrap/_navbar_language_dropdown.html.twig') }}#}
                     {{ component('menu', {type: SEARCH_MENU, caller: _self}) }}
                 </div>
             {% endif %}
