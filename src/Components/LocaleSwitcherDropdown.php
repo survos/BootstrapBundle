@@ -2,6 +2,7 @@
 
 namespace Survos\BootstrapBundle\Components;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
@@ -15,6 +16,7 @@ final class LocaleSwitcherDropdown
 
     public function __construct(
         private RequestStack $requestStack,
+        private LoggerInterface $logger,
         #[Autowire('%kernel.enabled_locales%')] private array $enabledLocales,
         )
     {
@@ -35,6 +37,7 @@ final class LocaleSwitcherDropdown
         {
             $uri = $request->getUri(); // the full url
             $this->localeInRequest = array_shift($hostParts);
+            $this->logger->warning("Host: $host, uri: $uri, locale:" . $this->localeInRequest);
             foreach ($this->enabledLocales as $subdomain) {
                 $search = "https://{$this->localeInRequest}.";
                 $replace = "https://$subdomain.";
