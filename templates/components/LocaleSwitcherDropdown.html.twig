@@ -26,7 +26,7 @@
 
             <a href="{{ localeLinks[supportedLocale] }}"
                class="dropdown-item notify-item language py-2"
-               title="{{ supportedLocale|language_name }}">
+               title="{{ supportedLocale|language_name }} {{  link }} {{ app.request.httpHost }}">
                 {#                    <img src="{{ asset('/bundles/survosvelzon/images/flags/%s.svg'|format(flag)) }}" alt="user-image" class="me-2 rounded" height="18"> #}
                 {#                    <span>{{ lang }}</span> #}
 
