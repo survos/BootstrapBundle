@@ -51,7 +51,6 @@ final class LocaleSwitcherDropdown
 
 //                $this->localeLinks[$subdomain] = str_replace($search, $replace, $uri);
             }
-            dd($this->localeLinks);
         }
     }
 
