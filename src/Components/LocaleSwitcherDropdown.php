@@ -6,6 +6,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
+use function Symfony\Component\String\u;
 
 #[AsTwigComponent(name: 'LocaleSwitcherDropdown', template: '@SurvosBootstrap/components/LocaleSwitcherDropdown.html.twig')]
 final class LocaleSwitcherDropdown
@@ -28,7 +29,7 @@ final class LocaleSwitcherDropdown
     }
 
 
-    public function mount(array $localeLinks=[]): void
+    public function mount(): void
     {
         $request = $this->getRequest();
         $host = $this->getRequest()->getHttpHost();
@@ -39,12 +40,13 @@ final class LocaleSwitcherDropdown
             $this->localeInRequest = array_shift($hostParts);
             $this->logger->warning("Host: $host, uri: $uri, locale:" . $this->localeInRequest);
             foreach ($this->enabledLocales as $subdomain) {
+
                 $search = "https://{$this->localeInRequest}.";
                 $replace = "https://$subdomain.";
 //                dump($uri, $search, $subdomain);
 //                dump($this->localeInRequest, $subdomain);
-                $this->localeLinks[$subdomain] = str_replace($search, $replace,
-                    $uri);
+                $this->localeLinks[$subdomain] = preg_replace("/{$this->localeInRequest}/", $subdomain, $uri);
+//                $this->localeLinks[$subdomain] = str_replace($search, $replace, $uri);
             }
         }
     }
