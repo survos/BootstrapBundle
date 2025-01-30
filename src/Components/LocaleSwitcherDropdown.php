@@ -45,9 +45,13 @@ final class LocaleSwitcherDropdown
                 $replace = "https://$subdomain.";
 //                dump($uri, $search, $subdomain);
 //                dump($this->localeInRequest, $subdomain);
-                $this->localeLinks[$subdomain] = preg_replace("/{$this->localeInRequest}/", $subdomain, $uri);
+//                dd($uri, $this->getRequest()->getUri());
+                $this->localeLinks[$subdomain] = 'https://' . preg_replace("/^{$this->localeInRequest}\./", $subdomain . '.', $host) .
+                    $this->getRequest()->getPathInfo();
+
 //                $this->localeLinks[$subdomain] = str_replace($search, $replace, $uri);
             }
+            dd($this->localeLinks);
         }
     }
 
