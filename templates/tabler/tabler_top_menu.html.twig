@@ -36,9 +36,9 @@
     >
         {# @todo: this doesn't seem right, needs better styling, maybe a class? #}
         {{ item.attributes.icon|default(false)
-            ? ux_icon(item.attributes.icon, {style: 'width:30px'})
+            ? ux_icon(item.attributes.icon, {style: 'width:17px'})
         }}
-        <span class="ms-2 d-none d-lg-block">
+        <span class="ms-2 d-none d-lg-block ps-2">
             {{ block('label') }}
 {#        {% set domain = item.extra('translation_domain','routing') %}#}
 {#        {% set translationParameters = item.extra('translation_params',{}) %}#}
