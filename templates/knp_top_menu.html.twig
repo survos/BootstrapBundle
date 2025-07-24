@@ -318,6 +318,7 @@
     #}
         {% if not item.labelAttribute('iconOnly') %}
             {% set domain = item.extra('translation_domain','routing') %}
+{#            {{ dump(domain) }}#}
             {% set label = item.label|trans(domain=domain) %}
             {% if options.allow_safe_labels %}{{ label|raw }}{% else %}{{ label }}{% endif %}
 

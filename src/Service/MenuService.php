@@ -93,7 +93,7 @@ class MenuService implements KnpMenuHelperInterface
 
             $this->add($subMenu, 'app_logout', label: 'layout.logout',
                 translationDomain: $translationDomain,
-                dividerPrepend: true, icon: 'fas fa-sign-out-alt');
+                dividerPrepend: true, icon: 'tabler:logout');
         } else {
             $this->add($menu, 'app_login', label: 'layout.login', id: 'login', translationDomain: $translationDomain);
 //            $menu->addChild(
@@ -107,7 +107,7 @@ class MenuService implements KnpMenuHelperInterface
 
             try {
                 $this->add($menu, 'app_register', label: 'layout.register',
-                    icon: 'fas fa-sign-in-alt',
+                    icon: 'fa:sign-in',
                     translationDomain: $translationDomain);
             } catch (\Exception $exception) {
                 // route is likely missing

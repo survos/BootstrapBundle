@@ -95,7 +95,8 @@ trait KnpMenuHelperTrait
         bool $if = true,
         bool $dividerPrepend = false,
         bool $dividerAppend = false,
-        ?string $translationDomain = 'routing', // from the method names
+        null|bool|string $translationDomain = 'routing',
+            // null=default, bool=false none, string domain
         array $translationParams = [], // e.g. count
         ?string $style=null,
         ?string $baseUrl = null, // if set, prepend to route, to switch between subdomains and main domain
@@ -179,7 +180,7 @@ trait KnpMenuHelperTrait
         if ($baseUrl) {
             $uri = $baseUrl . $this->urlGenerator->generate($route, $routeRequirements);
         }
- 
+
         if ($uri) {
             $child->setUri($uri);
             if ($external !== false) {
@@ -193,12 +194,13 @@ trait KnpMenuHelperTrait
             }
         }
 
+        if ($translationDomain === false) {
+            $child->setExtra('translation_domain', $translationDomain);
+        }
 
-
-
-        // hack to align navigation if no link
-
-        if (!$child->getExtra('translation_domain')) {
+//        $route === 'admin' && dump($child->getExtra('translation_domain'), $translationDomain);
+//        if (!$child->getExtra('translation_domain'))
+        {
             if ($translationDomain) {
                 $child->setExtra('translation_domain', $translationDomain);
                 $child->setExtra('translation_params', $translationParams);
