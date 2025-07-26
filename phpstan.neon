@@ -9,7 +9,6 @@ parameters:
 #      - 'src/Resources/skeleton'
 #      - */cache/*
        analyse:
-                  - ./vendor
 
     ignoreErrors:
         # False positive: clients are not dependencies of this project.
