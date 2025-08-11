@@ -8,7 +8,11 @@
                 {% block page_intro %}
                     {% block breadcrumb %}
                         <div class="page-pretitle">
-                            {% block page_pretitle %}{{ preTitle }}{% endblock %}
+                            {% block page_pretitle %}
+                                {% if preTitle != app.request.get('_route') %}
+                                {{ preTitle }}
+                                {% endif %}
+                            {% endblock %}
                         </div>
                     {% endblock %}
                     <h2 class="page-title">
